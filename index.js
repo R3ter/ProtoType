@@ -25,6 +25,8 @@ const server = new ApolloServer({
     Materials,
     City
   },
+  introspection: true,
+  playground: true,
   formatError(error){
     if(!error.originalError){
       return error

@@ -36,7 +36,7 @@ const sendActivateCode=(email)=>{
         from:"Teachery Experts",
         to:email,
         subject:"testing",
-        text:`here is ur link http://localhost:4000/activateAccount?userId=${email}&code=${randomId}`
+        text:`here is ur link https://school-classes.herokuapp.com/activateAccount?userId=${email}&code=${randomId}`
     },(e)=>{
         if(e){
             console.log(e)
