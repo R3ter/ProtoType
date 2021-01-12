@@ -1,16 +1,20 @@
-import apollo from 'apollo-server'
+// import apollo from 'apollo-server'
 import pkg from '@prisma/client';
 import Materials from "./Resolvers/types/Materials.js"
 import typeDefs from './Resolvers/schema.js'
 import Mutation from './Resolvers/Mutation.js'
 import City from './Resolvers/types/City.js'
 import Query from './Resolvers/Query.js'
+import express from 'express';
+import apolloServer from 'apollo-server-express';
+import { checkActivationCode } from './methods/activate.js';
 
-const { ApolloServer } = apollo
+
+const { ApolloServer} = apolloServer
+
 
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient()
-
 
 
 const server = new ApolloServer({
@@ -36,9 +40,24 @@ const server = new ApolloServer({
       req,
       prisma
     }
-}}
+  }}
 );
 
-server.listen().then(({ url }) => {
-    console.log(`Server is running at ${url}`);
-});
+
+const app = express();
+server.applyMiddleware({ app });
+app.listen({ port: 4000 }, () =>{
+  console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
+}
+);
+
+app.get("/activateAccount", async (req,res)=>{
+  if(!req.query.userId||!req.query.code){
+    return res.sendStatus(404);
+  }
+  if(await checkActivationCode(req.query.code,req.query.userId,prisma)){
+    return res.send("succ")
+  }
+  return res.sendStatus(404);
+  
+})

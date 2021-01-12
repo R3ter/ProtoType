@@ -16,10 +16,9 @@ model User{
   email String @unique
   phone_number String @unique
   Role Role  @default(STUDENT)
-  username String @unique
   password String
   Active Boolean @default(false)
-  userInfo UserInfo?
+  userInfo UserInfo? 
   createdAt DateTime @default(now())
 }
 
@@ -56,6 +55,7 @@ model Materials {
   id String @id  @default(uuid())
   name String?
   lookUp LookUp
+  education_level Education_Level
   createdAt DateTime @default(now())
 }
 model LookUp{

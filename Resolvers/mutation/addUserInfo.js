@@ -19,7 +19,6 @@ const addUserInfo =async(parent, {data}, {req,prisma}, info)=>{
             },
             preferred_materials:{
                 connect:data.preferred_materials.map((e)=>{return{id:e}})
-                
             },
             Area:{
                 connect:{

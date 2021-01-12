@@ -1,4 +1,4 @@
-import apollo from 'apollo-server'
+import apollo from 'apollo-server-express'
 
 const {gql}=apollo
 
@@ -22,6 +22,15 @@ type Query{
   getUserInfo(userId:ID!):UserInfo
   getMyInfo:UserInfo
 }
+type Mutation{
+  logout(userId:ID!,refreshToken:String!):Boolean!
+  refreshToken(userId:ID!,refreshToken:String!):Authentication!
+  CreateMaterial(lookUp:lookUp,education_level: Education_Level!):Materials!
+  addUser(data:UserInput!):Result!
+  addUserInfo(data:userInfoInput!):Boolean!
+  login(username:String!,password:String!):LoginResult!
+  resendActivationCode:Boolean!
+}
 type UserInfo{
   birth_date:String
   Current_education_level:Education_Level
@@ -38,18 +47,22 @@ input userInfoInput{
   City:ID!
   Area:ID!
 }
-type Mutation{
-  CreateMaterial(lookUp:lookUp):Materials!
-  addUser(data:UserInput!):Result!
-  addUserInfo(data:userInfoInput!):Boolean!
-  login(username:String!,password:String!):Authentication!
+type LoginResult {
+  token:String!
+  refreshToken:String!
+  userId:ID!
+
+  first_name:String!
+  last_name:String!
+  email:String!
+  phone_number:String!
+  isActive:Boolean!
 }
 type Result{
   error:String
   result:Boolean!
 }
 input UserInput{
-  username:String!
   first_name:String!
   last_name:String!
   email:String!
@@ -60,9 +73,11 @@ input UserInput{
 type Authentication{
   token:String!
   refreshToken:String!
+  userId:ID!
 }
 type Materials {
   name:String!
+  education_level: Education_Level!
 }
 type City{
   id:ID!
