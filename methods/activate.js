@@ -3,23 +3,21 @@ import nodemailer from 'nodemailer'
 import { checkToken } from './Tokens.js'
 
 const codes=[]
-const checkActivationCode = async(code,email,prisma)=>{
+const checkActivationCode = async(code,token,callback,rejected)=>{
 
-    if(codes[email]===code){
-        await prisma.user.update({where:{email:email},
-            data:{Active:true}
-        })
-        delete codes[email]
-        return true
+    const data=await checkToken(token,false)
+    if(codes[data.email]===code){
+        delete codes[data.email]
+        return callback(data)
     }
-    return false
+    return rejected()
 }
 const sendActivateCode=(email)=>{
-    const randomId = cryptoRandomString({length: 30})
+    const randomId = cryptoRandomString({length: 4, type: 'numeric'})
     codes[email] = randomId
     setTimeout(()=> {
         delete codes[email]
-      }, 300000);
+      }, 60000);
       console.log(`http://localhost:4000/activateAccount?userId=${email}&code=${randomId}`)
 
     var transporter = nodemailer.createTransport({
@@ -36,7 +34,7 @@ const sendActivateCode=(email)=>{
         from:"Teachery Experts",
         to:email,
         subject:"testing",
-        text:`here is ur link https://school-classes.herokuapp.com/activateAccount?userId=${email}&code=${randomId}`
+        text:`ur code is ${randomId}`
     },(e)=>{
         if(e){
             console.log(e)

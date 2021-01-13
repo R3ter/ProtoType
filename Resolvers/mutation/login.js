@@ -7,7 +7,7 @@ const login =async (parent,{username,password},{prisma})=>{
     if(validator.isEmail(username)){
         user = await prisma.user.findUnique({
             where:{
-                email:username
+                email:username.toLowerCase()
             }
         }).then(async(e)=>{
             if(!e){

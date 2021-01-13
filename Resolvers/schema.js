@@ -26,10 +26,11 @@ type Mutation{
   logout(userId:ID!,refreshToken:String!):Boolean!
   refreshToken(userId:ID!,refreshToken:String!):Authentication!
   CreateMaterial(lookUp:lookUp,education_level: Education_Level!):Materials!
-  addUser(data:UserInput!):Result!
+  addUser(data:UserInput!):LoginResult!
   addUserInfo(data:userInfoInput!):Boolean!
   login(username:String!,password:String!):LoginResult!
   resendActivationCode:Boolean!
+  activateAccount(code:String!):Authentication!
 }
 type UserInfo{
   birth_date:String

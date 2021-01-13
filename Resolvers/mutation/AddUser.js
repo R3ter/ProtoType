@@ -1,6 +1,7 @@
 import validator from 'validator';
 import bcrypt from 'bcrypt'
 import { sendActivateCode } from '../../methods/activate.js';
+import { loginToken } from '../../methods/Tokens.js';
 
 
 const addUser=async (parent, {data:{
@@ -46,14 +47,15 @@ const addUser=async (parent, {data:{
       //  username,
       first_name,
       last_name,
-      email,
+      email:email.toLowerCase(),
       phone_number,
       password:hash
     }
-  }).then((result)=>{
+  }).then(async(result)=>{
     if(result){
         sendActivateCode(email)
-        return {result:true}
+        const token=await loginToken(result.id,result.Role,false,email)
+        return {...result,userId:result.id,...token,isActive:false}
       }
    })
 }

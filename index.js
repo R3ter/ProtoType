@@ -52,14 +52,20 @@ app.listen({ port: process.env.PORT||4000 }, () =>{
   console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
 }
 );
-
+// prisma.user.deleteMany().then((e)=>{
+//   console.log(e)
+// })
 app.get("/activateAccount", async (req,res)=>{
   if(!req.query.userId||!req.query.code){
     return res.sendStatus(404);
   }
-  if(await checkActivationCode(req.query.code,req.query.userId,prisma)){
+  await checkActivationCode(req.query.code,req.query.userId, async ()=>{
+    await prisma.user.update({where:{email:email},
+      data:{Active:true}
+    })
     return res.send("succ")
-  }
-  return res.sendStatus(404);
+},async ()=>{
+  return res.send("error")
+})
   
 })
