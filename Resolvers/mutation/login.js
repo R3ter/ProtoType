@@ -11,13 +11,21 @@ const login =async (parent,{username,password},{prisma})=>{
             }
         }).then(async(e)=>{
             if(!e){
-                throw new Error("password does not match")
+                return{error:"password does not match",result:false}
             }
             const {id,first_name,Role,last_name,email,phone_number,Active,password:userPassword}=e
             if(bcrypt.compareSync(password, userPassword)){
                 const info=await loginToken(id,Role,Active,email)
-                return {...info,isActive:Active,first_name,last_name,email,phone_number}
-            }
+                return {result:true,
+                    authentication:{
+                        ...info,
+                        isActive:Active,
+                        first_name,
+                        last_name,
+                        email:email.toLowerCase()
+                        ,phone_number
+                    }}
+                }
         })
     }else if(validator.isMobilePhone(username,null,{strictMode:true})){
         user = await prisma.user.findUnique({
@@ -26,19 +34,27 @@ const login =async (parent,{username,password},{prisma})=>{
             }
         }).then(async(e)=>{
             if(!e){
-                throw new Error("password does not match")
+                return{error:"password does not match",result:false}
             }
             const {id,first_name,Role,last_name,email,phone_number,Active,password:userPassword}=e
             if(bcrypt.compareSync(password, userPassword)){
                 const info=await loginToken(id,Role,Active,email)
-                return {...info,isActive:Active,first_name,last_name,email,phone_number}
-            }
-        })
+                return {result:true,
+                    authentication:{
+                      ...info,
+                      isActive:Active,
+                      first_name,
+                      last_name,
+                      email:email.toLowerCase()
+                      ,phone_number
+                  }}
+                }
+            })
     }
     if(user){
         return user
     }
-    throw new Error("password does not match")
+    return{error:"password does not match",result:false}
 }
 
 export default login

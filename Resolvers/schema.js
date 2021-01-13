@@ -24,13 +24,13 @@ type Query{
 }
 type Mutation{
   logout(userId:ID!,refreshToken:String!):Boolean!
-  refreshToken(userId:ID!,refreshToken:String!):Authentication!
+  refreshToken(userId:ID!,refreshToken:String!):LoginResult!
   CreateMaterial(lookUp:lookUp,education_level: Education_Level!):Materials!
   addUser(data:UserInput!):LoginResult!
   addUserInfo(data:userInfoInput!):Boolean!
   login(username:String!,password:String!):LoginResult!
   resendActivationCode:Boolean!
-  activateAccount(code:String!):Authentication!
+  activateAccount(code:String!):LoginResult!
 }
 type UserInfo{
   birth_date:String
@@ -49,15 +49,21 @@ input userInfoInput{
   Area:ID!
 }
 type LoginResult {
+  result:Boolean!
+  error:String
+  authentication:Authentication
+  
+}
+type Authentication{
   token:String!
   refreshToken:String!
   userId:ID!
-
   first_name:String!
   last_name:String!
   email:String!
   phone_number:String!
   isActive:Boolean!
+  Role:Role!
 }
 type Result{
   error:String
@@ -71,11 +77,7 @@ input UserInput{
   password:String!
 }
 
-type Authentication{
-  token:String!
-  refreshToken:String!
-  userId:ID!
-}
+
 type Materials {
   name:String!
   education_level: Education_Level!

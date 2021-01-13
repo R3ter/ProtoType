@@ -17,7 +17,7 @@ const sendActivateCode=(email)=>{
     codes[email] = randomId
     setTimeout(()=> {
         delete codes[email]
-      }, 60000);
+      }, 300000);
       console.log(`http://localhost:4000/activateAccount?userId=${email}&code=${randomId}`)
 
     var transporter = nodemailer.createTransport({

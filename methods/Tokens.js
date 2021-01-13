@@ -6,12 +6,12 @@ const refreshTokens=[]
 
 const loginToken=async(userid,role,Activate,email)=>{
 
-    const token = await jwt.sign({ id: userid,Role:role,Activate,email }, secret,{ expiresIn: '1h' });
+    const token = await jwt.sign({ id: userid,Role:role,Activate,email }, secret,{ expiresIn: '600000' });
     
     const randomId = cryptoRandomString({length: 255})
     refreshTokens[userid]={refreshToken:randomId,Role:role}
 
-    return {token,refreshToken:randomId,userId:userid}
+    return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role}
 }
 const RefreshToken= async (userId,RefreshToken)=>{
     if(refreshTokens[userId]&&refreshTokens[userId].refreshToken==RefreshToken){

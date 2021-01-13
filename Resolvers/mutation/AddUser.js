@@ -55,7 +55,15 @@ const addUser=async (parent, {data:{
     if(result){
         sendActivateCode(email)
         const token=await loginToken(result.id,result.Role,false,email)
-        return {...result,userId:result.id,...token,isActive:false}
+        return {result:true,
+          authentication:{
+            ...token,
+            isActive:false,
+            first_name,
+            last_name,
+            email:email.toLowerCase()
+            ,phone_number
+        }}
       }
    })
 }

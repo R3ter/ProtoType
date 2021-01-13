@@ -9,12 +9,26 @@ const Mutation={
     logout:(parent,{userId,refreshToken})=>logout(userId,refreshToken)
     ,refreshToken:(parent,{userId,refreshToken})=>RefreshToken(userId,refreshToken),
     resendActivationCode:(parent,args,{req})=>ResendActivationCode(req.headers.token),
-    activateAccount:(parent,{code},{req,prisma})=>checkActivationCode(code,req.headers.token,async({id})=>{
-        const user=await prisma.user.update({where:{id},
+    activateAccount:(parent,{code},{req,prisma})=>checkActivationCode(code,req.headers.token,async({id,role})=>{
+        const {
+            first_name,
+            last_name,
+            email,
+            phone_number
+        }=await prisma.user.update({where:{id},
             data:{Active:true}
         })
-        return await loginToken(user.id,user.Role,user.Active,user.email)
-    },()=>new Error("code is incorrect"))
+        const info=await loginToken(id,role,true,email)
+        return {result:true,
+            authentication:{
+              ...info,
+              isActive:true,
+              first_name,
+              last_name,
+              email
+              ,phone_number
+          }}
+    },()=>({result:false,error:"invalid code"}))
 
 }
 export default Mutation
