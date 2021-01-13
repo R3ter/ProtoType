@@ -27,13 +27,13 @@ const server = new ApolloServer({
   },
   introspection: true,
   playground: true,
-  formatError(error){
-    if(error.extensions.exception.code=="P2002"){
-      return({error:error.extensions.exception.meta.target+
-      " already exists",code:error.originalError.code,data:error.originalError.data})
-    }
-    return({error:error.message,code:error.originalError.code,data:error.originalError.data})
-  },
+  // formatError(error){
+  //   if(error.extensions.exception.code=="P2002"){
+  //     return({error:error.extensions.exception.meta.target+
+  //     " already exists",code:error.originalError.code,data:error.originalError.data})
+  //   }
+  //   return({error:error.message,code:error.originalError.code,data:error.originalError.data})
+  // },
   context({req}){
     return {
       req,
