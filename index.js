@@ -28,14 +28,11 @@ const server = new ApolloServer({
   introspection: true,
   playground: true,
   formatError(error){
-    if(!error.originalError){
-      return error
-    }
     if(error.extensions.exception.code=="P2002"){
       return({error:error.extensions.exception.meta.target+
-      " already exists",code:error.originalError.code,data:error.originalError.data})
-    }
-    return({error:error.message,code:error.originalError.code,data:error.originalError.data})
+        " already exists",code:error.originalError.code,data:error.originalError.data})
+      }
+    return error
   },
   context({req}){
     return {
