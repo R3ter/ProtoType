@@ -6,7 +6,7 @@ import Mutation from './Resolvers/Mutation.js'
 import City from './Resolvers/types/City.js'
 import Query from './Resolvers/Query.js'
 import express from 'express';
-import apolloServer from 'apollo-server-express';
+import apolloServer from 'apollo-server';
 import { checkActivationCode } from './methods/activate.js';
 
 
@@ -42,27 +42,29 @@ const server = new ApolloServer({
   }}
 );
 
-
-const app = express();
-server.applyMiddleware({ app });
-app.listen({ port: process.env.PORT||4000 }, () =>{
-  console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
-}
-);
+server.listen(process.env.PORT||4000).then(({ url }) => {
+  console.log(`Server is up at ${url}`);
+});
+// const app = express();
+// server.applyMiddleware({ app });
+// app.listen({ port: process.env.PORT||4000 }, () =>{
+//   console.log(`Server ready at http://localhost:4000${server.graphqlPath}`)
+// }
+// );
 // prisma.user.deleteMany().then((e)=>{
 //   console.log(e)
 // })
-app.get("/activateAccount", async (req,res)=>{
-  if(!req.query.userId||!req.query.code){
-    return res.sendStatus(404);
-  }
-  await checkActivationCode(req.query.code,req.query.userId, async ()=>{
-    await prisma.user.update({where:{email:email},
-      data:{Active:true}
-    })
-    return res.send("succ")
-},async ()=>{
-  return res.send("error")
-})
+// app.get("/activateAccount", async (req,res)=>{
+//   if(!req.query.userId||!req.query.code){
+//     return res.sendStatus(404);
+//   }
+//   await checkActivationCode(req.query.code,req.query.userId, async ()=>{
+//     await prisma.user.update({where:{email:email},
+//       data:{Active:true}
+//     })
+//     return res.send("succ")
+// },async ()=>{
+//   return res.send("error")
+// })
   
-})
+// })
