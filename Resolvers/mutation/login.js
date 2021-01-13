@@ -4,7 +4,6 @@ import {loginToken} from './../../methods/Tokens.js'
 
 const login =async (parent,{username,password},{prisma})=>{
     let user;
-    throw new Error("dawdawdsawe")
     if(validator.isEmail(username)){
         user = await prisma.user.findUnique({
             where:{
