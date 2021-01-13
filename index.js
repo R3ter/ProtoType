@@ -32,7 +32,7 @@ const server = new ApolloServer({
       return({message:error.extensions.exception.meta.target+
       " already exists",code:error.originalError.code,data:error.originalError.data})
     }
-    return({message:error.message,code:error.originalError.code,data:error.originalError.data})
+    return({message:error.extensions.exception.stacktrace[0],code:error.originalError.code,data:error.originalError.data})
   },
   context({req}){
     return {
