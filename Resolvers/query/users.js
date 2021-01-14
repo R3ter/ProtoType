@@ -1,6 +1,6 @@
 import {checkToken} from './../../methods/Tokens.js'
 const users=(parent, args, {req,prisma}, info)=>{
-    checkToken(req.headers.token)
+    checkToken({token:req.headers.token})
     return prisma.user.findMany({
         include: {
             userInfo:{

@@ -5,7 +5,7 @@ import { checkToken } from './Tokens.js'
 const codes=[]
 const checkActivationCode = async(code,token,callback,rejected)=>{
 
-    const data=await checkToken(token,false)
+    const data=await checkToken({token,activeRequired:false})
     if(codes[data.email]===code){
         delete codes[data.email]
         return callback(data)
@@ -45,7 +45,7 @@ const sendActivateCode=(email)=>{
 }
 const ResendActivationCode=(token)=>{
     if(token){
-        const info=checkToken(token,false)
+        const info=checkToken({token,activeRequired:false})
         if(info.Activate){
             return false
         }

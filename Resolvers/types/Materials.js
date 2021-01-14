@@ -1,5 +1,5 @@
 const Materials={
-    async name(parent, args, {req,prisma}){
+    async name(parent, args, {req}){
         return parent.lookUp[req.headers.lang||"eng"]
     }
 }

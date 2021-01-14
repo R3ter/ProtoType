@@ -36,7 +36,7 @@ model UserInfo{
 }
 model Area{
   id String @id @default(uuid())
-  name String
+  name String?
   lookUp LookUp
   City City
   latitude String
@@ -45,7 +45,7 @@ model Area{
 }
 model City{
   id String @id @default(uuid())
-  name String
+  name String?
   lookUp LookUp
   latitude String
   longitude String
@@ -55,7 +55,7 @@ model Materials {
   id String @id  @default(uuid())
   name String?
   lookUp LookUp
-  education_level Education_Level
+  education_level Education_Level 
   createdAt DateTime @default(now())
 }
 model LookUp{
@@ -65,12 +65,22 @@ model LookUp{
   fr String?
   createdAt DateTime @default(now())
 }
-enum Education_Level {
-  Preschool
+model Education_Level{
+  id String @id  @default(uuid())
+  lookUp LookUp
+  education_level Education_Level_enum @unique
+  name String?
+}
+
+enum Education_Level_enum {
+  Kindergarten
   Primary_School
+  Preparatory_Stage
+  Secondary_School
+  
+  Preschool
   Elementary_School
   Middle_School
-  Secondary_School
   High_School
   Diploma
   Doctorate

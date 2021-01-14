@@ -4,10 +4,10 @@ import Materials from "./Resolvers/types/Materials.js"
 import typeDefs from './Resolvers/schema.js'
 import Mutation from './Resolvers/Mutation.js'
 import City from './Resolvers/types/City.js'
+import Area from './Resolvers/types/Area.js'
+import Education_Level from './Resolvers/types/Education_Level.js'
 import Query from './Resolvers/Query.js'
-import express from 'express';
 import apolloServer from 'apollo-server';
-import { checkActivationCode } from './methods/activate.js';
 
 
 const { ApolloServer} = apolloServer
@@ -23,12 +23,13 @@ const server = new ApolloServer({
     Query,
     Mutation,
     Materials,
-    City
+    City,
+    Area,
+    Education_Level
   },
   introspection: true,
   playground: true,
   formatError(error){
-    console.log(error)
     if(error.extensions.exception.code=="P2002"){
       return({message:error.extensions.exception.meta.target+
       " already exists",code:error.originalError.code,data:error.originalError.data})
@@ -42,6 +43,26 @@ const server = new ApolloServer({
     }
   }}
 );
+// prisma.area.create({
+//   data:{
+//     name:"",
+//     longitude:"",
+//     latitude:"",
+//     City:{
+//       connect:{
+//         id:"a1b4caec-d651-4d8a-b7d2-5104eadc9567"
+//       }
+//     },
+//     lookUp:{
+//       create:{
+//         eng:"jerusalem",
+//         ar:"ar jerusalem"
+//       }
+//     }
+//   }
+// }).then((e)=>{
+//   console.log(e)
+// })
 
 server.listen(process.env.PORT||4000).then(({ url }) => {
   console.log(`Server is up at ${url}`);

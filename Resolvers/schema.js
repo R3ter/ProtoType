@@ -1,9 +1,28 @@
 import apollo from 'apollo-server'
 
 const {gql}=apollo
-
 const typeDefs=gql`
 scalar DateTime
+
+type Query{
+  users:[User]
+  getMaterials:[Materials]
+  getCities:[City]
+  getAreas(cityId:ID):[Area]
+  getUserInfo(userId:ID!):UserInfo
+  getMyInfo:UserInfo
+  getEducationLevels:[Education_Level]
+}
+type Mutation{
+  logout(userId:ID!,refreshToken:String!):Boolean!
+  refreshToken(userId:ID!,refreshToken:String!):LoginResult!
+  CreateMaterial(lookUp:lookUp,education_level: Education_Level_enum!):Boolean!
+  addUser(data:UserInput!):LoginResult!
+  addUserInfo(data:userInfoInput!):Boolean!
+  login(username:String!,password:String!):LoginResult!
+  resendActivationCode:Boolean!
+  activateAccount(code:String!):LoginResult!
+}
 type User {
   id:ID!
   first_name:String
@@ -15,23 +34,6 @@ type User {
   Active: Boolean!
   userInfo: UserInfo
 }
-type Query{
-  users:[User]
-  materials:[Materials]
-  cities:[City]
-  getUserInfo(userId:ID!):UserInfo
-  getMyInfo:UserInfo
-}
-type Mutation{
-  logout(userId:ID!,refreshToken:String!):Boolean!
-  refreshToken(userId:ID!,refreshToken:String!):LoginResult!
-  CreateMaterial(lookUp:lookUp,education_level: Education_Level!):Materials!
-  addUser(data:UserInput!):LoginResult!
-  addUserInfo(data:userInfoInput!):Boolean!
-  login(username:String!,password:String!):LoginResult!
-  resendActivationCode:Boolean!
-  activateAccount(code:String!):LoginResult!
-}
 type UserInfo{
   birth_date:String
   Current_education_level:Education_Level
@@ -42,7 +44,7 @@ type UserInfo{
 }
 input userInfoInput{
   birth_date:DateTime
-  Current_education_level:Education_Level!
+  Current_education_level:Education_Level_enum!
   preferred_materials:[ID]!
   address:String!
   City:ID!
@@ -52,7 +54,6 @@ type LoginResult {
   result:Boolean!
   error:String
   authentication:Authentication
-  
 }
 type Authentication{
   token:String!
@@ -76,9 +77,8 @@ input UserInput{
   phone_number:String!
   password:String!
 }
-
-
 type Materials {
+  id:ID!
   name:String!
   education_level: Education_Level!
 }
@@ -89,6 +89,7 @@ type City{
   longitude:String
 }
 type Area{
+  id:ID!
   name:String
   City:City
   latitude:String
@@ -99,12 +100,21 @@ input lookUp{
   ar:String!
   fr:String
 }
-enum Education_Level {
-  Preschool
+type Education_Level{
+  id:ID!
+  name:String!
+  education_level:Education_Level_enum!
+}
+
+enum Education_Level_enum {
+  Kindergarten
   Primary_School
+  Preparatory_Stage
+  Secondary_School
+  
+  Preschool
   Elementary_School
   Middle_School
-  Secondary_School
   High_School
   Diploma
   Doctorate

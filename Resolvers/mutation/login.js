@@ -15,14 +15,14 @@ const login =async (parent,{username,password},{prisma})=>{
             }
             const {id,first_name,Role,last_name,email,phone_number,Active,password:userPassword}=e
             if(bcrypt.compareSync(password, userPassword)){
-                const info=await loginToken(id,Role,Active,email)
+                const info=await loginToken(id,Role,Active,email,phone_number)
                 return {result:true,
                     authentication:{
                         ...info,
                         isActive:Active,
                         first_name,
                         last_name,
-                        email:email.toLowerCase()
+                        email:email
                         ,phone_number
                     }}
                 }
@@ -38,14 +38,14 @@ const login =async (parent,{username,password},{prisma})=>{
             }
             const {id,first_name,Role,last_name,email,phone_number,Active,password:userPassword}=e
             if(bcrypt.compareSync(password, userPassword)){
-                const info=await loginToken(id,Role,Active,email)
+                const info=await loginToken(id,Role,Active,email,phone_number)
                 return {result:true,
                     authentication:{
                       ...info,
                       isActive:Active,
                       first_name,
                       last_name,
-                      email:email.toLowerCase()
+                      email:email
                       ,phone_number
                   }}
                 }

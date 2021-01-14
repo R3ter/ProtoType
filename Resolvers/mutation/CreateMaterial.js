@@ -1,10 +1,15 @@
 import { checkToken } from "../../methods/Tokens.js"
 
-const CreateMaterial=(parent, {lookUp,education_level}, {req,prisma}, info)=>{
-  checkToken(req.headers.token)
-  return prisma.materials.create({
+const CreateMaterial=async(parent, {lookUp,education_level}, {req,prisma}, info)=>{
+  checkToken({token:req.headers.token,Roles:["TEACHER"]})
+
+  return await prisma.materials.create({
     data:{
-      education_level,
+      education_level:{
+        connect:{
+          education_level
+        }
+      },
       name:"",
       lookUp:{
         create:{
@@ -14,9 +19,9 @@ const CreateMaterial=(parent, {lookUp,education_level}, {req,prisma}, info)=>{
         }
       }
     }
-    ,include:{
-      lookUp:true
-    }
+  }).then((e)=>{
+    if(e)
+      return true
   })
 }
 export default CreateMaterial

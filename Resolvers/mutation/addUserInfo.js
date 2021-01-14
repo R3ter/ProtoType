@@ -2,7 +2,7 @@ import { checkToken } from "../../methods/Tokens.js"
 import isLength from 'validator/lib/isLength.js'
 const addUserInfo =async(parent, {data}, {req,prisma}, info)=>{
 
-    const {id}=checkToken(req.headers.token)
+    const {id}=checkToken({token:req.headers.token})
 
     if(!isLength(data.address,{max:"100"})){
         throw new Error("data is too big")
@@ -20,6 +20,11 @@ const addUserInfo =async(parent, {data}, {req,prisma}, info)=>{
             preferred_materials:{
                 connect:data.preferred_materials.map((e)=>{return{id:e}})
             },
+            Current_education_level:{
+                connect:{
+                    education_level:data.Current_education_level
+                }
+            },
             Area:{
                 connect:{
                     id:data.Area
@@ -35,6 +40,11 @@ const addUserInfo =async(parent, {data}, {req,prisma}, info)=>{
             ...data,
             preferred_materials:{
                 connect:data.preferred_materials.map((e)=>{return{id:e}})
+            },
+            Current_education_level:{
+                connect:{
+                    education_level:data.Current_education_level
+                }
             },
             City:{
                 connect:{

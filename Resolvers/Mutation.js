@@ -7,7 +7,7 @@ import {ResendActivationCode,checkActivationCode} from './../methods/activate.js
 const Mutation={
     addUser,CreateMaterial,login,addUserInfo,
     logout:(parent,{userId,refreshToken})=>logout(userId,refreshToken)
-    ,refreshToken:(parent,{userId,refreshToken})=>RefreshToken(userId,refreshToken),
+    ,refreshToken:(parent,{userId,refreshToken},{prisma})=>RefreshToken(userId,refreshToken,prisma),
     resendActivationCode:(parent,args,{req})=>ResendActivationCode(req.headers.token),
     activateAccount:(parent,{code},{req,prisma})=>checkActivationCode(code,req.headers.token,async({id,role})=>{
         const {
@@ -18,7 +18,7 @@ const Mutation={
         }=await prisma.user.update({where:{id},
             data:{Active:true}
         })
-        const info=await loginToken(id,role,true,email)
+        const info=await loginToken(id,role,true,email,phone_number)
         return {result:true,
             authentication:{
               ...info,

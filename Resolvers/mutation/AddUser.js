@@ -3,7 +3,6 @@ import bcrypt from 'bcrypt'
 import { sendActivateCode } from '../../methods/activate.js';
 import { loginToken } from '../../methods/Tokens.js';
 
-
 const addUser=async (parent, {data:{
   // username,
   password,
@@ -13,16 +12,23 @@ const addUser=async (parent, {data:{
   phone_number
 }
 }, {req,prisma}, info)=>{
-  if(!validator.isLength(email,{max:50})||
-  !validator.isLength(last_name,{max:50})||
-  !validator.isLength(phone_number,{max:50})||
-  !validator.isLength(first_name,{max:50})){
-    return {result:false,error:"one of the fields is too long"}
+
+  if(first_name.indexOf(" ")!== -1){
+    return {result:false,error:"feild 'first name' should not contain whitespace"}
+  }
+  if(last_name.indexOf(" ")!== -1){
+    return {result:false,error:"feild 'last name' should not contain whitespace"}
+  }
+  if(!validator.isLength(first_name,{min:3,max:20})){
+    return {result:false,error:"feild 'first name' must be between 3 and 20 character long"}
+  }
+  if(!validator.isLength(last_name,{min:3,max:20})){
+    return {result:false,error:"feild 'last name' must be between 3 and 20 character long"}
   }
   if(!validator.isMobilePhone(phone_number,null,{strictMode:true})){
     return {result:false,error:"phone number is invalid"}
   }
-
+  
   // if(username.match("@")){
   //   return {result:false,error:"username can not contains @"}
   // }
@@ -54,7 +60,7 @@ const addUser=async (parent, {data:{
   }).then(async(result)=>{
     if(result){
         sendActivateCode(email)
-        const token=await loginToken(result.id,result.Role,false,email)
+        const token=await loginToken(result.id,result.Role,false,email,result.phone_number)
         return {result:true,
           authentication:{
             ...token,
