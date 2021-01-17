@@ -25,8 +25,7 @@ type Mutation{
 }
 type User {
   id:ID!
-  first_name:String
-  last_name:String
+  full_name:String!
   email:String!
   phone_number:String!
   Role:Role!
@@ -59,8 +58,7 @@ type Authentication{
   token:String!
   refreshToken:String!
   userId:ID!
-  first_name:String!
-  last_name:String!
+  full_name:String!
   email:String!
   phone_number:String!
   isActive:Boolean!
