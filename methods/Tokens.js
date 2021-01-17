@@ -5,7 +5,7 @@ const secret="dwawadhawbfhjavbffbhwafafwawf"
 const refreshTokens=[]
 
 const loginToken=async(userid,role,Activate,email,phone_number)=>{
-    if(!userid||!role||!Activate||!email||!phone_number){
+    if(!userid||!role||!email||!phone_number){
         throw new Error("some of the token data are missing")
     }
     const token = await jwt.sign({ id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '600000' });

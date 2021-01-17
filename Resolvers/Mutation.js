@@ -11,8 +11,7 @@ const Mutation={
     resendActivationCode:(parent,args,{req})=>ResendActivationCode(req.headers.token),
     activateAccount:(parent,{code},{req,prisma})=>checkActivationCode(code,req.headers.token,async({id,role})=>{
         const {
-            first_name,
-            last_name,
+            full_name,
             email,
             phone_number
         }=await prisma.user.update({where:{id},
@@ -23,8 +22,7 @@ const Mutation={
             authentication:{
               ...info,
               isActive:true,
-              first_name,
-              last_name,
+              full_name,
               email
               ,phone_number
           }}
