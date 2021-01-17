@@ -73,8 +73,7 @@ type Result{
   result:Boolean!
 }
 input UserInput{
-  first_name:String!
-  last_name:String!
+  full_name:String!
   email:String!
   phone_number:String!
   password:String!

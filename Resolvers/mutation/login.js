@@ -16,7 +16,7 @@ const login = async(parent,{username,password},{prisma})=>{
             if(!e){
                 return{error:"password does not match",result:false}
             }
-            const {userInfo,id,first_name,Role,last_name,email,phone_number,Active,password:userPassword}=e
+            const {userInfo,id,full_name,Role,email,phone_number,Active,password:userPassword}=e
             if(bcrypt.compareSync(password, userPassword)){
                 const info=await loginToken(id,Role,Active,email,phone_number)
                 console.log(!!userInfo)
@@ -26,8 +26,7 @@ const login = async(parent,{username,password},{prisma})=>{
                         isActive:Active,
                         isInfoComplet:!!userInfo,
                         materialSet:!!userInfo?(!!userInfo.preferred_materials?!!userInfo.preferred_materials.length:false):false,
-                        first_name,
-                        last_name,
+                        full_name,
                         email,
                         phone_number
                     }}
@@ -45,17 +44,16 @@ const login = async(parent,{username,password},{prisma})=>{
             if(!e){
                 return{error:"password does not match",result:false}
             }
-            const {userInfo,id,first_name,Role,last_name,email,phone_number,Active,password:userPassword}=e
+            const {userInfo,id,full_name,Role,email,phone_number,Active,password:userPassword}=e
             if(bcrypt.compareSync(password, userPassword)){
                 const info=await loginToken(id,Role,Active,email,phone_number)
                 return {result:true,
                     authentication:{
                         ...info,
                         isActive:Active,
-                        first_name,
                         isInfoComplet:!!userInfo,
                         materialSet:!!userInfo?(!!userInfo.preferred_materials?!!userInfo.preferred_materials.length:false):false,
-                        last_name,
+                        full_name,
                         email,
                         phone_number
                   }}
