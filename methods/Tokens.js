@@ -17,14 +17,12 @@ const loginToken=async(userid,role,Activate,email,phone_number)=>{
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
     if(refreshTokens[userId]&&refreshTokens[userId]==RefreshToken){
-        const {Active,first_name,last_name,email,phone_number,Role} = await prisma.user.findUnique({where:{id:userId}})
+        const {Active,full_name,email,phone_number,Role} = await prisma.user.findUnique({where:{id:userId}})
         const info=await loginToken(userId,Role,Active,email,phone_number)
         return {result:true,
         authentication:{
             ...info,
-            
-            first_name,
-            last_name,
+            full_name,
             email
             ,phone_number
         }}

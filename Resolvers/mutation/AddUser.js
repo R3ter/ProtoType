@@ -53,8 +53,7 @@ const addUser=async (parent, {data:{
           authentication:{
             ...token,
             isActive:false,
-            first_name,
-            last_name,
+            full_name,
             email:email.toLowerCase()
             ,phone_number
         }}

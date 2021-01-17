@@ -35,8 +35,7 @@ model UserInfo{
 }
 model TeacherAccount{
   id String @id  @default(uuid())
-  first_name String
-  last_name String
+  full_name String
   email String @unique
   phone_number String @unique
   Role Role  @default(TEACHER)
