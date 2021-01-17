@@ -11,28 +11,65 @@ generator client {
 }
 model User{
   id String @id  @default(uuid())
-  first_name String
-  last_name String
+  full_name String
   email String @unique
   phone_number String @unique
   Role Role  @default(STUDENT)
   password String
   Active Boolean @default(false)
-  userInfo UserInfo? 
+  userInfo UserInfo?
   createdAt DateTime @default(now())
 }
-
 model UserInfo{
   id String @id  @default(uuid())
   user User @relation(fields: [userId], references: [id])
   userId String @unique
   birth_date DateTime @default(now())
   Current_education_level Education_Level
-  preferred_materials Materials[]
+  preferred_materials CourseTag[]
   address String
   City City
   Area Area
+  image_URL String?
   createdAt DateTime @default(now())
+}
+model TeacherAccount{
+  id String @id  @default(uuid())
+  first_name String
+  last_name String
+  email String @unique
+  phone_number String @unique
+  Role Role  @default(TEACHER)
+  password String
+  Active Boolean @default(true)
+  profile TeacherProfile? 
+  createdAt DateTime @default(now())
+}
+model TeacherProfile{
+  id String @id @default(uuid())
+  teacher TeacherAccount @relation(fields: [teacherId], references: [id])
+  teacherId String @unique
+  description DLookUp
+  City City
+  Area Area
+  image_URL String?
+  address String
+  subjects CourseTag[]
+  reviews Rating
+  createdAt DateTime @default(now())
+}
+model CourseTag{
+  id String @id @default(uuid())
+  name String?
+  lookUp LookUp
+}
+model Rating{
+  id String @id @default(uuid())
+  ratingStars Int
+  review String
+  user User
+
+
 }
 model Area{
   id String @id @default(uuid())
@@ -54,9 +91,13 @@ model City{
 model Materials {
   id String @id  @default(uuid())
   name String?
-  lookUp LookUp
+  image_URL String?
+  teacher TeacherAccount
+  lookUp  LookUp
+  description DLookUp
   education_level Education_Level 
   createdAt DateTime @default(now())
+  tags CourseTag[]
 }
 model LookUp{
   id String @id  @default(uuid())
@@ -64,6 +105,12 @@ model LookUp{
   ar String
   fr String?
   createdAt DateTime @default(now())
+}
+model DLookUp{
+  id  String @id  @default(uuid())
+  ar  String
+  eng String?
+  fr  String?
 }
 model Education_Level{
   id String @id  @default(uuid())

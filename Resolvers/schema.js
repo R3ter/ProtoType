@@ -64,6 +64,8 @@ type Authentication{
   email:String!
   phone_number:String!
   isActive:Boolean!
+  isInfoComplet:Boolean
+  materialSet:Boolean
   Role:Role!
 }
 type Result{
@@ -98,6 +100,11 @@ type Area{
 input lookUp{
   eng:String!
   ar:String!
+  fr:String
+}
+input DLookUp{
+  ar:String!
+  eng:String
   fr:String
 }
 type Education_Level{

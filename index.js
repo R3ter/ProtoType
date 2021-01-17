@@ -19,7 +19,7 @@ const prisma = new PrismaClient()
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers:{ 
+  resolvers:{
     Query,
     Mutation,
     Materials,
