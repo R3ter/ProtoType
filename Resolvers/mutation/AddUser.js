@@ -19,18 +19,11 @@ const addUser=async (parent, {data:{
     return {result:false,error:"phone number is invalid"}
   }
   
-  // if(username.match("@")){
-  //   return {result:false,error:"username can not contains @"}
-  // }
-  // if(!isLength(username,{min:6,max:20})){
-  //   return {result:false,error:"username must be at least 6 to 20 characters in length"}
-  // }
-  
   if(!validator.isEmail(email)){
     return {result:false,error:"email is invalid"}
   }
   if(!validator.isLength(password,{min:6,max:30})){
-    return {result:false,error:"password must be at least 6 to 30 characters in length"}
+    return {result:false,error:"password must be at least 6 to 30 characters long"}
   }
   if(!password.match(/[a-z]/)||!password.match(/[0-9]/)){
     return {result:false,error:"password should contains numbers and letters"}
@@ -45,7 +38,7 @@ const addUser=async (parent, {data:{
       phone_number,
       password:hash
     }
-  }).then(async(result)=>{
+  }).then(async(result,e)=>{
     if(result){
         sendActivateCode(email)
         const token=await loginToken(result.id,result.Role,false,email,result.phone_number)
@@ -53,11 +46,18 @@ const addUser=async (parent, {data:{
           authentication:{
             ...token,
             isActive:false,
+            isInfoComplet:false,
+            materialSet:false,
             full_name,
             email:email.toLowerCase()
             ,phone_number
         }}
       }
-   })
+    }).catch((e)=>{
+      if(e.code=="P2002"){
+        return {result:false,error:e.meta.target[0]+" already exists"}
+      }
+      return {result:false,error:e}
+    })
 }
 export default addUser

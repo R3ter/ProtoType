@@ -67,8 +67,6 @@ model Rating{
   ratingStars Int
   review String
   user User
-
-
 }
 model Area{
   id String @id @default(uuid())

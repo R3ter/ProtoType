@@ -12,6 +12,7 @@ type Query{
   getUserInfo(userId:ID!):UserInfo
   getMyInfo:UserInfo
   getEducationLevels:[Education_Level]
+  getCursesTags(search:String):[CourseTag]
 }
 type Mutation{
   logout(userId:ID!,refreshToken:String!):Boolean!
@@ -109,7 +110,10 @@ type Education_Level{
   name:String!
   education_level:Education_Level_enum!
 }
-
+type CourseTag{
+  id:ID!
+  name:String!
+}
 enum Education_Level_enum {
   Kindergarten
   Primary_School

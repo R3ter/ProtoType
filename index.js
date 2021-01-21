@@ -5,17 +5,15 @@ import typeDefs from './Resolvers/schema.js'
 import Mutation from './Resolvers/Mutation.js'
 import City from './Resolvers/types/City.js'
 import Area from './Resolvers/types/Area.js'
+import CourseTag from './Resolvers/types/CourseTag.js'
 import Education_Level from './Resolvers/types/Education_Level.js'
 import Query from './Resolvers/Query.js'
 import apolloServer from 'apollo-server';
 
-
 const { ApolloServer} = apolloServer
-
 
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient()
-
 
 const server = new ApolloServer({
   typeDefs,
@@ -24,6 +22,7 @@ const server = new ApolloServer({
     Mutation,
     Materials,
     City,
+    CourseTag,
     Area,
     Education_Level
   },
@@ -90,3 +89,4 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 // })
   
 // })
+
