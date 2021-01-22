@@ -33,7 +33,11 @@ const server = new ApolloServer({
       return({message:error.extensions.exception.meta.target+
       " already exists",code:error.originalError.code,data:error.originalError.data})
     }
-    return({message:error.message,code:error.originalError.code,data:error.originalError.data})
+    if(error.message=='Unauthenticate'){
+      return({message:"Unauthenticate",statusCode:401})
+    }
+    return error
+    // return({message:error.message,code:error.originalError.code,data:error.originalError.data})
   },
   context({req}){
     return {
@@ -62,6 +66,7 @@ const server = new ApolloServer({
 // }).then((e)=>{
 //   console.log(e)
 // })
+
 
 server.listen(process.env.PORT||4000).then(({ url }) => {
   console.log(`Server is up at ${url}`);

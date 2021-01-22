@@ -26,8 +26,7 @@ const getMyInfo=(parent, args, {req,prisma}, info)=>{
             preferred_materials:{
                 select:{
                     lookUp:true,
-                    id:true,
-                    education_level:true
+                    id:true
                 }
             }
         }

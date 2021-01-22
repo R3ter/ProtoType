@@ -1,5 +1,7 @@
 import  jwt from 'jsonwebtoken';
 import cryptoRandomString from 'crypto-random-string'
+import apollo from 'apollo-server';
+const {AuthenticationError}=apollo
 const secret="dwawadhawbfhjavbffbhwafafwawf"
 
 const refreshTokens=[]
@@ -27,7 +29,8 @@ const RefreshToken= async (userId,RefreshToken,prisma)=>{
             ,phone_number
         }}
     }
-    return {result:false,error:"refresh token is not correct"}
+    throw new AuthenticationError("Unauthenticate")
+    // return {result:false,error:"refresh token is not correct"}
 }
 const logout= async(userId,RefreshToken)=>{
     if(refreshTokens[userId]&&refreshTokens[userId]==RefreshToken){
@@ -51,7 +54,7 @@ const checkToken=({token,activeRequired=true,Roles=["STUDENT","TEACHER"]})=>{
         }
         throw new Error("account is not active")
     }
-    throw new Error('Authentication required')
+    throw new AuthenticationError("Unauthenticate")
 }
 
 export {loginToken,checkToken,RefreshToken,logout}

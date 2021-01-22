@@ -1,23 +1,33 @@
 const getCursesTags=async(parent, {search}, {req,prisma}, info)=>{
-    return await prisma.courseTag.findMany({
-        where:{
-            lookUp:{
-                OR:[{
-                    fr:{
-                      contains:search
+    if(search){
+        return await prisma.courseTag.findMany({
+            include:{
+                lookUp:true
+            },
+            where:{
+                lookUp:{
+                    OR:[{
+                        fr:{
+                          contains:search
+                        }
+                    },{
+                        ar:{
+                          contains:search
+                        }
+                    },{
+                        eng:{
+                          contains:search
+                        }
                     }
-                },{
-                    ar:{
-                      contains:search
-                    }
-                },{
-                    eng:{
-                      contains:search
-                    }
-                }
-            ]
+                ]
+            }
         }
+    })
     }
-})
+    return await prisma.courseTag.findMany({
+        include:{
+            lookUp:true
+        }
+    })
 }
 export default getCursesTags

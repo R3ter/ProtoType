@@ -13,11 +13,12 @@ const Mutation={
         const {
             full_name,
             email,
-            phone_number
+            phone_number,
+            Role
         }=await prisma.user.update({where:{id},
             data:{Active:true}
         })
-        const info=await loginToken(id,role,true,email,phone_number)
+        const info=await loginToken(id,Role,true,email,phone_number)
         return {result:true,
             authentication:{
               ...info,
