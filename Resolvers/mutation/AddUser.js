@@ -25,9 +25,9 @@ const addUser=async (parent, {data:{
   if(!validator.isLength(password,{min:6,max:30})){
     return {result:false,error:"password must be at least 6 to 30 characters long"}
   }
-  if(!password.match(/[a-z]/)||!password.match(/[0-9]/)){
-    return {result:false,error:"password should contains numbers and letters"}
-  }
+  // if(!password.match(/[a-z]/)||!password.match(/[0-9]/)){
+  //   return {result:false,error:"password should contains numbers and letters"}
+  // }
 
   const hash = bcrypt.hashSync(password, 6);
   return await prisma.user.create({
