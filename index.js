@@ -10,6 +10,8 @@ import Education_Level from './Resolvers/types/Education_Level.js'
 import Query from './Resolvers/Query.js'
 import apolloServer from 'apollo-server';
 
+import "./methods/messages/sendMessage.js" 
+
 const { ApolloServer} = apolloServer
 
 const { PrismaClient } = pkg;

@@ -43,6 +43,8 @@ type UserInfo{
   Area:Area
 }
 input userInfoInput{
+  skipedInfo:Boolean
+  skipedMaterials:Boolean
   birth_date:DateTime
   Current_education_level:Education_Level_enum!
   preferred_materials:[ID]!
@@ -65,6 +67,8 @@ type Authentication{
   isActive:Boolean!
   isInfoComplet:Boolean
   materialSet:Boolean
+  skipedInfo:Boolean
+  skipedMaterials:Boolean
   Role:Role!
 }
 type Result{

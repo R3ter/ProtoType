@@ -16,16 +16,17 @@ const login = async(parent,{username,password},{prisma})=>{
             if(!e){
                 return{error:"password does not match",result:false}
             }
-            const {userInfo,id,full_name,Role,email,phone_number,Active,password:userPassword}=e
+            const {userInfo,id,full_name,Role,email,phone_number,Active,password:userPassword,skipedMaterials,skipedInfo}=e
             if(bcrypt.compareSync(password, userPassword)){
                 const info=await loginToken(id,Role,Active,email,phone_number)
-                console.log(!!userInfo)
                 return {result:true,
                     authentication:{
                         ...info,
                         isActive:Active,
                         isInfoComplet:!!userInfo,
                         materialSet:!!userInfo?(!!userInfo.preferred_materials?!!userInfo.preferred_materials.length:false):false,
+                        skipedMaterials,
+                        skipedInfo,
                         full_name,
                         email,
                         phone_number

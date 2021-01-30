@@ -14,10 +14,16 @@ model User{
   full_name String
   email String @unique
   phone_number String @unique
-  Role Role  @default(STUDENT)
+  Role Role @default(STUDENT)
   password String
   Active Boolean @default(false)
   userInfo UserInfo?
+  teacherProfile TeacherProfile?
+
+  skipedMaterials Boolean @default(false)
+  skipedInfo Boolean @default(false)
+
+  updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
 model UserInfo{
@@ -27,36 +33,41 @@ model UserInfo{
   birth_date DateTime @default(now())
   Current_education_level Education_Level
   preferred_materials CourseTag[]
-  address String
+  image_URL String?
+
+  reviews Rating[]
+  favoriteCourses Materials[]
+
+  longitude String?
+  latitude String?
+  address String?
   City City
   Area Area
-  image_URL String?
-  createdAt DateTime @default(now())
-}
-model TeacherAccount{
-  id String @id  @default(uuid())
-  full_name String
-  email String @unique
-  phone_number String @unique
-  Role Role  @default(TEACHER)
-  password String
-  Active Boolean @default(true)
-  profile TeacherProfile? 
+  
+
   createdAt DateTime @default(now())
 }
 model TeacherProfile{
   id String @id @default(uuid())
-  teacher TeacherAccount @relation(fields: [teacherId], references: [id])
+  teacher User @relation(fields: [teacherId], references: [id])
   teacherId String @unique
+  phone Int
+  email String
   description DLookUp
+  image_URL String?
+  subjects CourseTag[]
+  reviews Rating[]
+  Courses Materials[]
+
+  longitude String?
+  latitude String?
+  address String?
   City City
   Area Area
-  image_URL String?
-  address String
-  subjects CourseTag[]
-  reviews Rating
+
   createdAt DateTime @default(now())
 }
+
 model CourseTag{
   id String @id @default(uuid())
   name String?
@@ -67,6 +78,9 @@ model Rating{
   ratingStars Int
   review String
   user User
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }
 model Area{
   id String @id @default(uuid())
@@ -89,7 +103,7 @@ model Materials {
   id String @id  @default(uuid())
   name String?
   image_URL String?
-  teacher TeacherAccount
+  teacher User
   lookUp  LookUp
   description DLookUp
   education_level Education_Level 

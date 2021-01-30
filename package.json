@@ -19,6 +19,8 @@
     "crypto-random-string": "^3.3.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "firebase": "^8.2.4",
+    "firebase-admin": "^9.4.2",
     "graphql": "^15.4.0",
     "jsonwebtoken": "^8.5.1",
     "nodemailer": "^6.4.17",
