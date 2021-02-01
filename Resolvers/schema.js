@@ -12,7 +12,10 @@ type Query{
   getUserInfo(userId:ID!):UserInfo
   getMyInfo:UserInfo
   getEducationLevels:[Education_Level]
+  getBestTeachers:[TeacherProfile]
   getCursesTags(search:String):[CourseTag]
+  BestMaterials:[Materials]
+  getTeacherInfo(teacherID:ID!):TeacherProfile
 }
 type Mutation{
   logout(userId:ID!,refreshToken:String!):Boolean!
@@ -30,7 +33,6 @@ type User {
   email:String!
   phone_number:String!
   Role:Role!
-  username: String!
   Active: Boolean!
   userInfo: UserInfo
 }
@@ -51,6 +53,32 @@ input userInfoInput{
   address:String!
   City:ID!
   Area:ID!
+}
+type TeacherProfile{
+  id:ID!
+  user:User!
+  phone:String
+  email:String
+  description:String!
+  image_URL:String
+  subjects:[CourseTag]
+  reviews:[Rating]
+  Courses:[Materials]
+
+  longitude:String
+  latitude:String
+  address:String
+  City:City
+  Area:Area
+
+}
+type Rating{
+  id:ID!
+  ratingStars:Int
+  review:String
+  user:User
+  createdAt:DateTime!
+
 }
 type LoginResult {
   result:Boolean!
@@ -82,9 +110,13 @@ input UserInput{
   password:String!
 }
 type Materials {
-  id:ID!
+  id: ID!
   name:String!
-  education_level: Education_Level!
+  image_URL:String
+  teacher:User!
+  description:String
+  education_level:Education_Level!
+  tags:[CourseTag]
 }
 type City{
   id:ID!

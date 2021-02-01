@@ -37,18 +37,13 @@
 // firebase.auth().signInWithEmailAndPassword("waleed.sukhon77@gmail.com", "waleed23")
 //   .then((e) => {
 //     e.user.getIdTokenResult().then((token)=>{
-
-//       // console.log(token.token)
-//       var message = {
-//         data: {
-//           score: '850',
-//           time: '2:45'
-//         }
+//         var message = {
+//             data: {
+//             score: '850',
+//             time: '2:45'
+//             }
 //         ,token:token.token
 //       };
-//       firebase.messaging().getToken({vapidKey: "BKagOny0KF_2pCJQ3m....moL0ewzQ8rZu"}).then((e)=>{
-//         console.log(e)
-//       })
 //       admin.messaging().send(message)
 //       .then((response) => {
 //         console.log('Successfully sent message:', response);

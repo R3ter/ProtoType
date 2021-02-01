@@ -9,7 +9,6 @@ const materials=(parent, args, {req,prisma}, info)=>{
                 select:{
                     lookUp:true
                 }
-
             }
         }
     },info)

@@ -49,9 +49,9 @@ model UserInfo{
 }
 model TeacherProfile{
   id String @id @default(uuid())
-  teacher User @relation(fields: [teacherId], references: [id])
+  user User @relation(fields: [teacherId], references: [id])
   teacherId String @unique
-  phone Int
+  phone String
   email String
   description DLookUp
   image_URL String?
@@ -64,7 +64,7 @@ model TeacherProfile{
   address String?
   City City
   Area Area
-
+  
   createdAt DateTime @default(now())
 }
 
