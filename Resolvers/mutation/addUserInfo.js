@@ -49,7 +49,7 @@ const addUserInfo =async(parent, {
             delete data.Current_education_level
         }
         if(data.preferred_materials){
-            preferred_materials={
+            data.preferred_materials={
                 connect:data.preferred_materials.map((e)=>{return{id:e}})
             }
         }else{
