@@ -31,18 +31,21 @@ model UserInfo{
   user User @relation(fields: [userId], references: [id])
   userId String @unique
   birth_date DateTime @default(now())
-  Current_education_level Education_Level
+  Current_education_level Education_Level?
   preferred_materials CourseTag[]
   image_URL String?
 
   reviews Rating[]
   favoriteCourses Materials[]
-
+  
+  skipedInfo Boolean @default(false)
+  skipedMaterials Boolean @default(false)
+  
   longitude String?
   latitude String?
   address String?
-  City City
-  Area Area
+  City City?
+  Area Area?
   
   createdAt DateTime @default(now())
 }

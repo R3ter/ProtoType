@@ -2,7 +2,7 @@ import users from './query/users.js'
 import getMaterials from './query/materials.js'
 import getCities from './query/getCities.js'
 import getAreas from './query/getAreas.js'
-import getCursesTags from './query/getCursesTags.js'
+import getCourseTags from './query/getCursesTags.js'
 import getMyInfo from './query/getMyInfo.js'
 import getEducationLevels from './query/getEducationLevels.js'
 import getBestTeachers from './query/getBestTeachers.js'
@@ -15,7 +15,7 @@ const Query={
     getMyInfo,
     getAreas,
     getEducationLevels,
-    getCursesTags,
+    getCourseTags,
     BestMaterials,
     getBestTeachers,
     getTeacherInfo

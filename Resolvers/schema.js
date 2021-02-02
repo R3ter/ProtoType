@@ -13,7 +13,7 @@ type Query{
   getMyInfo:UserInfo
   getEducationLevels:[Education_Level]
   getBestTeachers:[TeacherProfile]
-  getCursesTags(search:String):[CourseTag]
+  getCourseTags(search:String):[CourseTag]
   BestMaterials:[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
 }
@@ -22,7 +22,7 @@ type Mutation{
   refreshToken(userId:ID!,refreshToken:String!):LoginResult!
   CreateMaterial(lookUp:lookUp,education_level: Education_Level_enum!):Boolean!
   addUser(data:UserInput!):LoginResult!
-  addUserInfo(skipedMaterials:Boolean,skipedInfo:Boolean,data:userInfoInput!):Boolean!
+  addUserInfo(skipedMaterials:Boolean,skipedInfo:Boolean,data:userInfoInput):Boolean!
   login(username:String!,password:String!):LoginResult!
   resendActivationCode:Boolean!
   activateAccount(code:String!):LoginResult!
@@ -48,11 +48,11 @@ input userInfoInput{
   skipedInfo:Boolean
   skipedMaterials:Boolean
   birth_date:DateTime
-  Current_education_level:Education_Level_enum!
-  preferred_materials:[ID]!
-  address:String!
-  City:ID!
-  Area:ID!
+  Current_education_level:Education_Level_enum
+  preferred_materials:[ID]
+  address:String
+  City:ID
+  Area:ID
 }
 type TeacherProfile{
   id:ID!
