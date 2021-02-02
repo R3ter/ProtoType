@@ -1,3 +1,5 @@
+import { checkToken } from "../../methods/Tokens.js"
+
 const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
     const {id} = checkToken({token:req.headers.token})
     return await prisma.teacherProfile.findMany({

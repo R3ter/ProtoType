@@ -10,5 +10,4 @@ const client = new Client({
     ssl: { rejectUnauthorized: false }
 })
 client.connect()
-
 client.query(`DROP TABLE User;`)

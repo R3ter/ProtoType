@@ -44,7 +44,6 @@ model UserInfo{
   City City
   Area Area
   
-
   createdAt DateTime @default(now())
 }
 model TeacherProfile{
@@ -58,7 +57,8 @@ model TeacherProfile{
   subjects CourseTag[]
   reviews Rating[]
   Courses Materials[]
-
+  cover_URL String?
+  
   longitude String?
   latitude String?
   address String?
@@ -67,7 +67,6 @@ model TeacherProfile{
   
   createdAt DateTime @default(now())
 }
-
 model CourseTag{
   id String @id @default(uuid())
   name String?

@@ -22,7 +22,7 @@ type Mutation{
   refreshToken(userId:ID!,refreshToken:String!):LoginResult!
   CreateMaterial(lookUp:lookUp,education_level: Education_Level_enum!):Boolean!
   addUser(data:UserInput!):LoginResult!
-  addUserInfo(data:userInfoInput!):Boolean!
+  addUserInfo(skipedMaterials:Boolean,skipedInfo:Boolean,data:userInfoInput!):Boolean!
   login(username:String!,password:String!):LoginResult!
   resendActivationCode:Boolean!
   activateAccount(code:String!):LoginResult!
