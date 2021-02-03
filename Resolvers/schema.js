@@ -41,15 +41,15 @@ type UserInfo{
   Current_education_level:Education_Level
   preferred_materials:[Materials]
   address:String
+  image_URL:String
   City:City
   Area:Area
 }
 input userInfoInput{
-  skipedInfo:Boolean
-  skipedMaterials:Boolean
   birth_date:DateTime
   Current_education_level:Education_Level_enum
   preferred_materials:[ID]
+  image_URL:String
   address:String
   City:ID
   Area:ID
@@ -65,13 +65,17 @@ type TeacherProfile{
   reviews:[Rating]
   Courses:[Materials]
 
+  cover_URL:String
   longitude:String
   latitude:String
   address:String
   City:City
   Area:Area
 
+  averageRating:Int!
+  ratingCounts:Int!
 }
+
 type Rating{
   id:ID!
   ratingStars:Int
@@ -117,6 +121,10 @@ type Materials {
   description:String
   education_level:Education_Level!
   tags:[CourseTag]
+  reviews:[Rating]
+  averageRating:Int!
+  ratingCounts:Int!
+
 }
 type City{
   id:ID!

@@ -108,6 +108,7 @@ model Materials {
   teacher User
   lookUp  LookUp
   description DLookUp
+  reviews Rating[]
   education_level Education_Level 
   createdAt DateTime @default(now())
   tags CourseTag[]
