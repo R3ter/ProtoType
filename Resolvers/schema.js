@@ -25,6 +25,7 @@ type Mutation{
   addUserInfo(skipedMaterials:Boolean,skipedInfo:Boolean,data:userInfoInput):Boolean!
   login(username:String!,password:String!):LoginResult!
   resendActivationCode:Boolean!
+  uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
 }
 type User {
@@ -49,7 +50,6 @@ input userInfoInput{
   birth_date:DateTime
   Current_education_level:Education_Level_enum
   preferred_materials:[ID]
-  image_URL:String
   address:String
   City:ID
   Area:ID

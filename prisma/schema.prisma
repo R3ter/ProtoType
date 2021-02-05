@@ -38,8 +38,6 @@ model UserInfo{
   reviews Rating[]
   favoriteCourses Materials[]
   
-  skipedInfo Boolean @default(false)
-  skipedMaterials Boolean @default(false)
   
   longitude String?
   latitude String?

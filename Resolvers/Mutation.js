@@ -4,8 +4,9 @@ import login from './mutation/login.js'
 import addUserInfo from './mutation/addUserInfo.js'
 import {RefreshToken,logout, loginToken} from './../methods/Tokens.js'
 import {ResendActivationCode,checkActivationCode} from './../methods/activate.js'
+import uploadUserImage from './mutation/uploadImage.js'
 const Mutation={
-    addUser,CreateMaterial,login,addUserInfo,
+    addUser,CreateMaterial,login,addUserInfo,uploadUserImage,
     logout:(parent,{userId,refreshToken})=>logout(userId,refreshToken)
     ,refreshToken:(parent,{userId,refreshToken},{prisma})=>RefreshToken(userId,refreshToken,prisma),
     resendActivationCode:(parent,args,{req})=>ResendActivationCode(req.headers.token),

@@ -22,12 +22,22 @@ const addUserInfo =async(parent, {
             data:{
                 skipedInfo:skipedInfo,
                 skipedMaterials:skipedMaterials
-                }
+            }
         }).then((e)=>{
             if(e)
                 return true
         }).catch((e)=>false)
-    }
+        }else{
+            prisma.user.update({
+                where:{
+                    id
+                },
+                data:{
+                    skipedInfo:skipedInfo,
+                    skipedMaterials:skipedMaterials
+                }
+            })
+        }
         if(data.City){
             data.City={ connect:{
                 id:data.City
@@ -63,14 +73,10 @@ const addUserInfo =async(parent, {
     const userInfo= await prisma.userInfo.upsert({
         where: { userId:id },
         update: {
-            skipedInfo,
-            skipedMaterials,
             ...data,
             
         },
         create: {
-            skipedInfo,
-            skipedMaterials,
             user:{
                 connect:{
                     id
