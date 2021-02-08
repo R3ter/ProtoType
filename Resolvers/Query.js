@@ -8,7 +8,12 @@ import getEducationLevels from './query/getEducationLevels.js'
 import getBestTeachers from './query/getBestTeachers.js'
 import BestMaterials from './query/getBestMaterials.js'
 import getTeacherInfo from './query/getTeacherInfo.js'
+import getTeacherReviews from './query/getTeacherReviews.js'
+import getTeacherAppointments from './query/getTeacherAppointment.js'
+import getTeacherCourses from './query/getTeacherCourses.js'
+import getTeachersOnMap from './query/getTeachersOnMap.js'
 const Query={
+    getTeachersOnMap,
     users,
     getMaterials,
     getCities,
@@ -18,6 +23,9 @@ const Query={
     getCourseTags,
     BestMaterials,
     getBestTeachers,
-    getTeacherInfo
+    getTeacherInfo,
+    getTeacherReviews,
+    getTeacherAppointments,
+    getTeacherCourses
 }
 export default Query  

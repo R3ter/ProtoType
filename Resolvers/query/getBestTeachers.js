@@ -7,27 +7,14 @@ const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
         include:{
             user:true,
             description:true,
-            subjects:true,
             reviews :true,
-            Courses :{
-                select:{
-                    id:true,
-                    name:true,
-                    lookUp:true,
-                    education_level:
-                    {
-                        select:{
-                            lookUp:true
-                        }
-                    }
-                }
-            }
+
         }
     })
     return teachers.map(async (e)=>{
         return {
             ...e,
-            ...await prisma.rating.aggregate({
+            ...await prisma.teacherReview.aggregate({
                 where:{
                     TeacherProfile:{
                       id:e.teacherId
@@ -37,7 +24,7 @@ const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
                     ratingStars:true
                 },
                 count:true
-              }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars}))
+                }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars}))
         }
     })
 }

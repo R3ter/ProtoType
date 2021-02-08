@@ -1,149 +1,217 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model User {
+  id                 String              @id @default(uuid())
+  email              String              @unique
+  phone_number       String              @unique
+  Role               Role                @default(STUDENT)
+  password           String
+  Active             Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+  full_name          String
+  skipedMaterials    Boolean             @default(false)
+  skipedInfo         Boolean             @default(false)
+  updatedAt          DateTime            @updatedAt
+  MaterialReview     MaterialReview[]    @relation("user")
+  Materials          Materials[]
+  TeacherApplication TeacherApplication?
+  teacherProfile     TeacherProfile?
+  TeacherReview      TeacherReview[]
+  userInfo           UserInfo?
+  
+  TeacherAppointments   Appointment[] @relation("TeacherAppointments")
+  studentAppointments   Appointment[] @relation("studentAppointments")
 }
-model User{
-  id String @id  @default(uuid())
-  full_name String
-  email String @unique
-  phone_number String @unique
-  Role Role @default(STUDENT)
-  password String
-  Active Boolean @default(false)
-  userInfo UserInfo?
-  teacherProfile TeacherProfile?
 
-  skipedMaterials Boolean @default(false)
-  skipedInfo Boolean @default(false)
+model UserInfo {
+  id                      String           @id @default(uuid())
+  userId                  String           @unique
+  birth_date              DateTime         @default(now())
+  address                 String?
+  createdAt               DateTime         @default(now())
+  cityId                  String?
+  areaId                  String?
+  education_LevelId       String?
+  image_URL               String?
+  longitude               String?
+  latitude                String?
+  cover_URL               String?
+  Area                    Area?            @relation(fields: [areaId], references: [id])
+  City                    City?            @relation(fields: [cityId], references: [id])
+  Current_education_level Education_Level? @relation(fields: [education_LevelId], references: [id])
+  user                    User             @relation(fields: [userId], references: [id])
+  preferred_materials     CourseTag[]
+  favoriteCourses         Materials[]
+}
 
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
+model Appointment {
+  id               String         @id @default(uuid())
+  from             String
+  to               String
+  date             String
+  note             String
+  userId           String
+  teacherId        String
+  accepted         Boolean        @default(false)
+  teacher          User           @relation("TeacherAppointments",fields: [teacherId], references: [id])
+  user             User           @relation("studentAppointments",fields: [userId], references: [id])
 }
-model UserInfo{
-  id String @id  @default(uuid())
-  user User @relation(fields: [userId], references: [id])
-  userId String @unique
-  birth_date DateTime @default(now())
-  Current_education_level Education_Level?
-  preferred_materials CourseTag[]
-  image_URL String?
 
-  reviews Rating[]
-  favoriteCourses Materials[]
-  
-  
-  longitude String?
-  latitude String?
-  address String?
-  City City?
-  Area Area?
-  
-  createdAt DateTime @default(now())
+model TeacherApplication {
+  id      String @id @default(uuid())
+  userId  String @unique
+  message String
+  user    User   @relation(fields: [userId], references: [id])
 }
-model TeacherProfile{
-  id String @id @default(uuid())
-  user User @relation(fields: [teacherId], references: [id])
-  teacherId String @unique
-  phone String
-  email String
-  description DLookUp
-  image_URL String?
-  subjects CourseTag[]
-  reviews Rating[]
-  Courses Materials[]
-  cover_URL String?
-  
-  longitude String?
-  latitude String?
-  address String?
-  City City
-  Area Area
-  
-  createdAt DateTime @default(now())
+
+model TeacherProfile {
+  id            String          @id @default(uuid())
+  teacherId     String          @unique
+  createdAt     DateTime        @default(now())
+  dLookUpId     String
+  description   DLookUp         @relation(fields: [dLookUpId], references: [id])
+  user          User            @relation(fields: [teacherId], references: [id])
+  appointments  Appointment[]
+  subjects      CourseTag[]
+  Materials     Materials[]
 }
-model CourseTag{
-  id String @id @default(uuid())
-  name String?
-  lookUp LookUp
+
+model CourseTag {
+  id               String          @id @default(uuid())
+  name             String?
+  userInfoId       String?
+  teacherProfileId String?
+  materialsId      String?
+  lookUpId         String
+  lookUp           LookUp          @relation(fields: [lookUpId], references: [id])
+  Materials        Materials?      @relation(fields: [materialsId], references: [id])
+  TeacherProfile   TeacherProfile? @relation(fields: [teacherProfileId], references: [id])
+  UserInfo         UserInfo?       @relation(fields: [userInfoId], references: [id])
 }
-model Rating{
-  id String @id @default(uuid())
+
+model TeacherReview {
+  id               String          @id @default(uuid())
+  teacherId        String
+  ratingStars      Int
+  review           String
+  updatedAt        DateTime        @updatedAt
+  createdAt        DateTime        @default(now())
+  teacherProfileId String?
+  userId           String
+  TeacherProfile   TeacherProfile
+  user             User
+}
+
+model Area {
+  id        String     @id @default(uuid())
+  name      String?
+  latitude  String
+  longitude String
+  createdAt DateTime   @default(now())
+  lookUpId  String
+  cityId    String
+  City      City       @relation(fields: [cityId], references: [id])
+  lookUp    LookUp     @relation(fields: [lookUpId], references: [id])
+  UserInfo  UserInfo[]
+}
+
+model City {
+  id        String     @id @default(uuid())
+  name      String?
+  latitude  String
+  longitude String
+  createdAt DateTime   @default(now())
+  lookUpId  String
+  lookUp    LookUp     @relation(fields: [lookUpId], references: [id])
+  Area      Area[]
+  UserInfo  UserInfo[]
+}
+
+model MaterialReview {
+  id          String    @id @default(uuid())
+  materialID  String
   ratingStars Int
-  review String
-  user User
+  review      String
+  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime  @default(now())
+  userId      String
+  material    Materials @relation(fields: [materialID], references: [id])
+  User        User      @relation("user", fields: [userId], references: [id])
+}
 
-  updatedAt DateTime @updatedAt
-  createdAt DateTime @default(now())
-}
-model Area{
-  id String @id @default(uuid())
-  name String?
-  lookUp LookUp
-  City City
-  latitude String
-  longitude String
-  createdAt DateTime @default(now())
-}
-model City{
-  id String @id @default(uuid())
-  name String?
-  lookUp LookUp
-  latitude String
-  longitude String
-  createdAt DateTime @default(now())
-}
 model Materials {
-  id String @id  @default(uuid())
-  name String?
-  image_URL String?
-  teacher User
-  lookUp  LookUp
-  description DLookUp
-  reviews Rating[]
-  education_level Education_Level 
-  createdAt DateTime @default(now())
-  tags CourseTag[]
+  id                String           @id @default(uuid())
+  name              String?
+  createdAt         DateTime         @default(now())
+  lookUpId          String
+  education_LevelId String
+  image_URL         String?
+  dLookUpId         String
+  userInfoId        String?
+  teacherProfileId  String?
+  userId            String
+  description       DLookUp          @relation(fields: [dLookUpId], references: [id])
+  education_level   Education_Level  @relation(fields: [education_LevelId], references: [id])
+  lookUp            LookUp           @relation(fields: [lookUpId], references: [id])
+  TeacherProfile    TeacherProfile?  @relation(fields: [teacherProfileId], references: [id])
+  teacher           User             @relation(fields: [userId], references: [id])
+  UserInfo          UserInfo?        @relation(fields: [userInfoId], references: [id])
+  tags              CourseTag[]
+  reviews           MaterialReview[]
 }
-model LookUp{
-  id String @id  @default(uuid())
-  eng String
-  ar String
-  fr String?
-  createdAt DateTime @default(now())
+
+model LookUp {
+  id              String            @id @default(uuid())
+  eng             String
+  ar              String
+  fr              String?
+  createdAt       DateTime          @default(now())
+  Area            Area[]
+  City            City[]
+  CourseTag       CourseTag[]
+  Education_Level Education_Level[]
+  Materials       Materials[]
 }
-model DLookUp{
-  id  String @id  @default(uuid())
-  ar  String
-  eng String?
-  fr  String?
+
+model DLookUp {
+  id             String           @id @default(uuid())
+  ar             String
+  eng            String?
+  fr             String?
+  Materials      Materials[]
+  TeacherProfile TeacherProfile[]
 }
-model Education_Level{
-  id String @id  @default(uuid())
-  lookUp LookUp
+
+model Education_Level {
+  id              String               @id @default(uuid())
   education_level Education_Level_enum @unique
-  name String?
+  name            String?
+  lookUpId        String
+  lookUp          LookUp               @relation(fields: [lookUpId], references: [id])
+  Materials       Materials[]
+  UserInfo        UserInfo[]
 }
 
 enum Education_Level_enum {
-  Kindergarten
-  Primary_School
-  Preparatory_Stage
-  Secondary_School
-  
   Preschool
+  Primary_School
   Elementary_School
   Middle_School
+  Secondary_School
   High_School
   Diploma
   Doctorate
+  Kindergarten
+  Preparatory_Stage
 }
+
 enum Role {
   STUDENT
   TEACHER

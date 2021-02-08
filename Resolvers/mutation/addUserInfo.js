@@ -67,14 +67,14 @@ const addUserInfo =async(parent, {
             data.preferred_materials={
                 connect:data.preferred_materials.map((e)=>{return{id:e}})
             }
+            console.log(data.preferred_materials)
         }else{
             delete data.preferred_materials
         }
-    const userInfo= await prisma.userInfo.upsert({
+    const userInfo = await prisma.userInfo.upsert({
         where: { userId:id },
         update: {
             ...data,
-            
         },
         create: {
             user:{

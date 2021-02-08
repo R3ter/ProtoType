@@ -4,7 +4,6 @@ import { checkToken } from './Tokens.js'
 
 const codes=[]
 const checkActivationCode = async(code,token,callback,rejected)=>{
-
     const data=await checkToken({token,activeRequired:false})
     if(codes[data.email]===code){
         delete codes[data.email]

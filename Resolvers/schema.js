@@ -15,9 +15,16 @@ type Query{
   getBestTeachers:[TeacherProfile]
   getCourseTags(search:String):[CourseTag]
   BestMaterials:[Materials]
+  getTeacherReviews(teacherID:ID!):TeacherReview
+  getTeacherCourses(teacherID:ID!):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
+  getTeacherAppointments(teacherID:ID!):[Appointment]
+  getTeachersOnMap:[MapInfo]!
 }
 type Mutation{
+  addAppointment(data:AppointmentInput!):Boolean!
+  becomeaTeacher(message:String!):Boolean!
+  TeacherAddMaterial(data:MaterialsInput):Result
   logout(userId:ID!,refreshToken:String!):Boolean!
   refreshToken(userId:ID!,refreshToken:String!):LoginResult!
   CreateMaterial(lookUp:lookUp,education_level: Education_Level_enum!):Boolean!
@@ -27,6 +34,28 @@ type Mutation{
   resendActivationCode:Boolean!
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
+}
+input AppointmentInput{
+  teacherId:ID!
+  from:String!
+  to:String!
+  date:String!
+  note:String
+}
+type MapInfo{
+  id:ID!
+  full_name:String!
+  ratingStars:Int!
+  count:Int!
+  phone_number:String!
+  email:String!
+  description:String!
+  image_URL:String
+  longitude:String
+  latitude:String
+
+  userLongitude:String
+  userLatitude:String
 }
 type User {
   id:ID!
@@ -42,7 +71,10 @@ type UserInfo{
   Current_education_level:Education_Level
   preferred_materials:[Materials]
   address:String
+  longitude:String
+  latitude:String
   image_URL:String
+  cover_URL:String
   City:City
   Area:Area
 }
@@ -51,38 +83,50 @@ input userInfoInput{
   Current_education_level:Education_Level_enum
   preferred_materials:[ID]
   address:String
+  longitude:String
+  latitude:String
   City:ID
   Area:ID
 }
 type TeacherProfile{
   id:ID!
   user:User!
-  phone:String
-  email:String
   description:String!
-  image_URL:String
-  subjects:[CourseTag]
-  reviews:[Rating]
-  Courses:[Materials]
-
-  cover_URL:String
-  longitude:String
-  latitude:String
   address:String
   City:City
   Area:Area
+  subjects:[CourseTag]
 
+  # Courses:[Materials]
+  # reviews:[TeacherReview]
+  # appointments:[Appointment]
+  
   averageRating:Int!
-  ratingCounts:Int!
+  ratingCounts:Int! 
 }
-
-type Rating{
-  id:ID!
+type Appointment{
+  id: ID!
+  from:String!
+  to:String!
+  date:String!
+  user:User!
+  teacher:User!
+}
+type TeacherReview{
+  id:ID
+  teacherId:ID
   ratingStars:Int
   review:String
   user:User
-  createdAt:DateTime!
-
+  createdAt:DateTime 
+}
+type MaterialReview{
+  id:ID
+  materialID:ID
+  ratingStars:Int
+  review:String
+  user:User
+  createdAt:DateTime
 }
 type LoginResult {
   result:Boolean!
@@ -121,11 +165,18 @@ type Materials {
   description:String
   education_level:Education_Level!
   tags:[CourseTag]
-  reviews:[Rating]
+  reviews:[MaterialReview]
   averageRating:Int!
   ratingCounts:Int!
-
 }
+input MaterialsInput {
+  name:lookUp!
+  image_URL:String
+  description:DLookUp
+  education_level:Education_Level_enum!
+  courseTags:[ID]!
+}
+
 type City{
   id:ID!
   name:String!

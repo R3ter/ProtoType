@@ -1,24 +1,43 @@
 import { checkToken } from "../../methods/Tokens.js"
 
 const BestMaterials= async(parent, args, {req,prisma}, info)=>{
-    //checkToken({token:req.headers.token})
+    checkToken({token:req.headers.token})
     const materials = await prisma.materials.findMany({
         include:{
             lookUp:true,
-            teacher:true,
             description:true,
             tags:{
                 select:{
                     lookUp:true
                 }
             },
-            reviews:{
+            reviews:true,
+            teacher:{
                 select:{
-                    user:{
+                    userInfo:{
                         select:{
-                            userInfo:true
+                            City:{
+                                select:{
+                                    lookUp:true
+                                }
+                            },
+                            Area:{
+                                select:{
+                                    lookUp:true
+                                }
+                            },
+                            birth_date:true,
+                            address:true,
+                            longitude:true,
+                            latitude:true,
+                            image_URL:true,
+                            cover_URL:true
                         }
-                    }
+                    },
+                    full_name:true,
+                    email:true,
+                    phone_number:true,
+                    
                 }
             },
             education_level:{
@@ -31,7 +50,7 @@ const BestMaterials= async(parent, args, {req,prisma}, info)=>{
     return materials.map(async (e)=>{
         return {
             ...e,
-            ...await prisma.rating.aggregate({
+            ...await prisma.materialReview.aggregate({
                 where:{
                     id:e.id
                   },

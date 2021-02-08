@@ -10,7 +10,7 @@ const loginToken=async(userid,role,Activate,email,phone_number)=>{
     if(!userid||!role||!email||!phone_number){
         throw new Error("some of the token data are missing")
     }
-    const token = await jwt.sign({ id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '600000' });
+    const token = await jwt.sign({ id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '1y' });
     
     const randomId = cryptoRandomString({length: 300})
     refreshTokens[userid]=randomId

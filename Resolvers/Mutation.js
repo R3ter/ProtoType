@@ -5,7 +5,13 @@ import addUserInfo from './mutation/addUserInfo.js'
 import {RefreshToken,logout, loginToken} from './../methods/Tokens.js'
 import {ResendActivationCode,checkActivationCode} from './../methods/activate.js'
 import uploadUserImage from './mutation/uploadImage.js'
+import TeacherAddMaterial from './mutation/Teacher/TeacherAddMaterial.js'
+import becomeaTeacher from './mutation/Teacher/becomeATeacher.js'
+import addAppointment from './mutation/addAppointment.js'
 const Mutation={
+    addAppointment,
+    becomeaTeacher,
+    TeacherAddMaterial,
     addUser,CreateMaterial,login,addUserInfo,uploadUserImage,
     logout:(parent,{userId,refreshToken})=>logout(userId,refreshToken)
     ,refreshToken:(parent,{userId,refreshToken},{prisma})=>RefreshToken(userId,refreshToken,prisma),

@@ -171,3 +171,40 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
   
 // })
 
+// prisma.user.update({
+//   where:{
+//     id:"e26be7ef-3174-41b2-bec4-99d658eea851"
+//   },
+//   data:{
+//     userInfo:{
+//       create:{
+//         latitude:""
+//       }
+//     }
+//   }
+// }).catch((e)=>{
+//   console.log(e)
+// })
+// prisma.user.update({
+//   where:{
+//     id:"e26be7ef-3174-41b2-bec4-99d658eea851"
+//   },
+//   data:{
+//     Role:"TEACHER",
+//     teacherProfile:{
+//       create:{
+//         description:{
+//           create:{
+//             ar:"",
+//             eng:""
+//           }
+//         }
+//       }
+//     }
+//   }
+// }).then((e)=>{
+// console.log(e)
+// }).catch((e)=>{
+//   console.log(e)
+// })
+
