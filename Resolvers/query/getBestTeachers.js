@@ -8,6 +8,7 @@ const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
             user:{
                 select:{
                     full_name:true,
+                    phone_number:true,
                     email:true,
                     userInfo:true
                     

@@ -16,31 +16,33 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
             teacherProfile:true
         }
     }).then(async(userInfo)=>{
-        console.log(userInfo)
-        return await userInfo.map(async(e)=>{
-            return {
-                userLongitude:longitude,
-                userLatitude:latitude,
-                ...e.userInfo,
-                ...e,
-                ...await prisma.teacherReview.aggregate({
-                    where:{
-                        TeacherProfile:{
-                            teacherId:e.userId
-                        }
+        return {
+            centerLongitude:longitude,
+            centerLatitude:latitude,
+            teachers:
+            await userInfo.map(async(e)=>{
+                return {
+                    ...e.userInfo,
+                    ...e,
+                    ...await prisma.teacherReview.aggregate({
+                        where:{
+                            TeacherProfile:{
+                                teacherId:e.userId
+                            }
+                            },
+                        avg:{
+                            ratingStars:true
                         },
-                    avg:{
-                        ratingStars:true
-                    },
-                    count:true
-                }).then((e)=>{
-                    return {
-                        ratingStars:e.avg.ratingStars,
-                        count:e.count
-                    }
+                        count:true
+                    }).then((e)=>{
+                        return {
+                            ratingStars:e.avg.ratingStars,
+                            count:e.count
+                        }
                 })
             }
         })
-    })
+    }
+})
 }
 export default getTeachersOnMap

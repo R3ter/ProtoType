@@ -19,7 +19,7 @@ type Query{
   getTeacherCourses(teacherID:ID!):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!):[Appointment]
-  getTeachersOnMap:[MapInfo]!
+  getTeachersOnMap:MapInfo!
 }
 type Mutation{
   addAppointment(data:AppointmentInput!):Boolean!
@@ -43,6 +43,12 @@ input AppointmentInput{
   note:String
 }
 type MapInfo{
+
+  teachers:[teacherMapInfo]
+  centerLongitude:String
+  centerLatitude:String
+}
+type teacherMapInfo{
   id:ID!
   full_name:String!
   ratingStars:Int!
@@ -53,9 +59,6 @@ type MapInfo{
   image_URL:String
   longitude:String
   latitude:String
-
-  userLongitude:String
-  userLatitude:String
 }
 type User {
   id:ID!
