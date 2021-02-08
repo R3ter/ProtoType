@@ -7,7 +7,6 @@ const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
         include:{
             user:true,
             description:true,
-            reviews :true,
 
         }
     })
