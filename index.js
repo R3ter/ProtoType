@@ -32,17 +32,17 @@ const server = new ApolloServer({
   },
   introspection: true,
   playground: true,
-  formatError(error){
-    if(error.extensions.exception.code=="P2002"){
-      return({message:error.extensions.exception.meta.target+
-      " already exists",code:error.originalError.code,data:error.originalError.data})
-    }
-    if(error.message=='Unauthenticate'){
-      return({message:"Unauthenticate",statusCode:401})
-    }
-    return error
-    // return({message:error.message,code:error.originalError.code,data:error.originalError.data})
-  },
+  // formatError(error){
+  //   if(error.extensions.exception.code=="P2002"){
+  //     return({message:error.extensions.exception.meta.target+
+  //     " already exists",code:error.originalError.code,data:error.originalError.data})
+  //   }
+  //   if(error.message=='Unauthenticate'){
+  //     return({message:"Unauthenticate",statusCode:401})
+  //   }
+  //   return error
+  //   // return({message:error.message,code:error.originalError.code,data:error.originalError.data})
+  // },
   context({req}){
     return {
       req,
