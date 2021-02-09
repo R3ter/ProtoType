@@ -9,8 +9,9 @@ const TeacherAddMaterial= async(parent,
         image_URL,
         courseTags,
 
+        
     }}
-    , {req,prisma}, info)=>{
+    , {req,prisma}, info)=>{ 
         const {id} = checkToken({Roles:"TEACHER",token:req.headers.token})
         if(!validator.isLength(name.ar,{min:3,max:20})){
             return {result:false,error:"arabic name should be between 3 and 20 character long"}
