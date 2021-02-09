@@ -10,7 +10,7 @@ import Education_Level from './Resolvers/types/Education_Level.js'
 import TeacherProfile from './Resolvers/types/TeacherProfile.js'
 import Query from './Resolvers/Query.js'
 import apolloServer from 'apollo-server';
-
+import TeacherMapInfo from './Resolvers/types/TeacherMapInfo.js'
 import "./methods/messages/sendMessage.js" 
 
 const { ApolloServer} = apolloServer
@@ -26,6 +26,7 @@ const server = new ApolloServer({
     Materials,
     City,
     CourseTag,
+    TeacherMapInfo,
     Area,
     Education_Level,
     TeacherProfile

@@ -44,18 +44,18 @@ input AppointmentInput{
 }
 type MapInfo{
 
-  teachers:[teacherMapInfo]
+  teachers:[TeacherMapInfo]
   centerLongitude:String
   centerLatitude:String
 }
-type teacherMapInfo{
+type TeacherMapInfo{
   id:ID!
   full_name:String!
   ratingStars:Int!
   count:Int!
   phone_number:String!
   email:String!
-  description:String!
+  description:String
   image_URL:String
   longitude:String
   latitude:String
