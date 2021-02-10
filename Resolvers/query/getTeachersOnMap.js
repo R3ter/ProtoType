@@ -32,10 +32,8 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
                     ...e,
                     ...await prisma.teacherReview.aggregate({
                         where:{
-                            TeacherProfile:{
-                                teacherId:e.userId
-                            }
-                            },
+                            teacherProfileId:e.userId
+                        },
                         avg:{
                             ratingStars:true
                         },
