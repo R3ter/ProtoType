@@ -209,3 +209,26 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //   console.log(e)
 // })
 
+// prisma.userInfo.upsert({
+//   where:{
+//     userId:"e26be7ef-3174-41b2-bec4-99d658eea851"
+//   },
+//   create:{
+//     preferred_materials:{
+//       connect:[{
+//         id:"6c23a3bb-1fae-4e9d-a7e3-4796e95e4f8e"
+//       }]
+//     }
+//   },
+//   update:{
+//     preferred_materials:{
+
+//       set:{
+//         id:"6c23a3bb-1fae-4e9d-a7e3-4796e95e4f8e"
+//       }
+//     }
+//   },
+//   include:{
+//     preferred_materials:true
+//   }
+// }).then((e)=>console.log(e))

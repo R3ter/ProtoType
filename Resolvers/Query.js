@@ -12,12 +12,14 @@ import getTeacherReviews from './query/getTeacherReviews.js'
 import getTeacherAppointments from './query/getTeacherAppointment.js'
 import getTeacherCourses from './query/getTeacherCourses.js'
 import getTeachersOnMap from './query/getTeachersOnMap.js'
+import getUserInfo from './query/getUserInfo.js'
 const Query={
     getTeachersOnMap,
     users,
     getMaterials,
     getCities,
     getMyInfo,
+    getUserInfo,
     getAreas,
     getEducationLevels,
     getCourseTags,

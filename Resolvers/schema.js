@@ -71,6 +71,7 @@ type User {
 }
 type UserInfo{
   birth_date:String
+  user:User!
   Current_education_level:Education_Level
   preferred_materials:[Materials]
   address:String
