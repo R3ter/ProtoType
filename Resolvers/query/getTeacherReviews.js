@@ -28,7 +28,5 @@ const getTeacherReviews=async(parent, {teacherID}, {req,prisma}, info)=>{
             }
         })
     })
-
 }
-
 export default getTeacherReviews

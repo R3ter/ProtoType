@@ -3,7 +3,6 @@ import apollo from 'apollo-server'
 const {gql}=apollo
 const typeDefs=gql`
 scalar DateTime
-
 type Query{
   users:[User]
   getMaterials:[Materials]
@@ -15,8 +14,7 @@ type Query{
   getBestTeachers:[TeacherProfile]
   getCourseTags(search:String):[CourseTag]
   BestMaterials:[Materials]
-
-  getTeacherReviews(teacherID:ID!):[TeacherReview]!
+  getTeacherReviews(teacherID:ID!):[TeacherReview]
   getTeacherCourses(teacherID:ID!):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!):[Appointment]
@@ -44,7 +42,6 @@ input AppointmentInput{
   note:String
 }
 type MapInfo{
-
   teachers:[TeacherMapInfo]
   centerLongitude:String
   centerLatitude:String
@@ -101,7 +98,6 @@ type TeacherProfile{
   City:City
   Area:Area
   subjects:[CourseTag]
-
   # Courses:[Materials]
   # reviews:[TeacherReview]
   # appointments:[Appointment]
@@ -119,18 +115,11 @@ type Appointment{
 }
 type TeacherReview{
   id:ID
-<<<<<<< 3c0844a398815fcc633fdeaaa1a85f0d06b712ff
   teacherId:ID
   ratingStars:Int
   review:String
-  user:User
-=======
-  teacherId:ID!
-  ratingStars:Int!
-  review:String!
-  student:User!
-  teacher:User!
->>>>>>> laptop
+  student:User
+  teacher:User
   createdAt:DateTime 
 }
 type MaterialReview{
@@ -189,7 +178,6 @@ input MaterialsInput {
   education_level:Education_Level_enum!
   courseTags:[ID]!
 }
-
 type City{
   id:ID!
   name:String!
