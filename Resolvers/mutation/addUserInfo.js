@@ -50,7 +50,7 @@ const addUserInfo =async(parent, {
                 connect:{
                     id:data.Area
                 }
-            }
+            } 
         }else{
             delete data.Area
         }
