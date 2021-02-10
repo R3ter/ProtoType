@@ -15,7 +15,8 @@ type Query{
   getBestTeachers:[TeacherProfile]
   getCourseTags(search:String):[CourseTag]
   BestMaterials:[Materials]
-  getTeacherReviews(teacherID:ID!):TeacherReview
+
+  getTeacherReviews(teacherID:ID!):[TeacherReview]!
   getTeacherCourses(teacherID:ID!):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!):[Appointment]
@@ -118,10 +119,18 @@ type Appointment{
 }
 type TeacherReview{
   id:ID
+<<<<<<< 3c0844a398815fcc633fdeaaa1a85f0d06b712ff
   teacherId:ID
   ratingStars:Int
   review:String
   user:User
+=======
+  teacherId:ID!
+  ratingStars:Int!
+  review:String!
+  student:User!
+  teacher:User!
+>>>>>>> laptop
   createdAt:DateTime 
 }
 type MaterialReview{

@@ -7,13 +7,26 @@ const getTeacherReviews=async(parent, {teacherID}, {req,prisma}, info)=>{
         where:{
             teacherId:teacherID
         },
-        include:{
-            user:{
-                select:{
-                    userInfo:true
-                }
+    }).then(async (e)=>{
+        return e.map(async (e)=>{
+            return{
+                ...e,
+                student:await prisma.user.findUnique({
+                    where:{
+                        id:e.userId
+                    },include:{
+                        userInfo:true
+                    }
+                }),
+                teacher:await prisma.user.findUnique({
+                    where:{
+                        id:e.teacherId
+                    },include:{
+                        userInfo:true
+                    }
+                })
             }
-        }
+        })
     })
 
 }

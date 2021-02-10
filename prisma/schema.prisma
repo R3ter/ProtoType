@@ -103,7 +103,6 @@ model TeacherReview {
   review           String
   updatedAt        DateTime @updatedAt
   createdAt        DateTime @default(now())
-  teacherProfileId String?
   userId           String
 }
 
