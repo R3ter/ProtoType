@@ -8,8 +8,6 @@ const TeacherAddMaterial= async(parent,
         education_level,
         image_URL,
         courseTags,
-
-        
     }}
     , {req,prisma}, info)=>{ 
         const {id} = checkToken({Roles:"TEACHER",token:req.headers.token})
