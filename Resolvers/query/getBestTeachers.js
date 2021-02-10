@@ -22,7 +22,7 @@ const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
             ...e,
             ...await prisma.teacherReview.aggregate({
                 where:{
-                    teacherProfileId:e.teacherId
+                    teacherId:e.teacherId
                   },
                 avg:{
                     ratingStars:true
