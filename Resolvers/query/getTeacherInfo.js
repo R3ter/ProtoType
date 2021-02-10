@@ -12,6 +12,7 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
                     full_name:true,
                     email:true,
                     phone_number:true,
+                    userInfo:true
                 }
             },
             description:true,
