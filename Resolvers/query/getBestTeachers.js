@@ -7,6 +7,7 @@ const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
         include:{
             user:{
                 select:{
+                    id:true,
                     full_name:true,
                     phone_number:true,
                     email:true,
@@ -28,7 +29,14 @@ const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
                     ratingStars:true
                 },
                 count:true
-                }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars}))
+                }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars})),
+                ...await prisma.materials.aggregate({
+                    where:{
+                        userId:e.teacherId
+                    },
+                    count:true
+                }).then((e)=>({courseCount:e.count}))
+                
         }
     })
 }

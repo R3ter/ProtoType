@@ -12,25 +12,38 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
                     full_name:true,
                     email:true,
                     phone_number:true,
-                    userInfo:true
                 }
             },
-            description:true
+            description:true,
         }
     }).then(async(e)=>{
+        console.log(e)
         return {
             ...e,
+            ...await prisma.userInfo.findUnique({
+                where:{
+                    userId:teacherID
+                },
+                include:{
+                    City:true,
+                    Area:true
+                }
+            }),
             ...await prisma.teacherReview.aggregate({
                 where:{
-                    TeacherProfile:{
-                        teacherId:teacherID
-                    }
-                    },
+                    teacherId:e.teacherId
+                  },
                 avg:{
                     ratingStars:true
                 },
                 count:true
-            })
+                }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars})),
+                ...await prisma.materials.aggregate({
+                    where:{
+                        userId:e.teacherId
+                    },
+                    count:true
+                }).then((e)=>({courseCount:e.count}))
         }
     })
     

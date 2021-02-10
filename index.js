@@ -232,3 +232,11 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //     preferred_materials:true
 //   }
 // }).then((e)=>console.log(e))
+
+prisma.userInfo.findUnique({
+  where:{
+  userId:"d754da19-b448-4b64-80ba-a37ff70f9da9"    
+  }
+}).then((e)=>{
+  console.log(e)
+})

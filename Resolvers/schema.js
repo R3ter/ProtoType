@@ -101,7 +101,7 @@ type TeacherProfile{
   # Courses:[Materials]
   # reviews:[TeacherReview]
   # appointments:[Appointment]
-  
+  courseCount:Int!
   averageRating:Int!
   ratingCounts:Int! 
 }
