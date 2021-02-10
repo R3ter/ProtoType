@@ -1,9 +1,13 @@
-const getTeacherAppointment=async(parent, {teacherID}, {req,prisma}, info)=>{
+const getTeacherAppointment=async(parent, {
+  teacherID,
+  day,month,year
+}, {req,prisma}, info)=>{
     return await prisma.appointment.findMany({
         where:{
           teacher:{
             id:teacherID
-          }
+          },
+          day,month,year
         },
         include:{
           user:true,

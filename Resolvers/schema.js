@@ -17,7 +17,8 @@ type Query{
   getTeacherReviews(teacherID:ID!):[TeacherReview]
   getTeacherCourses(teacherID:ID!):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
-  getTeacherAppointments(teacherID:ID!):[Appointment]
+  getTeacherAppointments(teacherID:ID!,day:String!,
+    month:String!,year:String!):[Appointment]
   getTeachersOnMap:MapInfo!
 }
 type Mutation{
@@ -38,7 +39,9 @@ input AppointmentInput{
   teacherId:ID!
   from:String!
   to:String!
-  date:String!
+  day:String!
+  month:String!
+  year:String!
   note:String
 }
 type MapInfo{
@@ -109,7 +112,11 @@ type Appointment{
   id: ID!
   from:String!
   to:String!
-  date:String!
+  
+  day:String!
+  month:String!
+  year:String!
+
   user:User!
   teacher:User!
 }

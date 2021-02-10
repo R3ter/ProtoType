@@ -53,7 +53,9 @@ model Appointment {
   id               String          @id @default(uuid())
   from             String
   to               String
-  date             String
+  day String 
+  month String
+  year String 
   userId           String
   teacherProfileId String?
   accepted         Boolean         @default(false)
