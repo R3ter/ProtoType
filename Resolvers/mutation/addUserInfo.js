@@ -50,7 +50,7 @@ const addUserInfo =async(parent, {
                 connect:{
                     id:data.Area
                 }
-            }
+            } 
         }else{
             delete data.Area
         }
@@ -63,18 +63,14 @@ const addUserInfo =async(parent, {
         }else{
             delete data.Current_education_level
         }
-        if(data.preferred_materials){
-            data.preferred_materials={
-                connect:data.preferred_materials.map((e)=>{return{id:e}})
-            }
-            console.log(data.preferred_materials)
-        }else{
-            delete data.preferred_materials
-        }
+        console.log(data.preferred_materials?data.preferred_materials:null)
     const userInfo = await prisma.userInfo.upsert({
         where: { userId:id },
         update: {
             ...data,
+            preferred_materials:data.preferred_materials?{
+                set:data.preferred_materials.map((e)=>{return{id:e}})
+            }:undefined
         },
         create: {
             user:{
@@ -83,6 +79,10 @@ const addUserInfo =async(parent, {
                 }
             },
             ...data,
+            
+            preferred_materials:data.preferred_materials?{
+                connect:data.preferred_materials.map((e)=>{return{id:e}})
+            }:undefined
         }
     })
     return !!userInfo
