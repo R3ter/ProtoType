@@ -51,14 +51,13 @@ model UserInfo {
 
 model Appointment {
   id               String          @id @default(uuid())
-  from             String
-  to               String
+  time             String 
   day String 
   month String
   year String 
   userId           String
   teacherProfileId String?
-  accepted         Boolean         @default(false)
+  state            Int             @default(0)
   teacherId        String
   note             String
   teacher          User            @relation("TeacherAppointments", fields: [teacherId], references: [id])

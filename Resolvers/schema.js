@@ -37,8 +37,7 @@ type Mutation{
 }
 input AppointmentInput{
   teacherId:ID!
-  from:String!
-  to:String!
+  time:String!
   day:String!
   month:String!
   year:String!
@@ -110,13 +109,11 @@ type TeacherProfile{
 }
 type Appointment{
   id: ID!
-  from:String!
-  to:String!
-  
+  time:String!
   day:String!
   month:String!
   year:String!
-
+  state:Int!
   user:User!
   teacher:User!
 }
