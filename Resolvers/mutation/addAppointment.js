@@ -4,18 +4,25 @@ const appAppointment=async(parent,
         data:{
             teacherId,
             time,
-            day,
-            month,
-            year,
+            date,
             courseId,
             courseHoursType, 
             note,
         }
 },{prisma,req},info)=>{
     const {id} = checkToken({token:req.headers.token})
+    const appointment= await prisma.appointment.findFirst({
+        where:{
+            teacherId,
+            date,time
+        }
+    })
+    if(appointment){
+        throw new Error("appointment is already booked")
+    }
     return await prisma.appointment.create({
         data:{
-            day,month,year,note,time,
+            date,note,time,
             course:{
                 connect:{
                     id:courseId

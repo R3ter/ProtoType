@@ -52,9 +52,7 @@ model UserInfo {
 model Appointment {
   id               String          @id @default(uuid())
   time             String          
-  day String 
-  month String
-  year String 
+  date String
   course Materials
   courseHoursType courseHoursType 
   coursePrice Float

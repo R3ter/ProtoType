@@ -17,8 +17,9 @@ type Query{
   getTeacherReviews(teacherID:ID!):[TeacherReview]
   getTeacherCourses(teacherID:ID!):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
-  getTeacherAppointments(teacherID:ID!,day:String!,
-    month:String!,year:String!):[Appointment]
+  getTeacherAppointments(teacherID:ID!,
+    date:String!):[Appointment]
+
   getTeachersOnMap:MapInfo!
 }
 type Mutation{
@@ -37,10 +38,8 @@ type Mutation{
 }
 input AppointmentInput{
   teacherId:ID!
+  date:String!
   time:String!
-  day:String!
-  month:String!
-  year:String!
   courseId:ID!
   courseHoursType:courseHoursType! 
   note:String
@@ -117,9 +116,7 @@ type TeacherProfile{
 type Appointment{
   id: ID!
   time:String!
-  day:String!
-  month:String!
-  year:String!
+  date:String!
   course:Materials!
   coursePrice:Float!
   state:Int!
@@ -241,6 +238,10 @@ enum Education_Level_enum {
 enum Role {
   STUDENT
   TEACHER
+}
+enum Hours{
+  one,
+  
 }
 `;
 
