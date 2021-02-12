@@ -10,6 +10,13 @@ const getTeacherAppointment=async(parent, {
           day,month,year
         },
         include:{
+          course:{
+            select:{
+              lookUp:true,
+              id:true,
+              
+            }
+          },
           user:true,
           teacher:true
         }

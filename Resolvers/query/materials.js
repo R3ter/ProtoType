@@ -7,6 +7,7 @@ const materials=(parent, args, {req,prisma}, info)=>{
             lookUp:true,
             education_level:{
                 select:{
+                    education_level:true,
                     lookUp:true
                 }
             }

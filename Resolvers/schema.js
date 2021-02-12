@@ -41,7 +41,14 @@ input AppointmentInput{
   day:String!
   month:String!
   year:String!
+  courseId:ID!
+  courseHoursType:courseHoursType! 
   note:String
+}
+enum courseHoursType{
+  oneHour
+  OneAndHalf
+  TwoHours
 }
 type MapInfo{
   teachers:[TeacherMapInfo]
@@ -113,8 +120,12 @@ type Appointment{
   day:String!
   month:String!
   year:String!
+  course:Materials!
+  coursePrice:Float!
   state:Int!
+  userId:ID!
   user:User!
+  courseHoursType:courseHoursType!
   teacher:User!
 }
 type TeacherReview{
