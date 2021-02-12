@@ -51,7 +51,7 @@ model UserInfo {
 
 model Appointment {
   id               String          @id @default(uuid())
-  time             String          
+
   date String
   course Materials
   courseHoursType courseHoursType 
@@ -83,8 +83,22 @@ model TeacherProfile {
   appointments Appointment[]
   subjects     CourseTag[]
   Materials    Materials[]
+  freeTimes    workDays[]
 }
-
+model workDays{
+  id           String        @id @default(uuid())
+  day Day @unique
+  hours Int[]
+}
+enum Day {
+  sunday
+  monday
+  tuesday
+  wedenesday
+  thursday
+  friday
+  suterday
+}
 model CourseTag {
   id               String          @id @default(uuid())
   name             String?

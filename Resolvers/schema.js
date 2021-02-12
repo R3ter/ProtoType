@@ -39,7 +39,7 @@ type Mutation{
 input AppointmentInput{
   teacherId:ID!
   date:String!
-  time:String!
+  time:Float!
   courseId:ID!
   courseHoursType:courseHoursType! 
   note:String
@@ -238,10 +238,6 @@ enum Education_Level_enum {
 enum Role {
   STUDENT
   TEACHER
-}
-enum Hours{
-  one,
-  
 }
 `;
 
