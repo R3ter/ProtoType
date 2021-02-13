@@ -14,11 +14,12 @@ const checkActivationCode = async(code,token,callback,rejected)=>{
 const sendActivateCode=(email)=>{
     const randomId = cryptoRandomString({length: 4, type: 'numeric'})
     codes[email] = randomId
+    
+    console.log(`activation code ${randomId}`)
+
     setTimeout(()=> {
         delete codes[email]
       }, 300000);
-      console.log(`http://localhost:4000/activateAccount?userId=${email}&code=${randomId}`)
-
     var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
