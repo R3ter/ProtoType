@@ -30,9 +30,9 @@ const appAppointment=async(parent,
         }
     }).then((e)=>e.hours)
     .catch(()=>false)
-    if(!freeTimes||!freeTimes.includes(moment(dateTime).format("HH:mm"))){
-        throw new Error("time is not available")
-    }
+    // if(!freeTimes||!freeTimes.includes(moment(dateTime).format("HH:mm"))){
+    //     throw new Error("time is not available")
+    // }
     return await prisma.appointment.create({
         data:{
             date:moment(dateTime).format("DD/MM/YYYY"),note,
