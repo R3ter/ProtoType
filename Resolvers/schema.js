@@ -18,7 +18,7 @@ type Query{
   getTeacherCourses(teacherID:ID!):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!,
-    date:String!):teacherSchedule
+    date:String!):[teacherSchedule]
 
   getTeachersOnMap:MapInfo!
   getPopularTeacher:[Materials]
@@ -101,8 +101,9 @@ input userInfoInput{
   Area:ID
 }
 type teacherSchedule{
-  appointments:[Appointment]
-  availableTime:[String]
+  time:String!
+  day:String!
+  state:Int!
 }
 type TeacherProfile{
   id:ID!
