@@ -7,6 +7,7 @@ type Query{
   users:[User]
   getMaterials(skip:Int,take:Int):[Materials]
   getCities:[City]
+  getMaterialInfo(materialID:ID!):Materials
   getAreas(cityId:ID):[Area]
   getUserInfo(userId:ID!):UserInfo
   getMyInfo:UserInfo
@@ -119,6 +120,7 @@ type TeacherProfile{
   courseCount:Int!
   averageRating:Int!
   ratingCounts:Int! 
+  register:Int!
   workingDays:[workingDay]
 }
 type workingDay{
@@ -204,6 +206,7 @@ type Materials {
   reviews:[MaterialReview]
   averageRating:Int!
   ratingCounts:Int!
+  studentImages:[String]
 }
 input MaterialsInput {
   name:lookUp!
