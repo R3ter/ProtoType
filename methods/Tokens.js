@@ -52,7 +52,7 @@ const checkToken=({token,activeRequired=true,Roles=["STUDENT","TEACHER"]})=>{
         if(token.Activate||!activeRequired){
             return token
         }
-        throw new Error("account is not active")
+        //throw new Error("account is not active")
     }
     throw new AuthenticationError("Unauthenticate")
 }
