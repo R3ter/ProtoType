@@ -50,9 +50,9 @@ const checkToken=({token,activeRequired=true,Roles=["STUDENT","TEACHER"]})=>{
             throw new Error('you are not authorized to take this action')
         }
         if(token.Activate||!activeRequired){
-            return token
         }
         //throw new Error("account is not active")
+        return token
     }
     throw new AuthenticationError("Unauthenticate")
 }
