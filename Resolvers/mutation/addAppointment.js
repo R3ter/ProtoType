@@ -12,6 +12,7 @@ const appAppointment=async(parent,
         }
 },{prisma,req},info)=>{
     const {id} = checkToken({token:req.headers.token})
+  var dt = moment(dateTime, "YYYY-MM-DD HH:mm:ss")
     
     // const appointment= await prisma.appointment.findFirst({
     //     where:{
@@ -22,6 +23,16 @@ const appAppointment=async(parent,
     // if(appointment){
     //     throw new Error("appointment is already booked")
     // }
+    const freeTimes=await prisma.workingDay.findFirst({
+        where:{
+          teacherId:teacherId,
+          day:dt.format('dddd').toLowerCase()
+        }
+    }).then((e)=>e.hours)
+    .catch(()=>false)
+    if(!freeTimes||!freeTimes.includes(moment(dateTime).format("HH:mm"))){
+        throw new Error("time is not available")
+    }
     return await prisma.appointment.create({
         data:{
             date:moment(dateTime).format("DD/MM/YYYY"),note,

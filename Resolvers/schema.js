@@ -19,7 +19,7 @@ type Query{
   getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!,
     date:String!):[teacherSchedule]
-
+  getMyBooking:[Appointment]
   getTeachersOnMap:MapInfo!
   getPopularTeacher:[Materials]
   getClassStudents(courseID:ID!):[User]
