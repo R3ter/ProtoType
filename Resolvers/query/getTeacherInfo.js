@@ -12,10 +12,11 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
                     full_name:true,
                     email:true,
                     phone_number:true,
-                    userInfo:true
-                }
+                    userInfo:true,
+                },
             },
-            description:true,
+
+            description:true
         }
     }).then(async(e)=>{
         return {
@@ -25,8 +26,18 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
                     userId:teacherID
                 },
                 include:{
-                    City:true,
-                    Area:true
+                    City:{
+                        select:{
+                            id:true,
+                            lookUp:true
+                        }
+                    },
+                    Area:{
+                        select:{
+                            id:true,
+                            lookUp:true
+                        }
+                    }
                 }
             }),
             ...await prisma.teacherReview.aggregate({
