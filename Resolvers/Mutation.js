@@ -8,7 +8,9 @@ import uploadUserImage from './mutation/uploadImage.js'
 import TeacherAddMaterial from './mutation/Teacher/TeacherAddMaterial.js'
 import becomeaTeacher from './mutation/Teacher/becomeATeacher.js'
 import addAppointment from './mutation/addAppointment.js'
+import addTeacherWorkTimes from './mutation/Teacher/addTeacherFreeTime.js'
 const Mutation={
+    addTeacherWorkTimes,
     addAppointment,
     becomeaTeacher,
     TeacherAddMaterial,

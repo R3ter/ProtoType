@@ -11,18 +11,27 @@ const appAppointment=async(parent,
         }
 },{prisma,req},info)=>{
     const {id} = checkToken({token:req.headers.token})
-    const appointment= await prisma.appointment.findFirst({
-        where:{
-            teacherId,
-            date,time
-        }
-    })
-    if(appointment){
-        throw new Error("appointment is already booked")
-    }
+    const dt = moment(date, "YYYY-MM-DD HH:mm:ss")
+    // const appointment= await prisma.appointment.findFirst({
+    //     where:{
+    //         teacherId,
+    //         date,time
+    //     }
+    // })
+    // if(appointment){
+    //     throw new Error("appointment is already booked")
+    // }
     return await prisma.appointment.create({
         data:{
-            date,note,time,
+            date,note,
+            time:await prisma.workingHour.findFirst({
+                where:{
+                    workingDay:{
+                        day:dt.format('dddd')
+                    },
+                    teacherId
+                }
+            }),
             course:{
                 connect:{
                     id:courseId

@@ -1,3 +1,26 @@
-const addMyFreeTime=async(parent, {teacherID}, {req,prisma}, info)=>{
-    
+import {checkToken} from './../../../methods/Tokens.js'
+
+const addMyFreeTime=async(parent, {day,hours}, {req,prisma}, info)=>{
+    const {id} = checkToken({token:req.headers.token})
+    return await prisma.teacherProfile.update({
+        where:{
+            teacherId:id
+        },
+        data:{
+          freeTimes:{
+            update:{
+                data:{
+                    day,
+                    hours:{
+                      set:hours
+                    }
+                }
+            }
+          }
+        }
+    }).then((e)=>{
+        return !!e
+    }).catch((e)=>false)
 }
+
+export default addMyFreeTime 

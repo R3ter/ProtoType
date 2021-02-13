@@ -56,11 +56,14 @@ model Appointment {
   course Materials
   courseHoursType courseHoursType 
   coursePrice Float
+  time String
   userId           String
   teacherProfileId String?
   state            Int             @default(0)
   teacherId        String
   note             String
+  teacherAccepet   Boolean
+  studentAccepet   Boolean
   teacher          User            @relation("TeacherAppointments", fields: [teacherId], references: [id])
   TeacherProfile   TeacherProfile? @relation(fields: [teacherProfileId], references: [id])
   user             User            @relation("studentAppointments", fields: [userId], references: [id])
@@ -87,17 +90,25 @@ model TeacherProfile {
 }
 model workDays{
   id           String        @id @default(uuid())
-  day Day @unique
+  day Day 
   hours Int[]
+  teacherProfile TeacherProfile @relation(fields: [teacherId], references: [teacherId])
+  teacherId    String        
+}
+model WorkingHour{
+  id           String        @id @default(uuid())
+  workingDay workDays @relation(fields: [workingDayId], references: [id])
+  workingDayId String 
+  hour Int
 }
 enum Day {
   sunday
   monday
   tuesday
-  wedenesday
+  wednesday
   thursday
   friday
-  suterday
+  saturday
 }
 model CourseTag {
   id               String          @id @default(uuid())

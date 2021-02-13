@@ -233,3 +233,18 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //   }
 // }).then((e)=>console.log(e))
 
+
+// prisma.teacherProfile.update({
+//   where:{
+//     teacherId:"e26be7ef-3174-41b2-bec4-99d658eea851"
+//   },
+//   data:{
+//     subjects:{
+//       connect:{
+//         id:"6c23a3bb-1fae-4e9d-a7e3-4796e95e4f8e"
+//       }
+//     }
+//   }
+// }).then((e)=>{
+//   console.log(e)
+// })

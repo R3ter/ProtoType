@@ -2,8 +2,18 @@ import { checkToken } from "../../methods/Tokens.js"
 
 const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
     const {id} = checkToken({token:req.headers.token})
-
+    const tags=await prisma.userInfo.findUnique({where:{
+        userId:id
+      },include:{
+        preferred_materials:true
+      }
+    }).then((e)=>e.preferred_materials.map((e)=>e.id))
+    console.log(tags)
     const teachers= await prisma.teacherProfile.findMany({
+        where:{
+            OR:tags.map((e)=>({subjects:{some:{id:e}}}))
+            
+          },
         include:{
             user:{
                 select:{
@@ -16,12 +26,12 @@ const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
                 }
             },
             description:true,
-            subjects:true
         }
     })
     return teachers.map(async (e)=>{
         return {
             ...e,
+            teacher:e.user,
             id:e.teacherId,
             ...await prisma.teacherReview.aggregate({
                 where:{

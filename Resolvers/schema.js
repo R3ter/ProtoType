@@ -21,8 +21,10 @@ type Query{
     date:String!):[Appointment]
 
   getTeachersOnMap:MapInfo!
+  getPopularTeacher:[Materials]
 }
 type Mutation{
+  addTeacherWorkTimes(hours:[Int!]!,day:Day!):Boolean!
   addAppointment(data:AppointmentInput!):Boolean!
   becomeaTeacher(message:String!):Boolean!
   TeacherAddMaterial(data:MaterialsInput):Result
@@ -221,6 +223,15 @@ type Education_Level{
 type CourseTag{
   id:ID!
   name:String!
+}
+enum Day {
+  sunday
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+  saturday
 }
 enum Education_Level_enum {
   Kindergarten
