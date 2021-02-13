@@ -1,8 +1,9 @@
 import { checkToken } from "../../methods/Tokens.js"
 
-const BestMaterials= async(parent, args, {req,prisma}, info)=>{
+const BestMaterials= async(parent, {skip=0,take=5}, {req,prisma}, info)=>{
     checkToken({token:req.headers.token})
     const materials = await prisma.materials.findMany({
+        skip,take,
         include:{
             lookUp:true,
             description:true,

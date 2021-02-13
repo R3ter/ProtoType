@@ -1,9 +1,16 @@
 import { checkToken } from "../../methods/Tokens.js"
-const WorkingHour={
-    async userBooked(parent, args, {req}){
+const teacherSchedule={
+    async state(parent, args, {req,prisma}){
+        console.log(parent)
     const {id} = checkToken({token:req.headers.token})
-
-        return parent.bookedStudentID===id
+    const appointment=await prisma.appointment.findFirst({
+        where:{
+            userId:id
+        }
+      })
+      if(appointment)
+        return 2
+    return parent.state>1?1:parent.state
     }
 }
-export default WorkingHour
+export default teacherSchedule

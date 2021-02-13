@@ -5,7 +5,7 @@ const typeDefs=gql`
 scalar DateTime
 type Query{
   users:[User]
-  getMaterials:[Materials]
+  getMaterials(skip:Int,take:Int):[Materials]
   getCities:[City]
   getAreas(cityId:ID):[Area]
   getUserInfo(userId:ID!):UserInfo
@@ -21,7 +21,7 @@ type Query{
     date:String!):[teacherSchedule]
   getMyBooking:[Appointment]
   getTeachersOnMap:MapInfo!
-  getPopularTeacher:[Materials]
+  getPopularTeacher(skip:Int,take:Int):[Materials]
   getClassStudents(courseID:ID!):[User]
 }
 type Mutation{
