@@ -18,7 +18,6 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
             description:true,
         }
     }).then(async(e)=>{
-        console.log(e)
         return {
             ...e,
             ...await prisma.userInfo.findUnique({

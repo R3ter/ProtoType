@@ -18,14 +18,14 @@ type Query{
   getTeacherCourses(teacherID:ID!):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!,
-    date:String!):[Appointment]
+    date:String!):teacherSchedule
 
   getTeachersOnMap:MapInfo!
   getPopularTeacher:[Materials]
   getClassStudents(courseID:ID!):[User]
 }
 type Mutation{
-  addTeacherWorkTimes(hours:[Int!]!,day:Day!):Boolean!
+  addTeacherWorkTimes(hours:[String!]!,day:Day!):Boolean!
   addAppointment(data:AppointmentInput!):Boolean!
   becomeaTeacher(message:String!):Boolean!
   TeacherAddMaterial(data:MaterialsInput):Result
@@ -41,8 +41,7 @@ type Mutation{
 }
 input AppointmentInput{
   teacherId:ID!
-  date:String!
-  time:Float!
+  dateTime:String!
   courseId:ID!
   courseHoursType:courseHoursType! 
   note:String
@@ -101,6 +100,10 @@ input userInfoInput{
   City:ID
   Area:ID
 }
+type teacherSchedule{
+  appointments:[Appointment]
+  availableTime:[String]
+}
 type TeacherProfile{
   id:ID!
   user:User!
@@ -115,6 +118,21 @@ type TeacherProfile{
   courseCount:Int!
   averageRating:Int!
   ratingCounts:Int! 
+  workingDays:[workingDay]
+}
+type workingDay{
+  id:ID!
+  day:Day 
+  hours:[WorkingHour]
+  teacherId:String!
+}
+type WorkingHour{
+  id:ID!
+  workingDay:workingDay
+  workingDayId:String 
+  booked:Boolean!
+  userBooked:Boolean!
+  hour:Int
 }
 type Appointment{
   id: ID!

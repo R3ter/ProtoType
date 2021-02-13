@@ -1,17 +1,18 @@
 import {checkToken} from './../../methods/Tokens.js'
+import moment from 'moment'
+console.log(moment(new Date(),"HH:mm"))
 const appAppointment=async(parent,
     {
         data:{
             teacherId,
-            time,
-            date,
+            dateTime,
             courseId,
             courseHoursType, 
             note,
         }
 },{prisma,req},info)=>{
     const {id} = checkToken({token:req.headers.token})
-    const dt = moment(date, "YYYY-MM-DD HH:mm:ss")
+    
     // const appointment= await prisma.appointment.findFirst({
     //     where:{
     //         teacherId,
@@ -23,20 +24,15 @@ const appAppointment=async(parent,
     // }
     return await prisma.appointment.create({
         data:{
-            date,note,
-            time:await prisma.workingHour.findFirst({
-                where:{
-                    workingDay:{
-                        day:dt.format('dddd')
-                    },
-                    teacherId
-                }
-            }),
+            date:moment(dateTime).format("DD/MM/YYYY"),note,
+            time:moment(dateTime).format("HH:mm"),
             course:{
                 connect:{
                     id:courseId
                 }
             },
+            studentAccepet:true,
+            teacherAccepet:false,
             courseHoursType,
             coursePrice:await prisma.education_Level.findUnique({
                 where:{

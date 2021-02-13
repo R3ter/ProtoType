@@ -86,20 +86,14 @@ model TeacherProfile {
   appointments Appointment[]
   subjects     CourseTag[]
   Materials    Materials[]
-  freeTimes    workDays[]
+  workingDays  workingDay[]
 }
-model workDays{
+model workingDay{
   id           String        @id @default(uuid())
   day Day 
-  hours Int[]
+  hours String[]
   teacherProfile TeacherProfile @relation(fields: [teacherId], references: [teacherId])
   teacherId    String        
-}
-model WorkingHour{
-  id           String        @id @default(uuid())
-  workingDay workDays @relation(fields: [workingDayId], references: [id])
-  workingDayId String 
-  hour Int
 }
 enum Day {
   sunday

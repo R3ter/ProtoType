@@ -7,18 +7,16 @@ const addMyFreeTime=async(parent, {day,hours}, {req,prisma}, info)=>{
             teacherId:id
         },
         data:{
-          freeTimes:{
-            update:{
-                data:{
-                    day,
-                    hours:{
-                      set:hours
-                    }
+            workingDays:{
+            create:{
+              day,
+              hours:{
+                  set:hours
                 }
             }
           }
         }
-    }).then((e)=>{
+      }).then((e)=>{
         return !!e
     }).catch((e)=>false)
 }

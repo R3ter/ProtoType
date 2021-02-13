@@ -10,6 +10,7 @@ import Education_Level from './Resolvers/types/Education_Level.js'
 import TeacherProfile from './Resolvers/types/TeacherProfile.js'
 import Query from './Resolvers/Query.js'
 import apolloServer from 'apollo-server';
+import WorkingHour from './Resolvers/types/WorkingHour.js'
 import TeacherMapInfo from './Resolvers/types/TeacherMapInfo.js'
 import "./methods/messages/sendMessage.js" 
 
@@ -25,6 +26,7 @@ const server = new ApolloServer({
     Mutation,
     Materials,
     City,
+    WorkingHour,
     CourseTag,
     TeacherMapInfo,
     Area,
@@ -233,18 +235,3 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //   }
 // }).then((e)=>console.log(e))
 
-
-// prisma.teacherProfile.update({
-//   where:{
-//     teacherId:"e26be7ef-3174-41b2-bec4-99d658eea851"
-//   },
-//   data:{
-//     subjects:{
-//       connect:{
-//         id:"6c23a3bb-1fae-4e9d-a7e3-4796e95e4f8e"
-//       }
-//     }
-//   }
-// }).then((e)=>{
-//   console.log(e)
-// })
