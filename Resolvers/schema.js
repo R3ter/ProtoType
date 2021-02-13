@@ -22,6 +22,7 @@ type Query{
 
   getTeachersOnMap:MapInfo!
   getPopularTeacher:[Materials]
+  getClassStudents(courseID:ID!):[User]
 }
 type Mutation{
   addTeacherWorkTimes(hours:[Int!]!,day:Day!):Boolean!

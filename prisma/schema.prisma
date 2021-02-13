@@ -189,6 +189,8 @@ model Materials {
   UserInfo          UserInfo?        @relation(fields: [userInfoId], references: [id])
   tags              CourseTag[]
   reviews           MaterialReview[]
+  studentsID String[]
+  
 }
 
 model LookUp {

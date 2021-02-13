@@ -14,7 +14,9 @@ import getTeacherCourses from './query/getTeacherCourses.js'
 import getTeachersOnMap from './query/getTeachersOnMap.js'
 import getUserInfo from './query/getUserInfo.js'
 import getPopularTeacher from './query/getPopularTeacher.js'
+import getClassStudents from './query/getClassStudents.js'
 const Query={
+    getClassStudents,
     getPopularTeacher,
     getTeachersOnMap,
     users,
