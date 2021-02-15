@@ -52,7 +52,7 @@ model UserInfo {
 
 model Appointment {
   id               String          @id @default(uuid())
-  dateTime         DateTime
+  // dateTime         DateTime
   date String
   course Materials
   courseHoursType courseHoursType 
