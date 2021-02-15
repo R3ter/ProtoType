@@ -23,6 +23,13 @@ const getMyInfo=(parent, {userId}, {req,prisma}, info)=>{
                     latitude:true
                 }
             },
+            Current_education_level:{
+                select:{
+                    lookUp:true,
+                    education_level:true,
+                    id:true
+                }
+            },
             preferred_materials:{
                 select:{
                     lookUp:true,
