@@ -7,6 +7,7 @@ const getMyInfo=(parent, args, {req,prisma}, info)=>{
             userId:id
         },include: {
             user: true,
+            userInfo:true,
             Area:{
                 select:{
                     lookUp:true,

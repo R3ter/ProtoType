@@ -9,7 +9,11 @@ import TeacherAddMaterial from './mutation/Teacher/TeacherAddMaterial.js'
 import becomeaTeacher from './mutation/Teacher/becomeATeacher.js'
 import addAppointment from './mutation/addAppointment.js'
 import addTeacherWorkTimes from './mutation/Teacher/addTeacherFreeTime.js'
+import editProfileInfo from './mutation/editProfileInfo.js'
+import changeMyPassword from "./mutation/changePassword.js"
 const Mutation={
+    changeMyPassword,
+    editProfileInfo,
     addTeacherWorkTimes,
     addAppointment,
     becomeaTeacher,

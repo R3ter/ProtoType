@@ -26,6 +26,8 @@ type Query{
   getClassStudents(courseID:ID!):[User]
 }
 type Mutation{
+  changeMyPassword(currentPassword:String!,newPassword:String!):Result!
+  editProfileInfo(data:userInfoInput!):Boolean!
   addTeacherWorkTimes(hours:[String!]!,day:Day!):Boolean!
   addAppointment(data:AppointmentInput!):Boolean!
   becomeaTeacher(message:String!):Boolean!
@@ -99,6 +101,7 @@ input userInfoInput{
   longitude:String
   latitude:String
   City:ID
+  full_name:String
   Area:ID
 }
 type teacherSchedule{
