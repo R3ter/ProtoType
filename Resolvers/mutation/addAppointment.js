@@ -35,6 +35,7 @@ const appAppointment=async(parent,
     // }
     return await prisma.appointment.create({
         data:{
+            dateTime,
             date:moment(dateTime).format("DD/MM/YYYY"),note,
             time:moment(dateTime).format("HH:mm"),
             course:{
