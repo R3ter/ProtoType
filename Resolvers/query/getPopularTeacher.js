@@ -8,12 +8,11 @@ const getBestTeachers= async(parent, {skip=0,take=5}, {req,prisma}, info)=>{
         preferred_materials:true
       }
     }).then((e)=>e.preferred_materials.map((e)=>e.id))
-    console.log(tags)
     const teachers= await prisma.teacherProfile.findMany({
         skip,take,
-        where:{
-            OR:tags.map((e)=>({subjects:{some:{id:e}}}))
-          },
+        // where:{
+        //     OR:tags.map((e)=>({subjects:{some:{id:e}}}))
+        //   },
         include:{
             user:{
                 select:{
