@@ -94,6 +94,7 @@ type UserInfo{
   Area:Area
 }
 input userInfoInput{
+  image_URL:String
   birth_date:DateTime
   Current_education_level:Education_Level_enum
   preferred_materials:[ID]
