@@ -20,7 +20,6 @@ const getTeacherAppointment=async(parent, {
         return {
           time:e,
           state:appointments.filter(f => {
-            console.log(f)
             return f.time==e
           }).length,
           day:moment(date).format('dddd').toLowerCase()

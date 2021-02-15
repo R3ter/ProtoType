@@ -3,6 +3,7 @@ import apollo from 'apollo-server'
 const {gql}=apollo
 const typeDefs=gql`
 scalar DateTime
+
 type Query{
   users:[User]
   getMaterials(skip:Int,take:Int):[Materials]
@@ -90,6 +91,7 @@ type UserInfo{
   latitude:String
   image_URL:String
   cover_URL:String
+  about:String
   City:City
   Area:Area
 }

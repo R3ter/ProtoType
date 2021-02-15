@@ -33,6 +33,7 @@ model UserInfo {
   userId                  String           @unique
   birth_date              DateTime         @default(now())
   address                 String?
+  about                   String?
   createdAt               DateTime         @default(now())
   cityId                  String?
   areaId                  String?
@@ -51,7 +52,7 @@ model UserInfo {
 
 model Appointment {
   id               String          @id @default(uuid())
-  dateTime         DateTime
+  // dateTime         DateTime
   date String
   course Materials
   courseHoursType courseHoursType 
