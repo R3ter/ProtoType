@@ -102,6 +102,7 @@ input userInfoInput{
   preferred_materials:[ID]
   address:String
   longitude:String
+  about:String
   latitude:String
   City:ID
   full_name:String
