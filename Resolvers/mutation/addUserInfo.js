@@ -1,8 +1,6 @@
 import { checkToken } from "../../methods/Tokens.js"
 import isLength from 'validator/lib/isLength.js'
 const addUserInfo =async(parent, {
-    skipedInfo=false,
-    skipedMaterials=false,
     data}, {req,prisma}, info)=>{
     const {id}=checkToken({token:req.headers.token})
 
@@ -54,16 +52,15 @@ const addUserInfo =async(parent, {
         }else{
             delete data.Area
         }
-        if(data.Current_education_level){
-            data.Current_education_level={
+        if(data.Current_education_level_ID){
+            data.Current_education_level_ID={
                 connect:{
-                    education_level:data.Current_education_level
+                    id:data.Current_education_level_ID
                 }
             }
         }else{
-            delete data.Current_education_level
+            delete data.Current_education_level_ID
         }
-        console.log(data.preferred_materials?data.preferred_materials:null)
     const userInfo = await prisma.userInfo.upsert({
         where: { userId:id },
         update: {

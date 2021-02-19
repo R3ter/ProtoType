@@ -111,7 +111,7 @@ type UserInfo{
 input userInfoInput{
   image_URL:String
   birth_date:DateTime
-  Current_education_level:ID
+  Current_education_level_ID:ID
   preferred_materials:[ID]
   address:String
   longitude:String
