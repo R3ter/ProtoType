@@ -217,7 +217,6 @@ type Materials {
   id: ID!
   name:String!
   image_URL:String
-  teacher:User!
   description:String
   education_level:Education_Level!
   tags:[CourseTag]

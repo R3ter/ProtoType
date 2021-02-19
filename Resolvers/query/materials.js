@@ -12,7 +12,6 @@ const BestMaterials= async(parent, {skip=0,take=5}, {req,prisma}, info)=>{
                     lookUp:true
                 }
             },
-            reviews:true,
             education_level:{
                 select:{
                     lookUp:true
