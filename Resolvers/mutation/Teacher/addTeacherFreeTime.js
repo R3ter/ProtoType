@@ -1,6 +1,5 @@
 import {checkToken} from './../../../methods/Tokens.js'
 import moment from 'moment'
-console.log(moment("2021-02-18T21:00:14.850Z").format('mm'))
 const addMyFreeTime=async(parent, {fromTo}, {req,prisma}, info)=>{
   
   const {id} = checkToken({Roles:"TEACHER",token:req.headers.token})
