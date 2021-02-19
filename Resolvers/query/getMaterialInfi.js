@@ -7,7 +7,7 @@ const getMaterialInfo=async(parent,{materialID},{prisma,req},inf)=>{
             lookUp:true,
             description:true
         }
-    }),studentImages:await prisma.materialReview.findMany({
+    }).catch(()=>null),studentImages:await prisma.materialReview.findMany({
         where:{
             materialID
         },
