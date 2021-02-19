@@ -25,7 +25,7 @@ type Query{
   getMyBooking:[Appointment]
   getSchoolTypes:[SchoolType]!
   getTeachersOnMap:MapInfo!
-  getPopularTeacher(skip:Int,take:Int):[Materials]
+  getPopularTeacher(skip:Int,take:Int):[TeacherProfile]
   getClassStudents(courseID:ID!):[User]
 }
 type Mutation{

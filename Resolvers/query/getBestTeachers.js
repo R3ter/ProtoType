@@ -5,17 +5,8 @@ const getBestTeachers= async(parent, {data}, {req,prisma}, info)=>{
 
     const teachers= await prisma.teacherProfile.findMany({
         include:{
-            user:{
-                select:{
-                    id:true,
-                    full_name:true,
-                    phone_number:true,
-                    email:true,
-                    userInfo:true
-                    
-                }
-            },
-            description:true,
+            user:true,
+            userInfo:true,
             subjects:{
                 select:{
                     lookUp:true,
