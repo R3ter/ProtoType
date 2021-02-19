@@ -41,7 +41,8 @@ const addMyFreeTime=async(parent, {fromTo}, {req,prisma}, info)=>{
         }
       }).then((e)=>{
         return !!e
-    }).catch(()=>false)
+    }).catch((e)=>{
+      return false})
 }
 
 export default addMyFreeTime 

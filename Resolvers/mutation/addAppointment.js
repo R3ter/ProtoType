@@ -1,13 +1,6 @@
 import {checkToken} from './../../methods/Tokens.js'
 import moment from 'moment'
 
-console.log(
-    moment("01:30","hh:mm").isBetween(
-        moment("01:00","hh:mm"),
-        moment("02:00","hh:mm")
-    )
-)
-
 const appAppointment=async(parent,
     {
         data:{
@@ -16,10 +9,13 @@ const appAppointment=async(parent,
             courseId,
             courseHoursType, 
             note,
+            studentCount
         }
 },{prisma,req},info)=>{
     const {id} = checkToken({token:req.headers.token})
-
+    if(studentCount>4||studentCount<1){
+        throw new Error("Max 4 students")
+    }
     if(moment(dateTime).format('mm')!="00"&&moment(dateTime).format('mm')!="30"){
         throw new Error("date is not correct!")
     }
@@ -34,12 +30,8 @@ const appAppointment=async(parent,
         const times=e.split("/-/")
 
         if(moment(moment(dateTime).format("HH:mm A"),"HH:mm A").isBetween(
-         
-            moment(     moment(times[0]).format("HH:mm A"),"HH:mm A")
-            ,
-       
-            
-            moment(     moment(times[1]).format("HH:mm A"),"HH:mm A"),null,"[)"
+            moment(moment(times[0]).format("HH:mm A"),"HH:mm A"),
+            moment(moment(times[1]).format("HH:mm A"),"HH:mm A"),null,"[)"
         )){
             timeIsFree=true
         }
@@ -49,6 +41,7 @@ const appAppointment=async(parent,
     }
     return await prisma.appointment.create({
         data:{
+            studentCount,
             dateTime,
             date:moment(dateTime).format("DD/MM/YYYY"),note,
             from:moment(dateTime).format("HH:mm"),
@@ -69,26 +62,32 @@ const appAppointment=async(parent,
             .format("HH:mm"),
             materialsId:courseId,
             courseHoursType,
-            coursePrice:await prisma.education_Level.findUnique({
+            ...await prisma.education_Level.findUnique({
                 where:{
-                    education_level:await prisma.materials.findFirst({
+                    education_level:await prisma.materials.findUnique({
                         where:{
                             id:courseId,
-                            teachersID:{
-                                has:teacherId
-                              }
+                            // teachersID:{
+                            //     has:teacherId
+                            //   }
                         },
                         include:{
                             education_level:true
                         }
                     }).then((e)=>e.education_level.education_level)
                     .catch((e)=>{
-                        console.log(e)
                         throw new Error("material is not defined")})
                 }
             })
-            .then((e)=>e[courseHoursType])
-            .catch(()=>{throw new Error("education level is not defined")})
+            .then((e)=>(
+                {coursePrice:e[courseHoursType]*studentCount
+                    -(e[courseHoursType]*
+                    ((studentCount*10)+(10*(studentCount-2)))/100),
+
+                    discountPercentage:e[courseHoursType]*
+                    ((studentCount*10)+(10*(studentCount-2)))/100
+                })
+            ).catch(()=>{throw new Error("education level is not defined")})
             ,
             teacherId,
             studentId:id

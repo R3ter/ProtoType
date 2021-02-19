@@ -67,6 +67,8 @@
     rejectionReason     String?
     teacherId String
     studentId String
+    discountPercentage     Float @default(0)
+    studentCount        Int 
     teacher             User @relation("teacherAppoitments",fields: [teacherId],references: [id])
     student             User @relation("studentAppoitments",fields: [studentId],references: [id])
     createdAt           DateTime          @default(now())
@@ -162,7 +164,7 @@
     name            String?
     lookUp          LookUp
     type            SchoolType
-    
+
     oneHour Float 
     OneAndHalf Float
     TwoHours Float 
