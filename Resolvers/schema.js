@@ -13,7 +13,7 @@ type Query{
   getAreas(cityId:ID):[Area]
   getUserInfo(userId:ID!):UserInfo
   getMyInfo:UserInfo
-  getEducationLevels:[Education_Level]
+  getEducationLevels(schoolType:SchoolType_enum!):[Education_Level]
   getBestTeachers:[TeacherProfile]
   getCourseTags(search:String):[CourseTag]
   BestMaterials:[Materials]
@@ -71,6 +71,11 @@ type SchoolType{
   name:String!
   schoolType:String!
 }
+enum SchoolType_enum {
+    arabic_school
+    foreign_school
+    university
+  }
 type TeacherMapInfo{
   id:ID!
   full_name:String!
