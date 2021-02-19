@@ -3,6 +3,7 @@ const getTeacherAppointment=async(parent, {
   teacherID,date,
 }, {req,prisma}, info)=>{
   const appointments=await prisma.appointment.findMany({
+    orderBy:"",
     where:{
       date,
       teacherId:teacherID
