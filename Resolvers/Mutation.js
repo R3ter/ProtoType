@@ -37,6 +37,8 @@ const Mutation={
               ...info,
               isActive:true,
               full_name,
+              isInfoComplet:false,
+              materialSet:false,
               email
               ,phone_number
           }}

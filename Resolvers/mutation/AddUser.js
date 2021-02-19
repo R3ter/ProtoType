@@ -15,9 +15,9 @@ const addUser=async (parent, {data:{
   if(!validator.isLength(full_name,{min:3,max:50})){
     return {result:false,error:"feild 'first name' must be between 3 and 20 character long"}
   }
-  if(!validator.isMobilePhone(phone_number,null,{strictMode:true})){
-    return {result:false,error:"phone number is invalid"}
-  }
+  // if(!validator.isMobilePhone(phone_number,null,{strictMode:true})){
+  //   return {result:false,error:"phone number is invalid"}
+  // }
   
   if(!validator.isEmail(email)){
     return {result:false,error:"email is invalid"}

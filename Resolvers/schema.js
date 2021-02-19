@@ -3,6 +3,7 @@ import apollo from 'apollo-server'
 const {gql}=apollo
 const typeDefs=gql`
 scalar DateTime
+scalar Time
 
 type Query{
   users:[User]
@@ -29,7 +30,7 @@ type Query{
 type Mutation{
   changeMyPassword(currentPassword:String!,newPassword:String!):Result!
   editProfileInfo(data:userInfoInput!):Boolean!
-  addTeacherWorkTimes(hours:[String!]!,day:Day!):Boolean!
+  addTeacherWorkTimes(fromTo:[fromTo!]!):Boolean!
   addAppointment(data:AppointmentInput!):Boolean!
   becomeaTeacher(message:String!):Boolean!
   TeacherAddMaterial(data:MaterialsInput):Result
@@ -43,8 +44,13 @@ type Mutation{
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
 }
+input fromTo{
+  from:DateTime!
+  to:DateTime!
+}
 input AppointmentInput{
   teacherId:ID!
+  studentCount:Int!
   dateTime:String!
   courseId:ID!
   courseHoursType:courseHoursType! 

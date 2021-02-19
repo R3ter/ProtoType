@@ -8,12 +8,6 @@ const becomeaTeacher= async(parent, {message}, {req,prisma}, info)=>{
                 connect:{
                     id
                 }
-            },
-            description:{
-                create:{
-                    ar:"waleed",
-                    eng:"adwsad"
-                }
             }
         }
     }).then(async ()=>await prisma.user.update({

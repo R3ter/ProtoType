@@ -25,8 +25,6 @@ const login = async(parent,{username,password},{prisma})=>{
                         isActive:Active,
                         isInfoComplet:!!userInfo,
                         materialSet:!!userInfo?(!!userInfo.preferred_materials?!!userInfo.preferred_materials.length:false):false,
-                        skipedMaterials,
-                        skipedInfo,
                         full_name,
                         email,
                         phone_number
@@ -55,8 +53,6 @@ const login = async(parent,{username,password},{prisma})=>{
                         isInfoComplet:!!userInfo,
                         materialSet:!!userInfo?(!!userInfo.preferred_materials?!!userInfo.preferred_materials.length:false):false,
                         full_name,
-                        skipedMaterials,
-                        skipedInfo,
                         email,
                         phone_number
                   }}

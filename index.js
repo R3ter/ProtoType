@@ -234,3 +234,79 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //     preferred_materials:true
 //   }
 // }).then((e)=>console.log(e))
+// prisma.education_Level.create({
+//   data:{
+//     education_level:"Elementary_School",
+//     FourHours:400,
+//     OneAndHalf:150,
+//     ThreeAndHalf:350,
+//     TwoHours:200,
+//     ThreeHours:300,
+//     oneHour:100,
+//     lookUp:{
+//       create:{
+//         ar:"Elementary",
+//         eng:"Elementary"
+//       }
+//     }
+//   }
+// }).then(e=>console.log(e))
+
+// prisma.materials.create({
+//   data:{
+//     description:{
+//       create:{
+//         ar:"sadawda",
+//         eng:"asdawdawdsadwa"
+//       },
+//     },
+//     lookUp:{
+//       create:{
+//         ar:"ar math",
+//         eng:"eng math"
+//       }
+//     },
+//     education_level:{
+//       connect:{
+//         education_level:"Elementary_School"
+//       }
+//     }
+//   }
+// }).then(e=>console.log(e))
+
+// prisma.teacherProfile.update({
+//   where:{
+//     teacherId:"e6152a46-6b36-4836-b96d-78c0b9abcd36"
+//   },
+//   data:{
+//     Materials:{
+//       connect:{
+//         id:"62e88255-7a2d-4f97-923d-7df46f14053e"
+//       }
+//     }
+//   }
+// }).then(e=>console.log(e))
+
+// prisma.materials.update({
+//   where:{
+//     id:"ee812625-079e-4284-be18-2106c87b72bf"
+//   },
+//   data:{
+//     teachersID:{
+//       set:["c84c2f01-b32d-42bc-9f5f-f4992c53574b"]
+//     }
+//   }
+// }).then(e=>console.log(e))
+
+// prisma.materials.findFirst({
+//   where:{
+//       id:"62e88255-7a2d-4f97-923d-7df46f14053e",
+//       teachersID:{
+//         has:""
+//       }
+//   },
+//   include:{
+//     teachers:true
+//   }
+// }).then((e)=>console.log(e))
+

@@ -1,6 +1,13 @@
 import {checkToken} from './../../methods/Tokens.js'
 import moment from 'moment'
 
+console.log(
+    moment("01:30","hh:mm").isBetween(
+        moment("01:00","hh:mm"),
+        moment("02:00","hh:mm")
+    )
+)
+
 const appAppointment=async(parent,
     {
         data:{
@@ -12,67 +19,81 @@ const appAppointment=async(parent,
         }
 },{prisma,req},info)=>{
     const {id} = checkToken({token:req.headers.token})
-  var dt = moment(dateTime, "YYYY-MM-DD HH:mm:ss")
-    
-    // const appointment= await prisma.appointment.findFirst({
-    //     where:{
-    //         teacherId,
-    //         date,time
-    //     }
-    // })
-    // if(appointment){
-    //     throw new Error("appointment is already booked")
-    // }
-    const freeTimes=await prisma.workingDay.findFirst({
+
+    if(moment(dateTime).format('mm')!="00"&&moment(dateTime).format('mm')!="30"){
+        throw new Error("date is not correct!")
+    }
+    const freeTimes=await prisma.workingDay.findUnique({
         where:{
-          teacherId:teacherId,
-          day:dt.format('dddd').toLowerCase()
+            teacherIdAndDay:teacherId+moment(dateTime).format('dddd').toLowerCase()
         }
     }).then((e)=>e.hours)
-    .catch(()=>false)
-    // if(!freeTimes||!freeTimes.includes(moment(dateTime).format("HH:mm"))){
-    //     throw new Error("time is not available")
-    // }
+    .catch(()=>[])
+    let timeIsFree=false
+    freeTimes.forEach(e => {
+        const times=e.split("/-/")
+
+        if(moment(moment(dateTime).format("HH:mm A"),"HH:mm A").isBetween(
+         
+            moment(     moment(times[0]).format("HH:mm A"),"HH:mm A")
+            ,
+       
+            
+            moment(     moment(times[1]).format("HH:mm A"),"HH:mm A"),null,"[)"
+        )){
+            timeIsFree=true
+        }
+    });
+    if(!timeIsFree){
+        return false
+    }
     return await prisma.appointment.create({
         data:{
+            dateTime,
             date:moment(dateTime).format("DD/MM/YYYY"),note,
-            time:moment(dateTime).format("HH:mm"),
-            course:{
-                connect:{
-                    id:courseId
-                }
-            },
-            studentAccepet:true,
-            teacherAccepet:false,
+            from:moment(dateTime).format("HH:mm"),
+            to:moment(dateTime).add(
+                (courseHoursType=="oneHour"||
+                courseHoursType=="OneAndHalf")?1:
+                (courseHoursType=="TwoHours"||
+                courseHoursType=="TwoAndHalf")?2:
+                (courseHoursType=="ThreeHours"||
+                courseHoursType=="ThreeAndHalf")?3:
+                4,"hours"
+            ).add(
+                ((courseHoursType=="OneAndHalf"||
+                courseHoursType=="TwoAndHalf"||
+                courseHoursType=="ThreeAndHalf")?
+                30:undefined),"minutes"
+            )
+            .format("HH:mm"),
+            materialsId:courseId,
             courseHoursType,
             coursePrice:await prisma.education_Level.findUnique({
                 where:{
-                    education_level:await prisma.materials.findUnique({
+                    education_level:await prisma.materials.findFirst({
                         where:{
-                            id:courseId
+                            id:courseId,
+                            teachersID:{
+                                has:teacherId
+                              }
                         },
                         include:{
                             education_level:true
                         }
                     }).then((e)=>e.education_level.education_level)
-                    .catch(()=>{throw new Error("material is not defined")})
+                    .catch((e)=>{
+                        console.log(e)
+                        throw new Error("material is not defined")})
                 }
             })
             .then((e)=>e[courseHoursType])
             .catch(()=>{throw new Error("education level is not defined")})
             ,
-            teacher:{
-                connect:{
-                    id:teacherId
-                }
-            },
-            user:{
-                connect:{
-                    id
-                }
-            }
+            teacherId,
+            studentId:id
         }
     }).then(()=>true)
-    .catch((e)=>false)
+    .catch(()=>false)
 }
 export default appAppointment
