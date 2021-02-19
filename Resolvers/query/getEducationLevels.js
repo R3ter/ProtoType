@@ -1,12 +1,11 @@
-const getEducationLevels=(parent, {schoolType}, {req,prisma}, info)=>{
+const getEducationLevels=(parent, {schoolTypeId}, {req,prisma}, info)=>{
     return prisma.education_Level.findMany({
         where:{
             type:{
-                schoolType
+                id:schoolTypeId
             }
         },
         include:{
-            type:true,
             lookUp:true
         }
     })

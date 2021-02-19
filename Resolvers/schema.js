@@ -13,7 +13,7 @@ type Query{
   getAreas(cityId:ID):[Area]
   getUserInfo(userId:ID!):UserInfo
   getMyInfo:UserInfo
-  getEducationLevels(schoolType:SchoolType_enum!):[Education_Level]
+  getEducationLevels(schoolTypeId:ID!):[Education_Level]
   getBestTeachers:[TeacherProfile]
   getCourseTags(search:String):[CourseTag]
   BestMaterials:[Materials]
@@ -37,7 +37,7 @@ type Mutation{
   TeacherAddMaterial(data:MaterialsInput):Result
   logout(userId:ID!,refreshToken:String!):Boolean!
   refreshToken(userId:ID!,refreshToken:String!):LoginResult!
-  CreateMaterial(lookUp:lookUp,education_level: Education_Level_enum!):Boolean!
+  CreateMaterial(lookUp:lookUp,education_levelID:ID!):Boolean!
   addUser(data:UserInput!):LoginResult!
   addUserInfo(data:userInfoInput):Boolean!
   login(username:String!,password:String!):LoginResult!
@@ -68,14 +68,10 @@ type MapInfo{
   centerLatitude:String
 }
 type SchoolType{
+  id:ID!
   name:String!
-  schoolType:String!
 }
-enum SchoolType_enum {
-    arabic_school
-    foreign_school
-    university
-  }
+
 type TeacherMapInfo{
   id:ID!
   full_name:String!
@@ -97,11 +93,7 @@ type User {
   Active: Boolean!
   userInfo: UserInfo
 }
-enum schoolTypeEnum{
-  arabic_school
-  foreign_school
-  university
-}
+
 type UserInfo{
   birth_date:String
   user:User!
@@ -119,7 +111,7 @@ type UserInfo{
 input userInfoInput{
   image_URL:String
   birth_date:DateTime
-  Current_education_level:Education_Level_enum
+  Current_education_level:ID
   preferred_materials:[ID]
   address:String
   longitude:String
@@ -238,7 +230,7 @@ input MaterialsInput {
   name:lookUp!
   image_URL:String
   description:DLookUp
-  education_level:Education_Level_enum!
+  education_levelID:ID!
   courseTags:[ID]!
 }
 type City{
@@ -267,7 +259,6 @@ input DLookUp{
 type Education_Level{
   id:ID!
   name:String!
-  education_level:Education_Level_enum!
 }
 type CourseTag{
   id:ID!
@@ -281,19 +272,6 @@ enum Day {
   thursday
   friday
   saturday
-}
-enum Education_Level_enum {
-  Kindergarten
-  Primary_School
-  Preparatory_Stage
-  Secondary_School
-  
-  Preschool
-  Elementary_School
-  Middle_School
-  High_School
-  Diploma
-  Doctorate
 }
 enum Role {
   STUDENT

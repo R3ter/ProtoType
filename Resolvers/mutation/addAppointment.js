@@ -64,17 +64,14 @@ const appAppointment=async(parent,
             courseHoursType,
             ...await prisma.education_Level.findUnique({
                 where:{
-                    education_level:await prisma.materials.findUnique({
+                    id:await prisma.materials.findUnique({
                         where:{
                             id:courseId,
                             // teachersID:{
                             //     has:teacherId
                             //   }
-                        },
-                        include:{
-                            education_level:true
                         }
-                    }).then((e)=>e.education_level.education_level)
+                    }).then((e)=>e.id)
                     .catch((e)=>{
                         throw new Error("material is not defined")})
                 }

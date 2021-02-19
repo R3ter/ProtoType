@@ -160,7 +160,6 @@
 
   model Education_Level {
     id              String               @id @default(uuid())
-    education_level Education_Level_enum @unique
     name            String?
     lookUp          LookUp
     type            SchoolType
@@ -172,15 +171,10 @@
     ThreeAndHalf Float
     FourHours Float
   }
-  enum SchoolType_enum {
-    arabic_school
-    foreign_school
-    university
-  }
+
   model SchoolType{
     id              String               @id @default(uuid())
     name LookUp
-    schoolType SchoolType_enum @unique
   }
   enum courseHoursType {
     oneHour
@@ -190,18 +184,6 @@
     ThreeHours
     ThreeAndHalf
     FourHours
-  }
-  enum Education_Level_enum {
-    Preschool
-    Primary_School
-    Elementary_School
-    Middle_School
-    Secondary_School
-    High_School
-    Diploma
-    Doctorate
-    Kindergarten
-    Preparatory_Stage
   }
 
   enum Role {
