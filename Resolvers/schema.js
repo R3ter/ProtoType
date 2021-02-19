@@ -23,6 +23,7 @@ type Query{
   getTeacherAppointments(teacherID:ID!,
     date:String!):[teacherSchedule]
   getMyBooking:[Appointment]
+  getSchoolTypes:[SchoolType]!
   getTeachersOnMap:MapInfo!
   getPopularTeacher(skip:Int,take:Int):[Materials]
   getClassStudents(courseID:ID!):[User]
@@ -38,7 +39,7 @@ type Mutation{
   refreshToken(userId:ID!,refreshToken:String!):LoginResult!
   CreateMaterial(lookUp:lookUp,education_level: Education_Level_enum!):Boolean!
   addUser(data:UserInput!):LoginResult!
-  addUserInfo(skipedMaterials:Boolean,skipedInfo:Boolean,data:userInfoInput):Boolean!
+  addUserInfo(data:userInfoInput):Boolean!
   login(username:String!,password:String!):LoginResult!
   resendActivationCode:Boolean!
   uploadUserImage(imageData:String!):Boolean!
@@ -66,6 +67,10 @@ type MapInfo{
   centerLongitude:String
   centerLatitude:String
 }
+type SchoolType{
+  name:String!
+  schoolType:String!
+}
 type TeacherMapInfo{
   id:ID!
   full_name:String!
@@ -86,6 +91,11 @@ type User {
   Role:Role!
   Active: Boolean!
   userInfo: UserInfo
+}
+enum schoolTypeEnum{
+  arabic_school
+  foreign_school
+  university
 }
 type UserInfo{
   birth_date:String
@@ -192,10 +202,8 @@ type Authentication{
   email:String!
   phone_number:String!
   isActive:Boolean!
-  isInfoComplet:Boolean
-  materialSet:Boolean
-  skipedInfo:Boolean
-  skipedMaterials:Boolean
+  isInfoComplet:Boolean!
+  materialSet:Boolean!
   Role:Role!
 }
 type Result{

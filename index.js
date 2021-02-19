@@ -12,6 +12,7 @@ import Query from './Resolvers/Query.js'
 import apolloServer from 'apollo-server';
 import teacherSchedule from './Resolvers/types/WorkingHour.js'
 import TeacherMapInfo from './Resolvers/types/TeacherMapInfo.js'
+import SchoolType from './Resolvers/types/SchoolType.js'
 import "./methods/messages/sendMessage.js" 
 
 const { ApolloServer} = apolloServer
@@ -25,6 +26,7 @@ const server = new ApolloServer({
     Query,
     Mutation,
     Materials,
+    SchoolType,
     City,
     teacherSchedule,
     CourseTag,
@@ -254,18 +256,14 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 
 // prisma.materials.create({
 //   data:{
-//     description:{
-//       create:{
-//         ar:"sadawda",
-//         eng:"asdawdawdsadwa"
-//       },
-//     },
+    
 //     lookUp:{
 //       create:{
 //         ar:"ar math",
 //         eng:"eng math"
 //       }
 //     },
+
 //     education_level:{
 //       connect:{
 //         education_level:"Elementary_School"
@@ -310,3 +308,48 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //   }
 // }).then((e)=>console.log(e))
 
+// prisma.education_Level.create({
+//   data:{
+//     FourHours:400,
+//     OneAndHalf:150,
+//     ThreeAndHalf:350,
+//     ThreeHours:300,
+//     TwoHours:200,
+//     education_level:"Elementary_School",
+//     oneHour:100,
+//     lookUp:{
+//       create:{
+//         ar:"Elementary",eng:"Elementary"
+//       }
+//     },
+//     type:{
+//       connect:{
+//         schoolType:"arabic_school"
+//       }
+//     }
+//   }
+// }).then((e)=>console.log(e))
+
+
+
+// prisma.materials.create({
+//   data:{
+//     education_level:{
+//       connect:{
+//         education_level:"Elementary_School"
+//       }
+//     },
+//     description:{
+//       create:{
+//         ar:"",
+//         eng:""
+//       }
+//     },
+//     lookUp:{
+//       create:{
+//         ar:"math ar",
+//         eng:"math eng"
+//       }
+//     }
+//   }
+// }).then((e)=>console.log(e))

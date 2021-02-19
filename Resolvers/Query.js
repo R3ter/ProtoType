@@ -17,7 +17,9 @@ import getPopularTeacher from './query/getPopularTeacher.js'
 import getClassStudents from './query/getClassStudents.js'
 import getMyBooking from './query/getMyBooks.js'
 import getMaterialInfo from './query/getMaterialInfi.js'
+import getSchoolTypes from './query/getSchoolTypes.js'
 const Query={
+    getSchoolTypes,
     getMaterialInfo,
     getMyBooking,
     getClassStudents,
