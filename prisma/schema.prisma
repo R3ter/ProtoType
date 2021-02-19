@@ -36,7 +36,7 @@
     longitude               String?
     latitude                String?
     cover_URL               String?
-    Current_education_level Education_Level
+    Current_education_level Education_Level?
     preferred_materials     CourseTag[]
     favoriteCourses         Materials[]
     studentAppointments     Appointment[]

@@ -3,7 +3,7 @@ import isLength from 'validator/lib/isLength.js'
 const addUserInfo =async(parent, {
     data}, {req,prisma}, info)=>{
     const {id}=checkToken({token:req.headers.token})
-
+        console.log(id)
     if(data&&data.address&&!isLength(data.address,{max:"100"})){
         throw new Error("data is too big")
     }
@@ -12,48 +12,8 @@ const addUserInfo =async(parent, {
             throw new Error ("duplicate material data")
         }
     }
-    if(!data||skipedInfo||skipedMaterials){
-        return await prisma.user.update({
-            where:{
-                id
-            },
-            data:{
-                skipedInfo:skipedInfo,
-                skipedMaterials:skipedMaterials
-            }
-        }).then((e)=>{
-            if(e)
-                return true
-        }).catch((e)=>false)
-        }else{
-            prisma.user.update({
-                where:{
-                    id
-                },
-                data:{
-                    skipedInfo:skipedInfo,
-                    skipedMaterials:skipedMaterials
-                }
-            })
-        }
-        if(data.City){
-            data.City={ connect:{
-                id:data.City
-            }}
-        }else{
-            delete data.City
-        }
-        if(data.Area){
-            data.Area={
-                connect:{
-                    id:data.Area
-                }
-            } 
-        }else{
-            delete data.Area
-        }
-        if(data.Current_education_level_ID){
-            data.Current_education_level_ID={
+    if(data.Current_education_level_ID){
+            data.Current_education_level={
                 connect:{
                     id:data.Current_education_level_ID
                 }
@@ -61,6 +21,8 @@ const addUserInfo =async(parent, {
         }else{
             delete data.Current_education_level_ID
         }
+        delete data.Current_education_level_ID
+
     const userInfo = await prisma.userInfo.upsert({
         where: { userId:id },
         update: {
@@ -70,12 +32,12 @@ const addUserInfo =async(parent, {
             }:undefined
         },
         create: {
+            ...data,
             user:{
                 connect:{
                     id
                 }
             },
-            ...data,
             
             preferred_materials:data.preferred_materials?{
                 connect:data.preferred_materials.map((e)=>{return{id:e}})
