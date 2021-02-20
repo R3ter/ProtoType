@@ -353,3 +353,31 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //     }
 //   }
 // }).then((e)=>console.log(e))
+
+prisma.materials.findUnique({
+  where:{
+    id:materialID
+},include:{
+    teachers:{
+      skip,take,
+        select:{
+            full_name:true,
+            id:true,
+            userInfo:{
+                select:{
+                    Current_education_level:{
+                        select:{
+                            lookUp:true
+                        }
+                    },
+                longitude:true,
+                latitude:true,
+                image_URL:true,
+                cover_URL:true,
+                about:true
+            }
+        }
+    }
+}
+}
+})
