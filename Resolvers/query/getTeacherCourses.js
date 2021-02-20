@@ -1,31 +1,27 @@
 import { checkToken } from "../../methods/Tokens.js"
 
-const getTeacherCourses=async(parent, {teacherID}, {req,prisma}, info)=>{
+const getTeacherCourses=async(parent, {teacherID,take=6,skip=0}, {req,prisma}, info)=>{
     const {id} = checkToken({token:req.headers.token})
-    console.log(teacherID)
     const materials = await prisma.materials.findMany({
+        take,skip,
         where:{
-            userId:teacherID
-        },
-        include:{
+            teachers:{
+                some:{
+                    id:teacherID
+                }
+            }
+        },include:{
             lookUp:true,
             description:true,
             tags:{
                 select:{
-                    lookUp:true
-                }
-            },
-            reviews:{
-                select:{
-                    User:{
-                        select:{
-                            userInfo:true
-                        }
-                    }
+                    lookUp:true,
+                    id:true
                 }
             },
             education_level:{
                 select:{
+                    id:true,
                     lookUp:true
                 }
             }

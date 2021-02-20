@@ -18,17 +18,21 @@ type Query{
   getCourseTags(search:String):[CourseTag]
   BestMaterials:[Materials]
   getTeacherReviews(teacherID:ID!):[TeacherReview]
-  getTeacherCourses(teacherID:ID!):[Materials]
+  getTeacherCourses(teacherID:ID!,take:Int,skip:Int):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!,
     date:String!):[teacherSchedule]
+  getMaterialReviews(materialId:ID!,skip:Int,take:Int):[MaterialReview]
   getMyBooking:[Appointment]
   getSchoolTypes:[SchoolType]!
   getTeachersOnMap:MapInfo!
   getPopularTeacher(skip:Int,take:Int):[TeacherProfile]
   getClassStudents(courseID:ID!):[User]
+  getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  teacherConnectToMaterial(materialID:ID!):Boolean!
+  addMaterialRevew(data:MaterialReviewInput!):Boolean!
   changeMyPassword(currentPassword:String!,newPassword:String!):Result!
   editProfileInfo(data:userInfoInput!):Boolean!
   addTeacherWorkTimes(fromTo:[fromTo!]!):Boolean!
@@ -56,6 +60,11 @@ input AppointmentInput{
   courseId:ID!
   courseHoursType:courseHoursType! 
   note:String
+}
+input MaterialReviewInput{
+  materialId:ID!
+  review:String!
+  ratingStars:Int!
 }
 enum courseHoursType{
   oneHour
@@ -92,6 +101,7 @@ type User {
   Role:Role!
   Active: Boolean!
   userInfo: UserInfo
+  teacherProfile:TeacherProfile
 }
 
 type UserInfo{
@@ -131,8 +141,6 @@ type TeacherProfile{
   user:User!
   description:String!
   address:String
-  City:City
-  Area:Area
   subjects:[CourseTag]
   # Courses:[Materials]
   # reviews:[TeacherReview]

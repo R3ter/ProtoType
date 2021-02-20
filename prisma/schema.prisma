@@ -120,6 +120,7 @@
   model MaterialReview {
     id          String    @id @default(uuid())
     materialID  String
+    userAndMaterialId     String @unique
     ratingStars Int
     review      String
     updatedAt   DateTime  @updatedAt
@@ -139,7 +140,7 @@
     description       DLookUp
     lookUp            LookUp
     education_level   Education_Level  @relation(fields: [education_LevelId], references: [id])
-    teachersID        String[]
+    teachers          User[]
     tags              CourseTag[]
     reviews           MaterialReview[]
   }

@@ -1,17 +1,23 @@
-const getMaterialInfo=async(parent,{materialID},{prisma,req},inf)=>{
+const getMaterialInfo=async(parent,{materialID},{prisma,req},info)=>{
     return{ ...await prisma.materials.findUnique({
         where:{
             id:materialID
         },
         include:{
             lookUp:true,
-            description:true
+            description:true,
+            education_level:{
+                select:{
+                    id:true,
+                    lookUp:true
+                }
+            }
         }
     }).catch(()=>null),studentImages:await prisma.materialReview.findMany({
         where:{
             materialID
         },
-        take:5,
+        take:6,
         include:{
             User:{select:{
                 userInfo:{
