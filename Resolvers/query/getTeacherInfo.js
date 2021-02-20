@@ -15,8 +15,7 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
                     userInfo:true,
                 },
             },
-
-            description:true
+            
         }
     }).then(async(e)=>{
         return {
@@ -24,22 +23,8 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
             ...await prisma.userInfo.findUnique({
                 where:{
                     userId:teacherID
-                },
-                include:{
-                    City:{
-                        select:{
-                            id:true,
-                            lookUp:true
-                        }
-                    },
-                    Area:{
-                        select:{
-                            id:true,
-                            lookUp:true
-                        }
-                    }
-                }
-            }),
+                }}
+                ),
             ...await prisma.teacherReview.aggregate({
                 where:{
                     teacherId:e.teacherId
@@ -51,7 +36,11 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
                 }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars})),
                 ...await prisma.materials.aggregate({
                     where:{
-                        userId:e.teacherId
+                        teachers:{
+                            some:{
+                                teacherId:e.teacherId
+                            }
+                        }
                     },
                     count:true
                 }).then((e)=>({courseCount:e.count}))

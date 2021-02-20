@@ -3,23 +3,26 @@ const getTeacherAppointment=async(parent, {
   teacherID,date,
 }, {req,prisma}, info)=>{
   const appointments=await prisma.appointment.findMany({
-    orderBy:"",
     where:{
-      date,
+      date:moment(date).format("dd/mm/yyyy"),
       teacherId:teacherID
     }
+  }).then((e)=>{
+    return e
   })
-  return await prisma.workingDay.findFirst({
+  return await prisma.workingDay.findUnique({
       where:{
-        teacherId:teacherID,
-        day:moment(date).format('dddd').toLowerCase()
+        teacherIdAndDay:teacherID+moment(date).format('dddd').toLowerCase()
       }
     }).then((e)=>{
       if(!e)
         return []
       return e.hours.map((e)=>{
         return {
-          time:e,
+          time:{
+            from:e.split("/-/")[0],
+            to:e.split("/-/")[1]
+          },
           state:appointments.filter(f => {
             return f.time==e
           }).length,

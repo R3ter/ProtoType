@@ -35,7 +35,7 @@ type Mutation{
   addMaterialRevew(data:MaterialReviewInput!):Boolean!
   changeMyPassword(currentPassword:String!,newPassword:String!):Result!
   editProfileInfo(data:userInfoInput!):Boolean!
-  addTeacherWorkTimes(fromTo:[fromTo!]!):Boolean!
+  addTeacherWorkTimes(fromTo:[fromToInput!]!):Boolean!
   addAppointment(data:AppointmentInput!):Boolean!
   becomeaTeacher(message:String!):Boolean!
   TeacherAddMaterial(data:MaterialsInput):Result
@@ -49,7 +49,11 @@ type Mutation{
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
 }
-input fromTo{
+input fromToInput{
+  from:DateTime!
+  to:DateTime!
+}
+type fromTo{
   from:DateTime!
   to:DateTime!
 }
@@ -80,7 +84,6 @@ type SchoolType{
   id:ID!
   name:String!
 }
-
 type TeacherMapInfo{
   id:ID!
   full_name:String!
@@ -88,7 +91,7 @@ type TeacherMapInfo{
   count:Int!
   phone_number:String!
   email:String!
-  description:String
+  info:String
   image_URL:String
   longitude:String
   latitude:String
@@ -132,7 +135,7 @@ input userInfoInput{
   Area:ID
 }
 type teacherSchedule{
-  time:String!
+  time:fromTo!
   day:String!
   state:Int!
 }
@@ -167,7 +170,7 @@ type WorkingHour{
 }
 type Appointment{
   id: ID!
-  time:String!
+  time:fromTo!
   date:String!
   course:Materials!
   coursePrice:Float!

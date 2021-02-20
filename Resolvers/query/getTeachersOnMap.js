@@ -13,11 +13,7 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
         },
         include:{
             userInfo:true,
-            teacherProfile:{
-                select:{
-                    description:true
-                }
-            },
+            teacherProfile:true
             
         }
     }).then(async(userInfo)=>{
@@ -30,6 +26,7 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
                     ...e.userInfo,
                     ...e.teacherProfile,
                     ...e,
+                    
                     ...await prisma.teacherReview.aggregate({
                         where:{
                             teacherProfileId:e.userId
