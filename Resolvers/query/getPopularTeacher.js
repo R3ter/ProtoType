@@ -37,7 +37,11 @@ const getBestTeachers= async(parent, {skip=0,take=5}, {req,prisma}, info)=>{
                 }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars})),
                 ...await prisma.materials.aggregate({
                     where:{
-                        userId:e.teacherId
+                        teachers:{
+                            some:{
+                                id:e.teacherId
+                            }
+                        }
                     },
                     count:true
                 }).then((e)=>({courseCount:e.count}))
