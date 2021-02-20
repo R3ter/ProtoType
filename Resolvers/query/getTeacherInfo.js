@@ -38,7 +38,7 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
                     where:{
                         teachers:{
                             some:{
-                                teacherId:e.teacherId
+                                id:e.teacherId
                             }
                         }
                     },
