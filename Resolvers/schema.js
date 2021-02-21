@@ -21,6 +21,7 @@ type Query{
   getTeacherCourses(teacherID:ID!,take:Int,skip:Int):[Materials]
   getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!,
+    timeType:courseHoursType!,
     date:String!):[teacherSchedule]
   getMaterialReviews(materialId:ID!,skip:Int,take:Int):[MaterialReview]
   getMyBooking:[Appointment]
@@ -74,6 +75,10 @@ enum courseHoursType{
   oneHour
   OneAndHalf
   TwoHours
+  TwoAndHalf
+  ThreeHours
+  ThreeAndHalf
+  FourHours
 }
 type MapInfo{
   teachers:[TeacherMapInfo]
@@ -96,6 +101,7 @@ type TeacherMapInfo{
   longitude:String
   latitude:String
 }
+
 type User {
   id:ID!
   full_name:String!

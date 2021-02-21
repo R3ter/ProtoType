@@ -137,6 +137,7 @@
     education_LevelId String
     image_URL         String?
     cover_URL         String?
+    
     description       DLookUp
     lookUp            LookUp
     education_level   Education_Level  @relation(fields: [education_LevelId], references: [id])

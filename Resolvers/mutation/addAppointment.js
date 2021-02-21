@@ -71,7 +71,7 @@ const appAppointment=async(parent,
                                                 //     has:teacherId
                                                 //   }
                                             }
-                                        }).then((e)=>e.id)
+                                        }).then((e)=>e.education_LevelId)
                                         .catch((e)=>{
                                             throw new Error("material is not defined")})
                                         }
@@ -85,7 +85,6 @@ const appAppointment=async(parent,
                                                 ((studentCount*10)+(10*(studentCount-2)))/100
                                             })
                                             ).catch((e)=>{
-                                                console.log(e)
                                                 throw new Error("education level is not defined")
                                             }),
                                             teacherId,
