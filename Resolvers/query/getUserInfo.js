@@ -7,14 +7,6 @@ const getMyInfo=(parent, {userId}, {req,prisma}, info)=>{
             userId
         },include: {
             user: true,
-            Area:{
-                select:{
-                    lookUp:true,
-                    id:true,
-                    longitude:true,
-                    latitude:true
-                }
-            },
             Current_education_level:{
                 select:{
                     lookUp:true,
