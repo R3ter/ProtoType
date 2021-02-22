@@ -1,6 +1,7 @@
 import {checkToken} from './../../methods/Tokens.js'
 import moment from 'moment'
-
+import { time } from 'console'
+console.log(moment("2021-02-18 02:00:00.406").format("HH:mm a"))
 const appAppointment=async(parent,
     {
         data:{
@@ -31,35 +32,68 @@ const appAppointment=async(parent,
                 date:moment(dateTime).format("DD/MM/YYYY")
             }
         })
-        appointments.forEach((e)=>{
-            console.log(e)
-            if(moment(e.from).isBetween(
-                moment(dateTime.from).format()
-                ,moment(dateTime.to).format())||
-                moment(e.from).isBetween(
-                    moment(dateTime.from).format()
-                    ,moment(dateTime.to).format())){
-                        timeIsFree=true
-                }
-        })
         freeTimes.forEach(e => {
             const times=e.split("/-/") 
-            if(moment(moment(dateTime).format("HH:mm A"),"HH:mm A").isBetween(
-                moment(moment(times[0]).format("HH:mm A"),"HH:mm A"),
-                moment(moment(times[1]).format("HH:mm A"),"HH:mm A"),null,"[)"
-                )){
+            const date=moment(dateTime).format("HH:mm a")
+            const from=moment(times[0]).format("HH:mm a")
+            const to=moment(times[1]).format("HH:mm a")
+            if(moment(date,"HH:mm a").isBetween(
+                moment(from,"HH:mm a"),moment(to,"HH:mm a"),null,"()"
+                )&&moment(date,"HH:mm a").add(
+                    (courseHoursType=="oneHour"||
+                    courseHoursType=="OneAndHalf")?1:
+                    (courseHoursType=="TwoHours"||
+                    courseHoursType=="TwoAndHalf")?2:
+                    (courseHoursType=="ThreeHours"||
+                    courseHoursType=="ThreeAndHalf")?3:
+                    4,"hours"
+                    ).add(
+                        ((courseHoursType=="OneAndHalf"||
+                        courseHoursType=="TwoAndHalf"||
+                        courseHoursType=="ThreeAndHalf")?
+                        30:undefined),"minutes"
+                        ).isBetween(
+                            moment(from,"HH:mm a"),
+                            moment(to,"HH:mm a"),null,"()"
+                    )){
                     timeIsFree=true
                 }
-        });
+            });
+            if(!timeIsFree){
+                return false
+            }
+            appointments.forEach((e)=>{
+                if(moment(dateTime).isBetween(
+                    moment(e.from)
+                    ,moment(e.to),undefined,"[]")||
+                    moment(dateTime).add(
+                        (courseHoursType=="oneHour"||
+                        courseHoursType=="OneAndHalf")?1:
+                        (courseHoursType=="TwoHours"||
+                        courseHoursType=="TwoAndHalf")?2:
+                        (courseHoursType=="ThreeHours"||
+                        courseHoursType=="ThreeAndHalf")?3:
+                        4,"hours"
+                        ).add(
+                            ((courseHoursType=="OneAndHalf"||
+                            courseHoursType=="TwoAndHalf"||
+                            courseHoursType=="ThreeAndHalf")?
+                            30:undefined),"minutes"
+                            ).isBetween(
+                        moment(e.from)
+                        ,moment(e.to),undefined,"[]")){
+                            timeIsFree=false
+                    }
+            })
             if(!timeIsFree){
                 return false
             }
             return await prisma.appointment.create({
                 data:{
                     studentCount,
-                    dateTime,
+                    dateTime:dateTime,
                     date:moment(dateTime).format("DD/MM/YYYY"),note,
-                    from:moment(dateTime).format(),
+                    from:moment(dateTime).format("HH:mm a"),
                     to:moment(dateTime).add(
                         (courseHoursType=="oneHour"||
                         courseHoursType=="OneAndHalf")?1:
@@ -73,7 +107,7 @@ const appAppointment=async(parent,
                             courseHoursType=="TwoAndHalf"||
                             courseHoursType=="ThreeAndHalf")?
                             30:undefined),"minutes"
-                            ).format(),
+                            ).format("HH:mm a"),
                             materialsId:courseId,
                             courseHoursType,
                             ...await prisma.education_Level.findUnique({
