@@ -18,7 +18,6 @@ const getMyInfo=(parent, {userId}, {req,prisma}, info)=>{
             Current_education_level:{
                 select:{
                     lookUp:true,
-                    education_level:true,
                     id:true
                 }
             },
