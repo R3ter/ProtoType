@@ -1,21 +1,13 @@
 import { checkToken } from "../../methods/Tokens.js"
 
 const getMyInfo=(parent, {userId}, {req,prisma}, info)=>{
-    const {id} = checkToken({token:req.headers.token})
+    checkToken({token:req.headers.token})
     return prisma.userInfo.findUnique({
         where:{
             userId
         },include: {
             user: true,
             Area:{
-                select:{
-                    lookUp:true,
-                    id:true,
-                    longitude:true,
-                    latitude:true
-                }
-            },
-            City:{
                 select:{
                     lookUp:true,
                     id:true,

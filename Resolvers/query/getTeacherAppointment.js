@@ -34,19 +34,28 @@ const getTeacherAppointment=async(parent, {
             to:moment(appointments[x].to,"HH:mm a").format("HH:mm a"),
             state:appointments[x].studentId==id?2:1
           })
-          i=moment(appointments[x].to,"HH:mm a").format("HH:mm a")
           
           x++;
           continue
           }
-          
+          let skip=false
+          appointments.map((e)=>{
+            if(moment(i,"HH:mm a").isBetween(
+              moment(e.from,"HH:mm a"),moment(e.to,"HH:mm a")
+            )){
+              skip=true
+            }
+          })
+          if(skip){
+            i=moment(i,"HH:mm a").add(3,"hours").add(30,"minutes").format("HH:mm a")
+            continue
+          }
           if(timeType=="oneHour"||timeType=="TwoHours"||timeType=="ThreeHours"
           ||timeType=="FourHours"){
             if(moment(i,"HH:mm a").format("mm")!="00"){
               i=moment(i,"HH:mm a").add(30,"minutes").format("HH:mm a")
             }
           }
-
           if(timeType=="oneHour"){
             if(moment(i,"HH:mm a").add(1,"hours").format("HH:mm a")>To){
               break
@@ -105,7 +114,6 @@ const getTeacherAppointment=async(parent, {
           }
         }
       })
-      console.log(data)
       return data.map((e)=>{
         return{
           time:{from:e.from,to:e.to}
