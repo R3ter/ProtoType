@@ -26,16 +26,31 @@ const appAppointment=async(parent,
         }).then((e)=>e.hours)
         .catch(()=>[])
         let timeIsFree=false
+        const appointments = await prisma.appointment.findMany({
+            where:{
+                date:moment(dateTime).format("DD/MM/YYYY")
+            }
+        })
+        appointments.forEach((e)=>{
+            console.log(e)
+            if(moment(e.from).isBetween(
+                moment(dateTime.from).format()
+                ,moment(dateTime.to).format())||
+                moment(e.from).isBetween(
+                    moment(dateTime.from).format()
+                    ,moment(dateTime.to).format())){
+                        timeIsFree=true
+                }
+        })
         freeTimes.forEach(e => {
-            const times=e.split("/-/")
-            
+            const times=e.split("/-/") 
             if(moment(moment(dateTime).format("HH:mm A"),"HH:mm A").isBetween(
                 moment(moment(times[0]).format("HH:mm A"),"HH:mm A"),
                 moment(moment(times[1]).format("HH:mm A"),"HH:mm A"),null,"[)"
                 )){
                     timeIsFree=true
                 }
-            });
+        });
             if(!timeIsFree){
                 return false
             }
@@ -44,7 +59,7 @@ const appAppointment=async(parent,
                     studentCount,
                     dateTime,
                     date:moment(dateTime).format("DD/MM/YYYY"),note,
-                    from:moment(dateTime).format("HH:mm"),
+                    from:moment(dateTime).format(),
                     to:moment(dateTime).add(
                         (courseHoursType=="oneHour"||
                         courseHoursType=="OneAndHalf")?1:
@@ -58,8 +73,7 @@ const appAppointment=async(parent,
                             courseHoursType=="TwoAndHalf"||
                             courseHoursType=="ThreeAndHalf")?
                             30:undefined),"minutes"
-                            )
-                            .format("HH:mm"),
+                            ).format(),
                             materialsId:courseId,
                             courseHoursType,
                             ...await prisma.education_Level.findUnique({

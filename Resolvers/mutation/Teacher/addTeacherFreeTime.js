@@ -17,6 +17,20 @@ const addMyFreeTime=async(parent, {fromTo}, {req,prisma}, info)=>{
       throw new Error("date is not correct!")
     }
   })
+  fromTo.forEach((element,index) => {
+    fromTo.forEach((e,index1)=>{
+      if(index!=index1){
+        if(moment(element.from).isBetween(e.from,e.to)||
+        moment(element.to).isBetween(e.from,e.to)){
+          throw new Error("times is duplicated")
+        }
+      }
+    })
+  })
+  fromTo.sort((a, b)=>{
+    return a.to - b.to
+  })
+  
   return await prisma.teacherProfile.update({
       where:{
         teacherId:id
