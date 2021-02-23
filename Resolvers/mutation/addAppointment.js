@@ -1,6 +1,5 @@
 import {checkToken} from './../../methods/Tokens.js'
 import moment from 'moment'
-import { time } from 'console'
 const appAppointment=async(parent,
     {
         data:{

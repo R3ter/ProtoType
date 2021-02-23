@@ -1,7 +1,7 @@
 import { checkToken } from "../../methods/Tokens.js"
 import moment from 'moment'
 
-const checkTime = (times, hours, minutes, appointments, id) => {
+const checkTime = (times, hours, minutes, appointments, id,timeType) => {
   const data = []
   times.forEach((e) => {
     const from = e.split("/-/")[0]
@@ -17,24 +17,24 @@ const checkTime = (times, hours, minutes, appointments, id) => {
       <= To.format("HH:mm a")) {
         let state = 0;
         let skip = false
-        // console.log(moment(i).format("HH:mm a"),
-        // moment(appointments[appointmentCount].from).format("HH:mm a"))
-        
-        if (appointments[appointmentCount]&&
-          moment(appointments[appointmentCount].from).format("HH:mm a")
-           == moment(i).format("HH:mm a") &&
-           moment(appointments[appointmentCount].to).format("HH:mm a")
-            == moment(i).add(hours, "hours")
-        .add(minutes, "minutes").format("HH:mm a")) {
-          state = 1
-        }
-        else if (appointments[appointmentCount]&&(
+
+
+        if (appointments[appointmentCount]&&(
           moment(i).isBetween(moment(appointments[appointmentCount].from),
           moment(appointments[appointmentCount].to)) ||
-          moment(i).add(hours, "hours").add(minutes, "minutes").isBetween(
+          moment(i).add(hours, "hours").add(minutes, "minutes").subtract(1,"minutes")
+          .isBetween(
             moment(appointments[appointmentCount].from),
             moment(appointments[appointmentCount].to))))
             {
+              if(appointments[appointmentCount] &&
+                appointments[appointmentCount].courseHoursType==timeType){
+                  data.push({
+                    from: moment(appointments[appointmentCount].from).format("HH:mm a"),
+                    to: moment(appointments[appointmentCount].to).format("HH:mm a"),
+                    state:appointments[appointmentCount].studentId==id?2:1
+                  })
+                }
               i = moment(appointments[appointmentCount].to)
               appointmentCount++;
               skip = true
@@ -76,17 +76,17 @@ const getTeacherAppointment = async (parent, {
     let times;
 
     if (timeType == "oneHour") {
-      times = checkTime(e.hours, 1, 0, appointments, id)
+      times = checkTime(e.hours, 1, 0, appointments, id,timeType)
     } else if (timeType == "TwoHours") {
-      times = checkTime(e.hours, 2, 0, appointments, id)
+      times = checkTime(e.hours, 2, 0, appointments, id,timeType)
     } else if (timeType == "ThreeHours") {
-      times = checkTime(e.hours, 3, 0, appointments, id)
+      times = checkTime(e.hours, 3, 0, appointments, id,timeType)
     }
     else if (timeType == "OneAndHalf") {
-      times = checkTime(e.hours, 1, 30, appointments, id)
+      times = checkTime(e.hours, 1, 30, appointments, id,timeType)
     }
     else if (timeType == "TwoAndHalf") {
-      times = checkTime(e.hours, 2, 30, appointments, id)
+      times = checkTime(e.hours, 2, 30, appointments, id,timeType)
     }
 
 
