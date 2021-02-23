@@ -1,126 +1,98 @@
 import { checkToken } from "../../methods/Tokens.js"
 import moment from 'moment'
-const getTeacherAppointment=async(parent, {
-  teacherID,date,timeType
-}, {req,prisma}, info)=>{
-  const {id}=checkToken({token:req.headers.token})
-  
-  const appointments=await prisma.appointment.findMany({
-    where:{
-      date:moment(date).format("DD/MM/YYYY"),
-      teacherId:teacherID
+
+const checkTime = (times, hours, minutes, appointments, id) => {
+
+  const data = []
+
+  times.forEach((e) => {
+    const from = e.split("/-/")[0]
+    const to = e.split("/-/")[1]
+
+    const From = moment(from)
+    const To = moment(to)
+    var i = moment(From)
+    console.log(moment(i))
+    console.log(To)
+    while (moment(i).isBefore(To)) {
+      if (moment(i).add(hours, "hours").format("HH:mm a")
+        <= To.format("HH:mm a")) {
+        let state = 0;
+        let skip = false
+        appointments.forEach((e) => {
+          if (e.from == moment(i).format("HH:mm a") &&
+            e.to == moment(i).add(hours, "hours")
+              .add(minutes, "minutes").format("HH:mm a")) {
+            state = 1
+          }
+          else if (moment(i).isBetween(moment(e.from),
+                    moment(e.to)) ||
+                    moment(i).add(hours, "hours").add(minutes, "minutes").isBetween(
+                      moment(e.from),
+                      moment(e.to)))
+                      {
+                        i = moment(e.to)
+                        skip = true
+                      }
+                    })
+        if (!skip) {
+          data.push({
+            from: moment(i).format("HH:mm a"),
+            to: moment(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a"),
+            state
+          })
+        }
+      }
+      i = moment(i).add(hours, "hours").add(minutes, "minutes")
     }
-  }).then((e)=>{
+  })
+  return data
+}
+
+const getTeacherAppointment = async (parent, {
+  teacherID, date, timeType
+}, { req, prisma }, info) => {
+  const { id } = checkToken({ token: req.headers.token })
+
+  const appointments = await prisma.appointment.findMany({
+    where: {
+      date: moment(date).format("DD/MM/YYYY"),
+      teacherId: teacherID
+    }
+  }).then((e) => {
     return e
   })
   return await prisma.workingDay.findUnique({
-    where:{
-      teacherIdAndDay:teacherID+moment(date).format('dddd').toLowerCase()
+    where: {
+      teacherIdAndDay: teacherID + moment(date).format('dddd').toLowerCase()
     }
-    }).then((e)=>{
-    if(!e)
-        return []
-      var data=[]
-      let x=0
-      e.hours.map((e)=>{
-        const from=e.split("/-/")[0]
-        const to=e.split("/-/")[1]
-        const From=moment(from).format("HH:mm a")
-        const To=moment(to).format("HH:mm a")
-        var i=From
-        while(i<To){
-          if(appointments[x]&&i<=appointments[x].from){
-            data.push({from:moment(appointments[x].from,"HH:mm a").format("HH:mm a"),
-            to:moment(appointments[x].to,"HH:mm a").format("HH:mm a"),
-            state:appointments[x].studentId==id?2:1
-          })
-          
-          x++;
-          continue
-          }
-          let skip=false
-          appointments.map((e)=>{
-            if(moment(i,"HH:mm a").isBetween(
-              moment(e.from,"HH:mm a"),moment(e.to,"HH:mm a")
-            )){
-              skip=true
-            }
-          })
-          if(skip){
-            i=moment(i,"HH:mm a").add(3,"hours").add(30,"minutes").format("HH:mm a")
-            continue
-          }
-          if(timeType=="oneHour"||timeType=="TwoHours"||timeType=="ThreeHours"
-          ||timeType=="FourHours"){
-            if(moment(i,"HH:mm a").format("mm")!="00"){
-              i=moment(i,"HH:mm a").add(30,"minutes").format("HH:mm a")
-            }
-          }
-          if(timeType=="oneHour"){
-            if(moment(i,"HH:mm a").add(1,"hours").format("HH:mm a")>To){
-              break
-            }
-            data.push({from:moment(i,"HH:mm a").format("HH:mm a"),
-              to:moment(i,"HH:mm a").add(1,"hours").format("HH:mm a")})
-            i=moment(i,"HH:mm a").add(1,"hours").format("HH:mm a")
-          }
-          else if(timeType=="TwoHours"){
-            if(moment(i,"HH:mm a").add(2,"hours").format("HH:mm a")>To){
-              break
-            }
-            data.push({from:moment(i,"HH:mm a").format("HH:mm a"),
-              to:moment(i,"HH:mm a").add(2,"hours").format("HH:mm a")})
-            i=moment(i,"HH:mm a").add(2,"hours").format("HH:mm a")
-          }
-          else if(timeType=="ThreeHours"){
-            if(moment(i,"HH:mm a").add(3,"hours").format("HH:mm a")>To){
-              break
-            }
-            data.push({from:moment(i,"HH:mm a").format("HH:mm a"),
-              to:moment(i,"HH:mm a").add(3,"hours").format("HH:mm a")})
-            i=moment(i,"HH:mm a").add(3,"hours").format("HH:mm a")
-          }
-          else if(timeType=="FourHours"){
-            if(moment(i,"HH:mm a").add(4,"hours").format("HH:mm a")>To){
-              break
-            }
-            data.push({from:moment(i,"HH:mm a").format("HH:mm a"),
-              to:moment(i,"HH:mm a").add(4,"hours").format("HH:mm a")})
-            i=moment(i,"HH:mm a").add(4,"hours").format("HH:mm a")
-          }
-          else if(timeType=="OneAndHalf"){
-            if(moment(i,"HH:mm a").add(1,"hours").add(30,"minutes").format("HH:mm a")>To){
-              break
-            }
-            data.push({from:moment(i,"HH:mm a").add(30,"minutes").format("HH:mm a"),
-              to:moment(i,"HH:mm a").add(1,"hours").format("HH:mm a")})
-            i=moment(i,"HH:mm a").add(1,"hours").add(30,"minutes").format("HH:mm a")
-          }
-          else if(timeType=="TwoAndHalf"){
-            if(moment(i,"HH:mm a").add(2,"hours").add(30,"minutes").format("HH:mm a")>To){
-              break
-            }
-            data.push({from:moment(i,"HH:mm a").add(30,"minutes").format("HH:mm a"),
-              to:moment(i,"HH:mm a").add(2,"hours").format("HH:mm a")})
-            i=moment(i,"HH:mm a").add(2,"hours").add(30,"minutes").format("HH:mm a")
-          }
-          else if(timeType=="ThreeAndHalf"){
-            if(moment(i,"HH:mm a").add(3,"hours").add(30,"minutes").format("HH:mm a")>To){
-              break
-            }
-            data.push({from:moment(i,"HH:mm a").add(30,"minutes").format("HH:mm a"),
-              to:moment(i,"HH:mm a").add(3,"hours").format("HH:mm a")})
-            i=moment(i,"HH:mm a").add(3,"hours").add(30,"minutes").format("HH:mm a")
-          }
-        }
-      })
-      return data.map((e)=>{
-        return{
-          time:{from:e.from,to:e.to}
-          ,state:(e.state)==undefined?0:e.state,
-          day:""
-        }
-      })
+  }).then((e) => {
+    if (!e)
+      return []
+    let times;
+
+    if (timeType == "oneHour") {
+      times = checkTime(e.hours, 1, 0, appointments, id)
+    } else if (timeType == "TwoHours") {
+      times = checkTime(e.hours, 2, 0, appointments, id)
+    } else if (timeType == "ThreeHours") {
+      times = checkTime(e.hours, 3, 0, appointments, id)
+    }
+    else if (timeType == "OneAndHalf") {
+      times = checkTime(e.hours, 1, 30, appointments, id)
+    }
+    else if (timeType == "TwoAndHalf") {
+      times = checkTime(e.hours, 2, 30, appointments, id)
+    }
+
+
+    return times.map((e) => {
+      return {
+        time: { from: e.from, to: e.to }
+        , state: e.state,
+        day: ""
+      }
     })
+  })
 }
 export default getTeacherAppointment

@@ -1,7 +1,6 @@
 import {checkToken} from './../../methods/Tokens.js'
 import moment from 'moment'
 import { time } from 'console'
-console.log(moment("2021-02-18 02:00:00.406").format("HH:mm a"))
 const appAppointment=async(parent,
     {
         data:{
@@ -34,9 +33,9 @@ const appAppointment=async(parent,
         })
         freeTimes.forEach(e => {
             const times=e.split("/-/") 
-            const date=moment(dateTime).format("HH:mm a")
-            const from=moment(times[0]).format("HH:mm a")
-            const to=moment(times[1]).format("HH:mm a")
+            const date=moment(dateTime)
+            const from=moment(times[0])
+            const to=moment(times[1])
             if(moment(date,"HH:mm a").isBetween(
                 moment(from,"HH:mm a"),moment(to,"HH:mm a"),null,"()"
                 )&&moment(date,"HH:mm a").add(
@@ -93,7 +92,7 @@ const appAppointment=async(parent,
                     studentCount,
                     dateTime:dateTime,
                     date:moment(dateTime).format("DD/MM/YYYY"),note,
-                    from:moment(dateTime).format("HH:mm a"),
+                    from:moment(dateTime).format(),
                     to:moment(dateTime).add(
                         (courseHoursType=="oneHour"||
                         courseHoursType=="OneAndHalf")?1:
@@ -107,7 +106,7 @@ const appAppointment=async(parent,
                             courseHoursType=="TwoAndHalf"||
                             courseHoursType=="ThreeAndHalf")?
                             30:undefined),"minutes"
-                            ).format("HH:mm a"),
+                            ).format(),
                             materialsId:courseId,
                             courseHoursType,
                             ...await prisma.education_Level.findUnique({
