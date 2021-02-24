@@ -120,7 +120,7 @@ const appAppointment=async(parent,
                     }
             })
             if(!timeIsFree){
-               return false
+              // return false
             }
             return await prisma.appointment.create({
                 data:{
