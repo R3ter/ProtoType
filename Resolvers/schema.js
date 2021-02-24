@@ -22,7 +22,7 @@ type Query{
   getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!,
     timeType:courseHoursType!,
-    date:String!):[teacherSchedule]
+    date:DateTime!):[teacherSchedule]
   getMaterialReviews(materialId:ID!,skip:Int,take:Int):[MaterialReview]
   getMyBooking:[Appointment]
   getSchoolTypes:[SchoolType]!
@@ -32,6 +32,7 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  sendMessage(toId:ID!,message:String!):Boolean!
   teacherConnectToMaterial(materialID:ID!):Boolean!
   addMaterialRevew(data:MaterialReviewInput!):Boolean!
   changeMyPassword(currentPassword:String!,newPassword:String!):Result!

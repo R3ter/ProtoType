@@ -13,7 +13,9 @@ import editProfileInfo from './mutation/editProfileInfo.js'
 import changeMyPassword from "./mutation/changePassword.js"
 import addMaterialRevew from './mutation/reviews/addMaterialReview.js'
 import teacherConnectToMaterial from './mutation/Teacher/connectToMaterial.js'
+import sendMessage from './mutation/chat/sendMessage.js'
 const Mutation={
+    sendMessage,
     teacherConnectToMaterial,
     addMaterialRevew,
     changeMyPassword,

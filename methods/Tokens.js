@@ -1,30 +1,22 @@
 import  jwt from 'jsonwebtoken';
 import cryptoRandomString from 'crypto-random-string'
 import apollo from 'apollo-server';
-import admin from 'firebase-admin'
-import frirebaseData from './firebaseData.js'
 const {AuthenticationError}=apollo
 const secret="dwawadhawbfhjavbffbhwafafwawf"
 
 const refreshTokens=[]
 
-admin.initializeApp({
-    credential:admin.credential.cert(frirebaseData),
-    databaseURL: "https://school-92b2c-default-rtdb.firebaseio.com/"
-  })
-
 const loginToken=async(userid,role,Activate,email,phone_number)=>{
-      const firebaseToken=await admin.auth().createCustomToken(userid)
+
+    // const firebaseToken=await admin.auth().createCustomToken(userid)
+
     if(!userid||!role||!email||!phone_number){
         throw new Error("some of the token data are missing")
     }
 
-    // firebase.database().ref('users/' + userId).set({
-    //     username: "name",
-    //     email: "email"
-    //   })
 
-    const token = await jwt.sign({firebaseToken,
+
+    const token = await jwt.sign({
         id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '1y' });
     
     const randomId = cryptoRandomString({length: 300})
