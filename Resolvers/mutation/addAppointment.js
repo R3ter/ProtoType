@@ -5,9 +5,9 @@ const appAppointment=async(parent,
         data:{
             teacherId,
             dateTime,
-            homeWorksPackgeId,
             courseId,
             courseHoursType, 
+            homeWorkPackageID,
             note,
             studentCount
         }
@@ -16,8 +16,43 @@ const appAppointment=async(parent,
         if(studentCount>4||studentCount<1){
             throw new Error("Max 4 students")
         }
-        if(moment(dateTime).format('mm')!="00"&&moment(dateTime).format('mm')!="30"){
+        if(moment(dateTime).format('mm')!="00" && moment(dateTime).format('mm')!="30"){
             throw new Error("date is not correct!")
+        }
+        let price={}
+        if(courseHoursType!="train"){
+            price={
+                ...await prisma.education_Level.findUnique({
+                where:{
+                    id:await prisma.materials.findUnique({
+                        where:{
+                            id:courseId,
+                            // teachersID:{
+                                //     has:teacherId
+                                //   }
+                            }
+                        }).then((e)=>e.education_LevelId)
+                        .catch((e)=>{
+                            throw new Error("material is not defined")})
+                        }
+        }).then((e)=>(
+            {coursePrice:e[courseHoursType]*studentCount
+                (e[courseHoursType]*
+                    ((studentCount*10)+(10*(studentCount-2)))/100),
+                    
+                    discountPercentage:e[courseHoursType]*
+                    ((studentCount*10)+(10*(studentCount-2)))/100
+                })
+                ).catch((e)=>{
+                    throw new Error("education level is not defined")
+                })
+            }
+        }else{
+            price={
+                ... await prisma.homeWorkPackage.findUnique({
+                    id:homeWorkPackageID
+                }).then((e)=>({coursePrice:e.price}))
+            }
         }
         const freeTimes=await prisma.workingDay.findUnique({
             where:{
@@ -42,7 +77,6 @@ const appAppointment=async(parent,
                 courseHoursType=="ThreeAndHalf")?
                 30:undefined),"minutes"
                 )
-                console.time(toHour)
         let timeIsFree=false
         const appointments = await prisma.appointment.findMany({
             where:{
@@ -89,35 +123,10 @@ const appAppointment=async(parent,
                     to:toHour.format(),
                             materialsId:courseId,
                             courseHoursType,
-                            ...await prisma.education_Level.findUnique({
-                                where:{
-                                    id:await prisma.materials.findUnique({
-                                        where:{
-                                            id:courseId,
-                                            // teachersID:{
-                                                //     has:teacherId
-                                                //   }
-                                            }
-                                        }).then((e)=>e.education_LevelId)
-                                        .catch((e)=>{
-                                            throw new Error("material is not defined")})
-                                        }
-                                    })
-                                    .then((e)=>(
-                                        {coursePrice:e[courseHoursType]*studentCount
-                                            -(e[courseHoursType]*
-                                                ((studentCount*10)+(10*(studentCount-2)))/100),
-                                                
-                                                discountPercentage:e[courseHoursType]*
-                                                ((studentCount*10)+(10*(studentCount-2)))/100
-                                            })
-                                            ).catch((e)=>{
-                                                throw new Error("education level is not defined")
-                                            }),
-                                            teacherId,
-                                            studentId:id
-                                        }
-                                    }).then(()=>true)
-                                    .catch(()=>false)
-                                }
-                                export default appAppointment
+                            ...price,                                            
+                            teacherId,
+                            studentId:id
+                        }
+                    }).then(()=>true).catch(()=>false)
+                }
+                export default appAppointment

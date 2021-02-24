@@ -10,6 +10,7 @@ type Query{
   getMaterials(skip:Int,take:Int):[Materials]
   getCities:[City]
   getMaterialInfo(materialID:ID!):Materials
+  getHomeWorksPackges(materialID:ID!):[HomeWorkPackage]!
   getAreas(cityId:ID):[Area]
   getUserInfo(userId:ID!):UserInfo
   getMyInfo:UserInfo
@@ -59,6 +60,12 @@ type fromTo{
   from:DateTime!
   to:DateTime!
 }
+type HomeWorkPackage{
+  id:ID
+  price:Float
+  MaterialId:String
+  name:String
+}
 input AppointmentInput{
   teacherId:ID!
   studentCount:Int!
@@ -79,11 +86,8 @@ enum courseHoursType{
   TwoHours
   TwoAndHalf
   ThreeHours
-
-  package5HomeWorks
-  package10HomeWorks
-  package15HomeWorks
-
+  
+  train
 }
 type MapInfo{
   teachers:[TeacherMapInfo]
@@ -186,16 +190,13 @@ type Appointment{
   course:Materials!
   coursePrice:Float!
   state:Int!
-  appointmentType:AppointmentType!
+  # appointmentType:AppointmentType!
   userId:ID!
   user:User!
   courseHoursType:courseHoursType!
   teacher:User!
 }
-enum AppointmentType {
-  HomeWork
-  Class
-}
+
 type TeacherReview{
   id:ID
   teacherId:ID

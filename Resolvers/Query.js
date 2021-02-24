@@ -20,7 +20,9 @@ import getMaterialInfo from './query/getMaterialInfi.js'
 import getSchoolTypes from './query/getSchoolTypes.js'
 import getMaterialReviews from './query/getMaterialReviews.js'
 import getMaterialTeachers from "./query/getMaterialTeachers.js"
+import getHomeWorksPackges from './query/getHomeWorkPackge.js'
 const Query={
+    getHomeWorksPackges,
     getMaterialTeachers,
     getMaterialReviews,
     getSchoolTypes,
