@@ -51,9 +51,15 @@ const appAppointment=async(parent,
             price={
                 ... await prisma.homeWorkPackage.findUnique({
                     id:homeWorkPackageID
-                }).then((e)=>({coursePrice:e.price}))
+                }).then((e)=>({coursePrice:e.price})),
+                HomeWorkPackage:{
+                    connect:{
+                        id:homeWorkPackageID
+                    }
+                }
             }
         }
+        
         const freeTimes=await prisma.workingDay.findUnique({
             where:{
                 teacherIdAndDay:teacherId+moment(dateTime).format('dddd').toLowerCase()
