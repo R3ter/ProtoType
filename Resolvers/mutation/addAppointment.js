@@ -50,13 +50,16 @@ const appAppointment=async(parent,
         }else{
             price={
                 ... await prisma.homeWorkPackage.findUnique({
-                    id:homeWorkPackageID
-                }).then((e)=>({coursePrice:e.price})),
-                HomeWorkPackage:{
-                    connect:{
-                        id:homeWorkPackageID
+                    where:{
+                        id : homeWorkPackageID
                     }
-                }
+                }).then((e)=>{
+                    console.log(e)
+                    return {
+                        coursePrice:e.price,
+                        homeWorkPackageId:e.id
+                    }
+                }),
             }
         }
         
@@ -127,12 +130,12 @@ const appAppointment=async(parent,
                     date:moment(dateTime).format("DD/MM/YYYY"),note,
                     from:moment(dateTime).format(),
                     to:toHour.format(),
-                            materialsId:courseId,
-                            courseHoursType,
-                            ...price,                                            
-                            teacherId,
-                            studentId:id
-                        }
-                    }).then(()=>true).catch(()=>false)
+                    materialsId:courseId,
+                    courseHoursType,
+                    ...price,                                            
+                    teacherId,
+                    studentId:id
                 }
-                export default appAppointment
+            }).then(()=>true).catch(()=>false)
+        }
+        export default appAppointment
