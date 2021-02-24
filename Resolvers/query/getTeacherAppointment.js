@@ -25,7 +25,8 @@ const checkTime = (times, hours, minutes, appointments, id,timeType) => {
           moment(i).add(hours, "hours").add(minutes, "minutes").subtract(1,"minutes")
           .isBetween(
             moment(appointments[appointmentCount].from),
-            moment(appointments[appointmentCount].to))))
+            moment(appointments[appointmentCount].to)
+            )))
             {
               if(appointments[appointmentCount] &&
                 appointments[appointmentCount].courseHoursType==timeType){
