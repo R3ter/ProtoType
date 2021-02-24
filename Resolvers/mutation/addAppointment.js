@@ -112,15 +112,15 @@ const appAppointment=async(parent,
             appointments.forEach((e)=>{
                 if(moment(dateTime).isBetween(
                     moment(e.from)
-                    ,moment(e.to),undefined,"[]")||
+                    ,moment(e.to))||
                     toHour.isBetween(
                         moment(e.from)
-                        ,moment(e.to),undefined,"[]")){
+                        ,moment(e.to))){
                             timeIsFree=false
                     }
             })
             if(!timeIsFree){
-                return false
+               return false
             }
             return await prisma.appointment.create({
                 data:{
@@ -135,6 +135,6 @@ const appAppointment=async(parent,
                     teacherId,
                     studentId:id
                 }
-            }).then(()=>true).catch(()=>false)
+            }).then(()=>true)
         }
         export default appAppointment
