@@ -70,7 +70,7 @@ input AppointmentInput{
   teacherId:ID!
   studentCount:Int!
   dateTime:String!
-  homeWorksPackgeId:ID
+  homeWorkPackageID:ID
   courseId:ID!
   courseHoursType:courseHoursType! 
   note:String
