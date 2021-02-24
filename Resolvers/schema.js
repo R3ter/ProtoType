@@ -63,6 +63,7 @@ input AppointmentInput{
   teacherId:ID!
   studentCount:Int!
   dateTime:String!
+  homeWorksPackgeId:ID
   courseId:ID!
   courseHoursType:courseHoursType! 
   note:String
@@ -78,8 +79,11 @@ enum courseHoursType{
   TwoHours
   TwoAndHalf
   ThreeHours
-  ThreeAndHalf
-  FourHours
+
+  package5HomeWorks
+  package10HomeWorks
+  package15HomeWorks
+
 }
 type MapInfo{
   teachers:[TeacherMapInfo]
@@ -182,10 +186,15 @@ type Appointment{
   course:Materials!
   coursePrice:Float!
   state:Int!
+  appointmentType:AppointmentType!
   userId:ID!
   user:User!
   courseHoursType:courseHoursType!
   teacher:User!
+}
+enum AppointmentType {
+  HomeWork
+  Class
 }
 type TeacherReview{
   id:ID

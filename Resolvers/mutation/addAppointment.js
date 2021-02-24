@@ -5,6 +5,7 @@ const appAppointment=async(parent,
         data:{
             teacherId,
             dateTime,
+            homeWorksPackgeId,
             courseId,
             courseHoursType, 
             note,

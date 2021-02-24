@@ -65,6 +65,7 @@
     state               Appointment_state @default(waiting)
     note                String
     rejectionReason     String?
+    appointmentType     AppointmentType  @default(Class)
     teacherId String
     studentId String
     discountPercentage     Float @default(0)
@@ -72,6 +73,10 @@
     teacher             User @relation("teacherAppoitments",fields: [teacherId],references: [id])
     student             User @relation("studentAppoitments",fields: [studentId],references: [id])
     createdAt           DateTime          @default(now())
+  }
+  enum AppointmentType {
+    HomeWork
+    Class
   }
   enum Appointment_state {
     accepted
@@ -137,7 +142,7 @@
     education_LevelId String
     image_URL         String?
     cover_URL         String?
-    
+
     description       DLookUp
     lookUp            LookUp
     education_level   Education_Level  @relation(fields: [education_LevelId], references: [id])
@@ -170,10 +175,18 @@
     OneAndHalf Float
     TwoHours Float 
     ThreeHours Float
-    ThreeAndHalf Float
-    FourHours Float
-  }
 
+    package5HomeWorks  Float @default(100)
+    package10HomeWorks Float @default(100)
+    package15HomeWorks Float @default(100)
+  }
+  model HomeWorksPackge{
+    id              String               @id @default(uuid())
+    name            LookUp
+    materialId      String
+    material        Materials @relation(fields: [materialId],references: [id])
+    price           Float
+  }
   model SchoolType{
     id              String               @id @default(uuid())
     name LookUp
@@ -184,8 +197,10 @@
     TwoHours
     TwoAndHalf
     ThreeHours
-    ThreeAndHalf
-    FourHours
+    
+    package5HomeWorks
+    package10HomeWorks
+    package15HomeWorks
   }
 
   enum Role {
