@@ -106,7 +106,7 @@ const appAppointment=async(parent,
                     timeIsFree=true
                 }
             });
-            if(!timeIsFree){
+            if(!timeIsFree&&false){
                 return false
             }
             appointments.forEach((e)=>{
