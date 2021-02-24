@@ -8,6 +8,7 @@ scalar Time
 type Query{
   users:[User]
   getMaterials(skip:Int,take:Int):[Materials]
+  getBookingInfo(data:AppointmentInput!):BookingData!
   getCities:[City]
   getMaterialInfo(materialID:ID!):Materials
   getHomeWorksPackges(materialID:ID!):[HomeWorkPackage]!
@@ -74,6 +75,18 @@ input AppointmentInput{
   courseId:ID!
   courseHoursType:courseHoursType! 
   note:String
+}
+type BookingData {
+  studentCount:Int!
+  dateTime:dateTime!
+  date:DateTime!
+  note:String!
+  from:String!
+  to:String!
+  materialsId:ID!
+  courseHoursType:String!
+  price:Int!
+  teacherId:ID!
 }
 input MaterialReviewInput{
   materialId:ID!

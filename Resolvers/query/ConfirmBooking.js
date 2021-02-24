@@ -70,7 +70,7 @@ const appAppointment=async(parent,
         .catch(()=>[])
         const toHour=moment(dateTime).add(
             (courseHoursType=="oneHour"||
-            courseHoursType=="train"||
+            courseHoursType=="package5HomeWorks"||
             courseHoursType=="OneAndHalf")?1:
             (courseHoursType=="TwoHours"||
             courseHoursType=="package10HomeWorks"||
@@ -122,19 +122,17 @@ const appAppointment=async(parent,
             if(!timeIsFree){
                 return false
             }
-            return await prisma.appointment.create({
-                data:{
-                    studentCount,
-                    dateTime:dateTime,
-                    date:moment(dateTime).format("DD/MM/YYYY"),note,
-                    from:moment(dateTime).format(),
-                    to:toHour.format(),
-                    materialsId:courseId,
-                    courseHoursType,
-                    ...price,                                            
-                    teacherId,
-                    studentId:id
-                }
-            }).then(()=>true).catch(()=>false)
+            return {
+                studentCount,
+                dateTime:dateTime,
+                date:moment(dateTime).format("DD/MM/YYYY"),note,
+                from:moment(dateTime).format(),
+                to:toHour.format(),
+                materialsId:courseId,
+                courseHoursType,
+                ...price,                                            
+                teacherId,
+                studentId:id
+            }
         }
         export default appAppointment
