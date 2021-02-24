@@ -3,25 +3,26 @@ import cryptoRandomString from 'crypto-random-string'
 import apollo from 'apollo-server';
 const {AuthenticationError}=apollo
 const secret="dwawadhawbfhjavbffbhwafafwawf"
+import frirebaseData from './firebaseData.js'
+
+import admin from 'firebase-admin'
 
 const refreshTokens=[]
 
 const loginToken=async(userid,role,Activate,email,phone_number)=>{
 
     // const firebaseToken=await admin.auth().createCustomToken(userid)
-
+    
     if(!userid||!role||!email||!phone_number){
         throw new Error("some of the token data are missing")
     }
 
-
-
     const token = await jwt.sign({
         id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '1y' });
-    
-    const randomId = cryptoRandomString({length: 300})
-    refreshTokens[userid]=randomId
-
+        const randomId = cryptoRandomString({length: 300})
+        refreshTokens[userid]=randomId
+        
+        console.log(token)
     return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role}
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
