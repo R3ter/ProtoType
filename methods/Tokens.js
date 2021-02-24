@@ -8,27 +8,21 @@ const secret="dwawadhawbfhjavbffbhwafafwawf"
 
 const refreshTokens=[]
 
+admin.initializeApp({
+    credential:admin.credential.cert(frirebaseData),
+    databaseURL: "https://school-92b2c-default-rtdb.firebaseio.com/"
+  })
+
 const loginToken=async(userid,role,Activate,email,phone_number)=>{
-    admin.initializeApp({
-        credential:admin.credential.cert(frirebaseData)
-      })
       const firebaseToken=await admin.auth().createCustomToken(userid)
     if(!userid||!role||!email||!phone_number){
         throw new Error("some of the token data are missing")
     }
 
-
-//     admin.messaging().send({token:firebaseToken,topic:"sadwa",
-// condition:"sadwa"}).then(e=>{
-//         console.log(e)
-//     })
-            
-var defaultMessaging = admin.messaging();
-    defaultMessaging.send({
-        token:firebaseToken,
-        topic:"",
-        condition:[firebaseToken]
-    })
+    // firebase.database().ref('users/' + userId).set({
+    //     username: "name",
+    //     email: "email"
+    //   })
 
     const token = await jwt.sign({firebaseToken,
         id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '1y' });
