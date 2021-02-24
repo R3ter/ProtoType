@@ -1,7 +1,7 @@
 import { checkToken } from "../../methods/Tokens.js"
 import moment from 'moment'
 
-const checkTime = (times, hours, minutes, appointments, id,timeType) => {
+const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
   const data = []
   times.forEach((e) => {
     const from = e.split("/-/")[0]
@@ -10,7 +10,6 @@ const checkTime = (times, hours, minutes, appointments, id,timeType) => {
     const From = moment(from)
     const To = moment(to)
     var i = moment(From)
-    let appointmentCount=0;
 
     while (moment(i).isBefore(To)&&
       moment(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a")
@@ -18,28 +17,29 @@ const checkTime = (times, hours, minutes, appointments, id,timeType) => {
         let state = 0;
         let skip = false
 
-
-        if (appointments[appointmentCount]&&(
-          moment(i).isBetween(moment(appointments[appointmentCount].from),
-          moment(appointments[appointmentCount].to)) ||
-          moment(i).add(hours, "hours").add(minutes, "minutes").subtract(1,"minutes")
-          .isBetween(
-            moment(appointments[appointmentCount].from),
-            moment(appointments[appointmentCount].to)
-            )))
-            {
-              if(appointments[appointmentCount] &&
-                appointments[appointmentCount].courseHoursType==timeType){
-                  data.push({
-                    from: moment(appointments[appointmentCount].from).format("HH:mm a"),
-                    to: moment(appointments[appointmentCount].to).format("HH:mm a"),
-                    state:appointments[appointmentCount].studentId==id?2:1
-                  })
+        appointmentsArray.map((appointments,index)=>{
+          if (appointments&&(
+            moment(i).isBetween(moment(appointments.from),
+            moment(appointments.to)) ||
+            moment(i).add(hours, "hours").add(minutes, "minutes").subtract(1,"minutes")
+            .isBetween(
+              moment(appointments.from),
+              moment(appointments.to)
+              )))
+              {
+                if(appointments &&
+                  appointments.courseHoursType==timeType){
+                    data.push({
+                      from: moment(appointments.from).format("HH:mm a"),
+                      to: moment(appointments.to).format("HH:mm a"),
+                      state:appointments.studentId==id?2:1
+                    })
+                  }
+                  i = moment(appointments.to)
+                  appointmentsArray[index]=null;
+                  skip = true
                 }
-              i = moment(appointments[appointmentCount].to)
-              appointmentCount++;
-              skip = true
-            }
+              })
             if (!skip) {
           data.push({
             from: moment(i).format("HH:mm a"),
@@ -60,11 +60,15 @@ const getTeacherAppointment = async (parent, {
   const { id } = checkToken({ token: req.headers.token })
 
   const appointments = await prisma.appointment.findMany({
+    orderBy: {
+      dateTime: 'asc',
+    },
     where: {
       date: moment(date).format("DD/MM/YYYY"),
       teacherId: teacherID
     }
   }).then((e) => {
+    console.log(e)
     return e
   })
   return await prisma.workingDay.findUnique({
@@ -76,12 +80,12 @@ const getTeacherAppointment = async (parent, {
       return []
     let times;
 
-    if (timeType == "oneHour") {
-      times = checkTime(e.hours, 1, 0, appointments, id,timeType)
-    } else if (timeType == "TwoHours") {
-      times = checkTime(e.hours, 2, 0, appointments, id,timeType)
-    } else if (timeType == "ThreeHours") {
-      times = checkTime(e.hours, 3, 0, appointments, id,timeType)
+    if (timeType == "oneHour" || timeType=="package5HomeWorks") {
+      times = checkTime(e.hours, 1, 0, appointments, id,"oneHour")
+    } else if (timeType == "TwoHours"|| timeType=="package10HomeWorks") {
+      times = checkTime(e.hours, 2, 0, appointments, id,"TwoHours")
+    } else if (timeType == "ThreeHours"|| timeType=="package15HomeWorks") {
+      times = checkTime(e.hours, 3, 0, appointments, id,"ThreeHours")
     }
     else if (timeType == "OneAndHalf") {
       times = checkTime(e.hours, 1, 30, appointments, id,timeType)
