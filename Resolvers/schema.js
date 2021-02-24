@@ -78,7 +78,7 @@ input AppointmentInput{
 }
 type BookingData {
   studentCount:Int!
-  dateTime:dateTime!
+  dateTime:DateTime!
   date:DateTime!
   note:String!
   from:String!
