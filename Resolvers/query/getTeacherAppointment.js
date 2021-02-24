@@ -80,7 +80,7 @@ const getTeacherAppointment = async (parent, {
       return []
     let times;
 
-    if (timeType == "oneHour" || timeType=="package5HomeWorks") {
+    if (timeType == "oneHour" || timeType=="train") {
       times = checkTime(e.hours, 1, 0, appointments, id,"oneHour")
     } else if (timeType == "TwoHours"|| timeType=="package10HomeWorks") {
       times = checkTime(e.hours, 2, 0, appointments, id,"TwoHours")
