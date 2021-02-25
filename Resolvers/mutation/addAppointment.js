@@ -35,17 +35,15 @@ const appAppointment=async(parent,
                         .catch((e)=>{
                             throw new Error("material is not defined")})
                         }
-        }).then((e)=>(
-            {coursePrice:e[courseHoursType]*studentCount
+        }).then((e)=>{
+            return {coursePrice:e[courseHoursType]*studentCount-
                 (e[courseHoursType]*
                     ((studentCount*10)+(10*(studentCount-2)))/100),
                     
                     discountPercentage:e[courseHoursType]*
                     ((studentCount*10)+(10*(studentCount-2)))/100
-                })
-                ).catch((e)=>{
-                    throw new Error("education level is not defined")
-                })
+                }}
+                )
             }
         }else{
             price={
@@ -61,7 +59,6 @@ const appAppointment=async(parent,
                 }),
             }
         }
-        
         const freeTimes=await prisma.workingDay.findUnique({
             where:{
                 teacherIdAndDay:teacherId+moment(dateTime).format('dddd').toLowerCase()
@@ -92,10 +89,13 @@ const appAppointment=async(parent,
             }
         })
         freeTimes.forEach(e => {
-            const times=e.split("/-/") 
-            const date=moment(dateTime)
-            const from=moment(times[0])
-            const to=moment(times[1])
+            const times=e.split("/-/")
+            const date=moment(dateTime).format("HH:mm a")
+            const from=moment(times[0]).format("HH:mm a")
+            const to=moment(times[1]).format("HH:mm a")
+
+            console.log(from)
+            console.log(to)
 
             if(moment(date,"HH:mm a").isBetween(
                 moment(from,"HH:mm a"),moment(to,"HH:mm a"),null,"[]"
@@ -103,12 +103,9 @@ const appAppointment=async(parent,
                             moment(from,"HH:mm a"),
                             moment(to,"HH:mm a"),null,"[]"
                     )){
-                    timeIsFree=true
+                        timeIsFree=true
                 }
             });
-            if(!timeIsFree&&false){
-                return false
-            }
             appointments.forEach((e)=>{
                 if(moment(dateTime).isBetween(
                     moment(e.from)
@@ -120,15 +117,15 @@ const appAppointment=async(parent,
                     }
             })
             if(!timeIsFree){
-              // return false
+               return false
             }
             return await prisma.appointment.create({
                 data:{
                     studentCount,
                     dateTime:dateTime,
                     date:moment(dateTime).format("DD/MM/YYYY"),note,
-                    from:moment(dateTime).format(),
-                    to:toHour.format(),
+                    from:moment(dateTime).format("YYYY-MM-DD HH:mm:ss"),
+                    to:toHour.format("YYYY-MM-DD HH:mm:ss"),
                     materialsId:courseId,
                     courseHoursType,
                     ...price,                                            

@@ -7,16 +7,18 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
     const from = e.split("/-/")[0]
     const to = e.split("/-/")[1]
 
-    const From = moment(from)
-    const To = moment(to)
-    var i = moment(From)
+    const From = moment(moment(from).format("HH:mm a"),"HH:mm a")
+    const To = moment(moment(to).format("HH:mm a"),"HH:mm a")
+    var i = moment(moment(From).format("HH:mm a"),"HH:mm a")
 
     while (moment(i).isBefore(To)&&
       moment(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a")
       <= To.format("HH:mm a")) {
         let state = 0;
         let skip = false
-
+        console.log(From)
+        console.log(To)
+        console.log(i)
         appointmentsArray.map((appointments,index)=>{
           if (appointments&&(
             moment(i).isBetween(moment(appointments.from),
@@ -58,7 +60,6 @@ const getTeacherAppointment = async (parent, {
   teacherID, date, timeType
 }, { req, prisma }, info) => {
   const { id } = checkToken({ token: req.headers.token })
-
   const appointments = await prisma.appointment.findMany({
     orderBy: {
       dateTime: 'asc',
@@ -68,7 +69,6 @@ const getTeacherAppointment = async (parent, {
       teacherId: teacherID
     }
   }).then((e) => {
-    console.log(e)
     return e
   })
   return await prisma.workingDay.findUnique({
