@@ -8,7 +8,7 @@ scalar Time
 type Query{
   users:[User]
   getMaterials(skip:Int,take:Int):[Materials]
-  getBookingInfo(data:AppointmentInput!):BookingData!
+  getBookingInfo(data:ConfirmBookingInput!):ConfirmBooking!
   getCities:[City]
   getMaterialInfo(materialID:ID!):Materials
   getHomeWorksPackges(materialID:ID!):[HomeWorkPackage]!
@@ -56,6 +56,23 @@ type Mutation{
 input fromToInput{
   from:DateTime!
   to:DateTime!
+}
+input ConfirmBookingInput{
+  dateTime:DateTime!
+  courseId:ID!
+  courseHoursType:courseHoursType! 
+  homeWorkPackageID:ID
+  studentCount:Int!
+}
+type ConfirmBooking{
+  date:String!
+  from:String!
+  to:String!
+  priceBeforeDiscount:Float!
+  finalPrice:Float!
+  coursePrice:Float!
+  discountPercentage:Float!
+  TaxPercentage:Float
 }
 type fromTo{
   from:DateTime!

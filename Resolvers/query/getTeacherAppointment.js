@@ -16,9 +16,6 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
       <= To.format("HH:mm a")) {
         let state = 0;
         let skip = false
-        console.log(From)
-        console.log(To)
-        console.log(i)
         appointmentsArray.map((appointments,index)=>{
           if (appointments&&(
             moment(i).isBetween(moment(appointments.from),

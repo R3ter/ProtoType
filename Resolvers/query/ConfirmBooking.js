@@ -3,12 +3,10 @@ import moment from 'moment'
 const appAppointment=async(parent,
     {
         data:{
-            teacherId,
             dateTime,
             courseId,
             courseHoursType, 
             homeWorkPackageID,
-            note,
             studentCount
         }
     },{prisma,req},info)=>{
@@ -26,26 +24,24 @@ const appAppointment=async(parent,
                 where:{
                     id:await prisma.materials.findUnique({
                         where:{
-                            id:courseId,
-                            // teachersID:{
-                                //     has:teacherId
-                                //   }
+                            id:courseId
                             }
                         }).then((e)=>e.education_LevelId)
                         .catch((e)=>{
                             throw new Error("material is not defined")})
                         }
         }).then((e)=>(
-            {coursePrice:e[courseHoursType]*studentCount
-                (e[courseHoursType]*
-                    ((studentCount*10)+(10*(studentCount-2)))/100),
-                    
+            {coursePrice:e[courseHoursType],
+                priceBeforeDiscount:e[courseHoursType]*studentCount,
+                    finalPrice:(e[courseHoursType]*studentCount)-
+                    (e[courseHoursType]*
+                        ((studentCount*10)+(10*(studentCount-2)))/100),
+
+                        
                     discountPercentage:e[courseHoursType]*
                     ((studentCount*10)+(10*(studentCount-2)))/100
                 })
-                ).catch((e)=>{
-                    throw new Error("education level is not defined")
-                })
+                )
             }
         }else{
             price={
@@ -55,28 +51,22 @@ const appAppointment=async(parent,
                     }
                 }).then((e)=>{
                     return {
+                        priceBeforeDiscount:e.price,
                         coursePrice:e.price,
+                        finalPrice:e.price,
+                        discountPercentage:0,
                         homeWorkPackageId:e.id
                     }
                 }),
             }
         }
         
-        const freeTimes=await prisma.workingDay.findUnique({
-            where:{
-                teacherIdAndDay:teacherId+moment(dateTime).format('dddd').toLowerCase()
-            }
-        }).then((e)=>e.hours)
-        .catch(()=>[])
         const toHour=moment(dateTime).add(
             (courseHoursType=="oneHour"||
-            courseHoursType=="package5HomeWorks"||
             courseHoursType=="OneAndHalf")?1:
             (courseHoursType=="TwoHours"||
-            courseHoursType=="package10HomeWorks"||
             courseHoursType=="TwoAndHalf")?2:
             (courseHoursType=="ThreeHours"||
-            courseHoursType=="package15HomeWorks"||
             courseHoursType=="ThreeAndHalf")?3:
             4,"hours"
             ).add(
@@ -85,54 +75,14 @@ const appAppointment=async(parent,
                 courseHoursType=="ThreeAndHalf")?
                 30:undefined),"minutes"
                 )
-        let timeIsFree=false
-        const appointments = await prisma.appointment.findMany({
-            where:{
-                date:moment(dateTime).format("DD/MM/YYYY")
-            }
-        })
-        freeTimes.forEach(e => {
-            const times=e.split("/-/") 
-            const date=moment(dateTime)
-            const from=moment(times[0])
-            const to=moment(times[1])
-
-            if(moment(date,"HH:mm a").isBetween(
-                moment(from,"HH:mm a"),moment(to,"HH:mm a"),null,"[]"
-                )&&toHour.isBetween(
-                            moment(from,"HH:mm a"),
-                            moment(to,"HH:mm a"),null,"[]"
-                    )){
-                    timeIsFree=true
-                }
-            });
-            if(!timeIsFree){
-                return false
-            }
-            appointments.forEach((e)=>{
-                if(moment(dateTime).isBetween(
-                    moment(e.from)
-                    ,moment(e.to),undefined,"[]")||
-                    toHour.isBetween(
-                        moment(e.from)
-                        ,moment(e.to),undefined,"[]")){
-                            timeIsFree=false
-                    }
-            })
-            if(!timeIsFree){
-                return false
-            }
+                
             return {
-                studentCount,
-                dateTime:dateTime,
-                date:moment(dateTime).format("DD/MM/YYYY"),note,
-                from:moment(dateTime).format(),
-                to:toHour.format(),
-                materialsId:courseId,
-                courseHoursType,
-                ...price,                                            
-                teacherId,
-                studentId:id
+                date:moment(dateTime).format("DD/MM/YYYY"),
+                from:moment(dateTime).format("HH:mm a"),
+                to:toHour.format("HH:mm a"),
+                ...price,
+                TaxPercentage:0
+
             }
         }
         export default appAppointment
