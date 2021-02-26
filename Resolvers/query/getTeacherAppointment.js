@@ -14,7 +14,14 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
     while (moment(i).isBefore(To)&&
       moment(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a")
       <= To.format("HH:mm a")) {
-        let state = null;
+        let state = {
+          id:"",
+          name:{
+            eng:"available",
+            ar:"متاح"
+          },
+          color:"#ffffff"
+        };
         let skip = false
         appointmentsArray.map((appointments,index)=>{
           if(appointments){
