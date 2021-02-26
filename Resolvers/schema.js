@@ -26,7 +26,7 @@ type Query{
     timeType:courseHoursType!,
     date:DateTime!):[teacherSchedule]
   getMaterialReviews(materialId:ID!,skip:Int,take:Int):[MaterialReview]
-  getMyBooking:[Appointment]
+  getMyBooking(skip:Int,take:Int,stateKey:String):[Appointment]
   getSchoolTypes:[SchoolType]!
   getTeachersOnMap:MapInfo!
   getPopularTeacher(skip:Int,take:Int):[TeacherProfile]
@@ -182,7 +182,12 @@ input userInfoInput{
 type teacherSchedule{
   time:fromTo!
   day:String!
-  state:Int!
+  state:Appointment_state
+}
+type Appointment_state{
+  id:ID!
+  name:String!
+  color:String!
 }
 type TeacherProfile{
   id:ID!
@@ -219,8 +224,7 @@ type Appointment{
   date:String!
   course:Materials!
   coursePrice:Float!
-  state:Int!
-  # appointmentType:AppointmentType!
+  state: Appointment_state!
   userId:ID!
   user:User!
   courseHoursType:courseHoursType!

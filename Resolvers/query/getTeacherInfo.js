@@ -24,26 +24,7 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
                 where:{
                     userId:teacherID
                 }}
-                ),
-            ...await prisma.teacherReview.aggregate({
-                where:{
-                    teacherId:e.teacherId
-                  },
-                avg:{
-                    ratingStars:true
-                },
-                count:true
-                }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars})),
-                ...await prisma.materials.aggregate({
-                    where:{
-                        teachers:{
-                            some:{
-                                id:e.teacherId
-                            }
-                        }
-                    },
-                    count:true
-                }).then((e)=>({courseCount:e.count}))
+            )
         }
     })
     

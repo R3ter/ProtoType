@@ -62,7 +62,8 @@
     course              Materials
     courseHoursType     courseHoursType
     coursePrice         Float
-    state               Appointment_state @default(waiting)
+    state               Appointment_state @relation(fields: [stateId],references: [id])
+    stateId             String
     note                String
     rejectionReason     String?
     teacherId String
@@ -84,12 +85,13 @@
     MaterialId String
     name String
   }
-  enum Appointment_state {
-    accepted
-    rejected
-    waiting
-    finnished
+  model Appointment_state {
+    id              String     @id @default(uuid())
+    name            LookUp
+    Appoitment_state_key String  @unique
+    color           String
   }
+
   model TeacherApplication {
     id              String     @id @default(uuid())
     userId          String     @unique

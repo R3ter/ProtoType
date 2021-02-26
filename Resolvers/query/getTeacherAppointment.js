@@ -14,24 +14,32 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
     while (moment(i).isBefore(To)&&
       moment(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a")
       <= To.format("HH:mm a")) {
-        let state = 0;
+        let state = null;
         let skip = false
         appointmentsArray.map((appointments,index)=>{
-          if (appointments&&(
-            moment(i).isBetween(moment(appointments.from),
-            moment(appointments.to)) ||
+          if(appointments){
+            appointments.from=moment(moment(appointments.from).format("HH:mm a"),"HH:mm a")
+            appointments.to=moment(moment(appointments.to).format("HH:mm a"),"HH:mm a")
+          }
+          if (appointments &&(
+            moment(i).isBetween(appointments.from,
+            appointments.to) ||
             moment(i).add(hours, "hours").add(minutes, "minutes").subtract(1,"minutes")
             .isBetween(
-              moment(appointments.from),
-              moment(appointments.to)
+              appointments.from,
+              appointments.to
               )))
               {
-                if(appointments &&
-                  appointments.courseHoursType==timeType){
+                if(appointments.courseHoursType==timeType){
                     data.push({
                       from: moment(appointments.from).format("HH:mm a"),
                       to: moment(appointments.to).format("HH:mm a"),
-                      state:appointments.studentId==id?2:1
+                      state:appointments.studentId==id?(
+                        appointments.state
+                      ):(
+                        appointments.state.Appoitment_state_key=="waiting"?
+                        null:appointments.state
+                      )
                     })
                   }
                   i = moment(appointments.to)
@@ -64,6 +72,13 @@ const getTeacherAppointment = async (parent, {
     where: {
       date: moment(date).format("DD/MM/YYYY"),
       teacherId: teacherID
+    },
+    include:{
+      state:{
+        select:{
+          name:true,id:true,color:true
+        }
+      }
     }
   }).then((e) => {
     return e
