@@ -45,7 +45,7 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
                         appointments.state
                       ):(
                         appointments.state.Appoitment_state_key=="waiting"?
-                        null:appointments.state
+                        state:appointments.state
                       )
                     })
                   }
@@ -83,7 +83,7 @@ const getTeacherAppointment = async (parent, {
     include:{
       state:{
         select:{
-          name:true,id:true,color:true
+          name:true,id:true,color:true,Appoitment_state_key:true
         }
       }
     }
