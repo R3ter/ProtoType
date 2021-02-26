@@ -28,6 +28,7 @@ const getTeacherCourses=async(parent, {teacherID,take=6,skip=0}, {req,prisma}, i
         }
     },info)
     return materials.map(async (e)=>{
+        console.log(e)
         return {
             ...e,
             ...await prisma.materialReview.aggregate({
