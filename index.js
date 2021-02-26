@@ -122,4 +122,35 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //     }
 //   }
 // })
+// prisma.teacherProfile.update({
+//   where:{
+//     teacherId:"357bda88-2039-4462-b553-791cf3d35f16"
+//   },
+//   data:{
+//     educationLevel:{
+//       connect:{
+//         id:"181be44a-2154-4d5f-9188-188d98444c88"
+//       }
+//     }
+//   }
+// }).then((e)=>console.log(e))
 
+prisma.materials.findMany({
+  where:{
+    AND:{
+      education_level:{
+        id:"181be44a-2154-4d5f-9188-188d98444c88"
+      },
+      NOT:{
+        teachers:{
+          some:{
+            id:"357bda88-2039-4462-b553-791cf3d35f16"
+          }
+        }
+      }
+    }
+  },
+  include:{
+    teachers:true
+  }
+}).then((e)=>console.log(e))

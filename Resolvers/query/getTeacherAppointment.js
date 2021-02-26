@@ -31,7 +31,6 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
               )))
               {
                 if(appointments.courseHoursType==timeType){
-                  console.log(appointments.state.Appoitment_state_key)
                     data.push({
                       from: moment(appointments.from).format("HH:mm a"),
                       to: moment(appointments.to).format("HH:mm a"),

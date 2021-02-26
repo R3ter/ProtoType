@@ -50,6 +50,7 @@
     educationLevel Education_Level[]
     materialTags   CourseTag[]
     workingDays  workingDay[]
+    materials    Materials[]
     createdAt    DateTime      @default(now())
   }
   
@@ -184,9 +185,8 @@
     TwoHours Float 
     ThreeHours Float
 
-    package5HomeWorks  Float @default(100)
-    package10HomeWorks Float @default(100)
-    package15HomeWorks Float @default(100)
+    teacherProfile TeacherProfile[]
+
   }
   model HomeWorksPackge{
     id              String               @id @default(uuid())

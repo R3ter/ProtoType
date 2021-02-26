@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getMaterialsForRegister(educationLevelId:ID!):[Materials]
   users:[User]
   getMaterials(skip:Int,take:Int):[Materials]
   getBookingInfo(data:ConfirmBookingInput!):ConfirmBooking!
@@ -28,6 +29,7 @@ type Query{
   getMaterialReviews(materialId:ID!,skip:Int,take:Int):[MaterialReview]
   getMyBooking(skip:Int,take:Int,stateKey:String):[Appointment]
   getSchoolTypes:[SchoolType]!
+  getMyEducationLevels:[Education_Level]
   getTeachersOnMap:MapInfo!
   getPopularTeacher(skip:Int,take:Int):[TeacherProfile]
   getClassStudents(courseID:ID!):[User]

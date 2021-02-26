@@ -22,7 +22,11 @@ import getMaterialReviews from './query/getMaterialReviews.js'
 import getMaterialTeachers from "./query/getMaterialTeachers.js"
 import getHomeWorksPackges from './query/getHomeWorkPackge.js'
 import getBookingInfo from './query/ConfirmBooking.js'
+import getMyEducationLevels from './query/teacher/getMyEducationLevels.js'
+import getMaterialsForRegister from './query/teacher/getMaterialsForRegister.js'
 const Query={
+    getMaterialsForRegister,
+    getMyEducationLevels,
     getBookingInfo,
     getHomeWorksPackges,
     getMaterialTeachers,
