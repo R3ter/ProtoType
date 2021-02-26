@@ -24,7 +24,9 @@ import getHomeWorksPackges from './query/getHomeWorkPackge.js'
 import getBookingInfo from './query/ConfirmBooking.js'
 import getMyEducationLevels from './query/teacher/getMyEducationLevels.js'
 import getMaterialsForRegister from './query/teacher/getMaterialsForRegister.js'
+import getMyWorkingHours from './query/teacher/getMyWorkingHours.js'
 const Query={
+    getMyWorkingHours,
     getMaterialsForRegister,
     getMyEducationLevels,
     getBookingInfo,

@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getMyWorkingHours:[workingDay]
   getMaterialsForRegister(educationLevelId:ID!):[Materials]
   users:[User]
   getMaterials(skip:Int,take:Int):[Materials]
@@ -206,11 +207,16 @@ type TeacherProfile{
   register:Int!
   workingDays:[workingDay]
 }
+# type workingDay{
+#   id:ID!
+#   day:Day 
+#   hours:[WorkingHour]
+#   teacherId:String!
+# }
 type workingDay{
-  id:ID!
-  day:Day 
-  hours:[WorkingHour]
-  teacherId:String!
+  day:Day!
+  hours:[fromTo]
+
 }
 type WorkingHour{
   id:ID!
