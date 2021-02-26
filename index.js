@@ -13,7 +13,6 @@ import apolloServer from 'apollo-server';
 import teacherSchedule from './Resolvers/types/WorkingHour.js'
 import TeacherMapInfo from './Resolvers/types/TeacherMapInfo.js'
 import SchoolType from './Resolvers/types/SchoolType.js'
-import {sendMessage} from  "./methods/messages/sendMessage.js" 
 import Appointment from './Resolvers/types/Appointment.js'
 const { ApolloServer} = apolloServer
 

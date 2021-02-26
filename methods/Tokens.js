@@ -11,19 +11,24 @@ const refreshTokens=[]
 
 const loginToken=async(userid,role,Activate,email,phone_number)=>{
 
-    // const firebaseToken=await admin.auth().createCustomToken(userid)
+    const firebaseToken=await admin.auth().createCustomToken(userid,{
+        id: userid,Role:role,Activate,email,phone_number
+    })
     
     if(!userid||!role||!email||!phone_number){
         throw new Error("some of the token data are missing")
     }
-
+    
     const token = await jwt.sign({
-        id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '1y' });
+        aud: "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
+        iss: "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
+        sub: "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
+        uid: userid,
+        id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '1h' });
         const randomId = cryptoRandomString({length: 300})
         refreshTokens[userid]=randomId
         
-        console.log(token)
-    return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role}
+    return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role,firebaseToken}
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
     if(refreshTokens[userId]&&refreshTokens[userId]==RefreshToken){

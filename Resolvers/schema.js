@@ -272,6 +272,7 @@ type Authentication{
   isInfoComplet:Boolean!
   materialSet:Boolean!
   Role:Role!
+  firebaseToken:String!
 }
 type Result{
   error:String
