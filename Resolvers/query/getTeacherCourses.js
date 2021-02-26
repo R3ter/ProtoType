@@ -26,15 +26,6 @@ const getTeacherCourses=async(parent, {teacherID,take=6,skip=0}, {req,prisma}, i
         console.log(e)
         return {
             ...e,
-            ...await prisma.materialReview.aggregate({
-                where:{
-                    id:e.id
-                  },
-                avg:{
-                    ratingStars:true
-                },
-                count:true
-              }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars}))
         }
     })
 
