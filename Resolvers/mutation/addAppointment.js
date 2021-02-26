@@ -88,12 +88,12 @@ const appAppointment=async(parent,
                 date:moment(dateTime).format("DD/MM/YYYY")
             }
         })
+        console.log(appointments)
         freeTimes.forEach(e => {
             const times=e.split("/-/")
             const date=moment(dateTime).format("HH:mm a")
             const from=moment(times[0]).format("HH:mm a")
             const to=moment(times[1]).format("HH:mm a")
-            console.log(from,date,toHour,to)
             
             if(moment(date,"HH:mm a").isBetween(
                 moment(from,"HH:mm a"),moment(to,"HH:mm a"),null,"[]")
@@ -105,12 +105,15 @@ const appAppointment=async(parent,
                     }
                 });
                 appointments.forEach((e)=>{
-                    if(moment(dateTime).isBetween(
-                        moment(e.from)
-                        ,moment(e.to))||
+                    if(moment(moment(dateTime).format("HH:mm a"),
+                    "HH:mm a").isBetween(
+                        moment(moment(e.from).format("HH:mm a"),"HH:mm a")
+                        ,moment(moment(e.to).format("HH:mm a"),"HH:mm a")
+                        ,null,"[)")||
                         toHour.isBetween(
-                            moment(e.from)
-                            ,moment(e.to))){
+                            moment(moment(e.from).format("HH:mm a"),"HH:mm a")
+                            ,moment(moment(e.to).format("HH:mm a"),"HH:mm a")
+                            ,null,"(]")){
                             timeIsFree=false
                     }
             })
@@ -119,7 +122,7 @@ const appAppointment=async(parent,
             }
             return await prisma.appointment.create({
                 data:{
-                    stateId:"b10f3259-f4f6-46bc-b716-e5904e6bab00",
+                    stateKey:"waiting",
                     studentCount,
                     dateTime:dateTime,
                     date:moment(dateTime).format("DD/MM/YYYY"),note,

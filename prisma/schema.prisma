@@ -62,8 +62,8 @@
     course              Materials
     courseHoursType     courseHoursType
     coursePrice         Float
-    state               Appointment_state @relation(fields: [stateId],references: [id])
-    stateId             String
+    state               Appointment_state @relation(fields: [stateKey],references: [Appoitment_state_key])
+    stateKey            String
     note                String
     rejectionReason     String?
     teacherId String
