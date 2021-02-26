@@ -182,7 +182,7 @@ input userInfoInput{
 type teacherSchedule{
   time:fromTo!
   day:String!
-  state:Appointment_state
+  state:Int!
 }
 type Appointment_state{
   id:ID!

@@ -14,14 +14,7 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
     while (moment(i).isBefore(To)&&
       moment(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a")
       <= To.format("HH:mm a")) {
-        let state = {
-          id:"",
-          name:{
-            eng:"available",
-            ar:"متاح"
-          },
-          color:"#ffffff"
-        };
+        let state = 0
         let skip = false
         appointmentsArray.map((appointments,index)=>{
           if(appointments){
@@ -42,11 +35,10 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
                       from: moment(appointments.from).format("HH:mm a"),
                       to: moment(appointments.to).format("HH:mm a"),
                       state:appointments.studentId==id?(
-                        appointments.state
-                      ):(
                         appointments.state.Appoitment_state_key=="waiting"?
-                        state:appointments.state
-                      )
+                        2:3
+                        ):appointments.state.Appoitment_state_key!="waiting"?
+                        1:0
                     })
                   }
                   i = moment(appointments.to)

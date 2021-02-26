@@ -19,6 +19,8 @@ const appAppointment=async(parent,
         if(moment(dateTime).format('mm')!="00" && moment(dateTime).format('mm')!="30"){
             throw new Error("date is not correct!")
         }
+        console.log(dateTime)
+
         let price={}
         if(courseHoursType!="train"){
             price={
@@ -65,7 +67,8 @@ const appAppointment=async(parent,
             }
         }).then((e)=>e.hours)
         .catch(()=>[])
-        const toHour=moment(dateTime).add(
+
+        const toHour=moment(dateTime,"YYYY-MM-DDTHH:mm:ss[Z]").add(
             (courseHoursType=="oneHour"||
             courseHoursType=="train"||
             courseHoursType=="OneAndHalf")?1:
@@ -126,11 +129,11 @@ const appAppointment=async(parent,
                     studentCount,
                     dateTime:dateTime,
                     date:moment(dateTime).format("DD/MM/YYYY"),note,
-                    from:moment(dateTime).format("YYYY-MM-DD HH:mm:ss"),
-                    to:toHour.format("YYYY-MM-DD HH:mm:ss"),
+                    from:moment(dateTime,"YYYY-MM-DDTHH:mm:ss[Z]").format("YYYY-MM-DDTHH:mm:ss[Z]"),
+                    to:moment(toHour,"YYYY-MM-DDTHH:mm:ss[Z]").format("YYYY-MM-DD[T]HH:mm:ss[Z]"),
                     materialsId:courseId,
                     courseHoursType,
-                    ...price,                                            
+                    ...price,
                     teacherId,
                     studentId:id
                 }
