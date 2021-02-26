@@ -5,11 +5,6 @@ const getTeacherCourses=async(parent, {teacherID,take=6,skip=0}, {req,prisma}, i
     const materials = await prisma.materials.findMany({
         take,skip,
         where:{
-            teachers:{
-                some:{
-                    id:teacherID
-                }
-            }
         },include:{
             lookUp:true,
             description:true,
