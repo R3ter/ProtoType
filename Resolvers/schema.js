@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getMyTeacherBooking(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getMyWorkingHours:[workingDay]
   getMaterialsForRegister(educationLevelId:ID!):[Materials]
   users:[User]
@@ -243,6 +244,7 @@ type Appointment{
   user:User!
   courseHoursType:courseHoursType!
   teacher:User!
+  rejectionReason:String
 }
 
 type TeacherReview{
