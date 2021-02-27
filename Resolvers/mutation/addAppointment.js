@@ -1,5 +1,6 @@
 import {checkToken} from './../../methods/Tokens.js'
 import moment from 'moment'
+import { now } from '../../methods/time.js'
 const appAppointment=async(parent,
     {
         data:{
@@ -16,10 +17,11 @@ const appAppointment=async(parent,
         if(studentCount>4||studentCount<1){
             throw new Error("Max 4 students")
         }
-        if(moment(dateTime).format('mm')!="00" && moment(dateTime).format('mm')!="30"){
+        if((moment(dateTime).format('mm')!="00" && moment(dateTime).format('mm')!="30")||
+        moment(dateTime).isBefore(moment(now()).add(5,"minutes"))
+        ){
             throw new Error("date is not correct!")
         }
-        console.log(dateTime)
 
         let price={}
         if(courseHoursType!="train"){
@@ -91,7 +93,6 @@ const appAppointment=async(parent,
                 date:moment(dateTime).format("DD/MM/YYYY")
             }
         })
-        console.log(appointments)
         freeTimes.forEach(e => {
             const times=e.split("/-/")
             const date=moment(dateTime).format("HH:mm a")
@@ -108,6 +109,9 @@ const appAppointment=async(parent,
                     }
                 });
                 appointments.forEach((e)=>{
+                    if(e.stateKey!="waiting"&&e.studentId==id){
+                        timeIsFree=false
+                    }else if(e.stateKey!="waiting")
                     if(moment(moment(dateTime).format("HH:mm a"),
                     "HH:mm a").isBetween(
                         moment(moment(e.from).format("HH:mm a"),"HH:mm a")

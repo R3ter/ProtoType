@@ -1,4 +1,5 @@
 import admin from 'firebase-admin'
+import { now } from '../time.js'
 import frirebaseData from './../firebaseData.js'
 
 admin.initializeApp({
@@ -13,7 +14,7 @@ const sendMessage=async(fromId,toId,message)=>{
         to:toId,
         message,
         isView:false,
-        createdAt:new Date()
+        createdAt:now()
     })
 }
 const readMessage=(userId)=>{

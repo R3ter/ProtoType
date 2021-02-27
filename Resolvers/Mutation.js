@@ -14,7 +14,11 @@ import changeMyPassword from "./mutation/changePassword.js"
 import addMaterialRevew from './mutation/reviews/addMaterialReview.js'
 import teacherConnectToMaterial from './mutation/Teacher/connectToMaterial.js'
 import sendMessage from './mutation/chat/sendMessage.js'
+import teacherAcceptAppointment from './mutation/Teacher/teacherAcceptAppointment.js'
+import rejectAppointment from "./mutation/Teacher/rejectAppointment.js"
 const Mutation={
+    rejectAppointment,
+    teacherAcceptAppointment,
     sendMessage,
     teacherConnectToMaterial,
     addMaterialRevew,

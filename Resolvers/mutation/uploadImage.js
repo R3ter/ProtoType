@@ -27,7 +27,6 @@ const UploadImage=async(parent, {imageData}, {req,prisma}, info)=>{
                   return false
               })
         },rej:(e)=>{
-            console.log(e)
             return false
         }
 })

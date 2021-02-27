@@ -136,7 +136,7 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 
 // prisma.appointment.update({
 //   where:{
-//     id:"71ee1957-59b8-43b5-9536-ed4bcf3fc4e7"
+//     id:"282d7929-b967-4087-8a5b-2374015ac667"
 //   },data:{
 //     state:{
 //       connect:{
@@ -146,4 +146,16 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //   }
 // }).then((e)=>{
 //   console.log(e)
+// })
+
+
+// prisma.appointment.findMany({
+//   take,skip,
+//   where:{
+//     studentId:id
+//     ,x
+//   },
+//   orderBy:{
+//       createdAt:"desc"
+//   },
 // })

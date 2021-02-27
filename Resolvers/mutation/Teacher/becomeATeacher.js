@@ -19,7 +19,6 @@ const becomeaTeacher= async(parent, {message}, {req,prisma}, info)=>{
         }
     }).then(()=>true))
     .catch((e)=>{
-        console.log(e)
         return false})
 
     // /////////test mode

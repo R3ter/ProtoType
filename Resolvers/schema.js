@@ -28,7 +28,7 @@ type Query{
     timeType:courseHoursType!,
     date:DateTime!):[teacherSchedule]
   getMaterialReviews(materialId:ID!,skip:Int,take:Int):[MaterialReview]
-  getMyBooking(skip:Int,take:Int,stateKey:String):[Appointment]
+  getMyBooking(skip:Int,take:Int,state:StateTime!):[Appointment]
   getSchoolTypes:[SchoolType]!
   getMyEducationLevels:[Education_Level]
   getTeachersOnMap:MapInfo!
@@ -37,6 +37,8 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  rejectAppointment(rejectionReason:String!,AppointmentID:ID!):Boolean!
+  teacherAcceptAppointment(AppointmentID:ID!):Boolean!
   sendMessage(toId:ID!,message:String!):Boolean!
   teacherConnectToMaterial(materialID:ID!):Boolean!
   addMaterialRevew(data:MaterialReviewInput!):Boolean!
@@ -55,6 +57,10 @@ type Mutation{
   resendActivationCode:Boolean!
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
+}
+enum StateTime{
+  PREVIOUS,
+  UPCOMING
 }
 input fromToInput{
   from:DateTime!

@@ -13,7 +13,6 @@ const changeMyPassword=async(parent,{currentPassword,newPassword},{prisma,req})=
         }
     })
     const hash = bcrypt.hashSync(newPassword, 6);
-    console.log(hash)
     if(bcrypt.compareSync(currentPassword,password)){
         return await prisma.user.update({
             where:{

@@ -1,13 +1,42 @@
+import { now } from "../../methods/time.js"
 import { checkToken } from "../../methods/Tokens.js"
-const getTeacherReviews=async(parent, {take=5,skip=0,stateKey}, {req,prisma}, info)=>{
+const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)=>{
     const {id} = checkToken({token:req.headers.token})
+    let filter
+    if(state=="PREVIOUS"){
+        filter={
+            OR:[
+                {
+                    dateTime:{
+                        lte:now()
+                    }
+                },{
+                    stateKey:"rejected"
+                }
+            ]
+        }
+    }else{
+        filter={
+            AND:[
+                {
+                    dateTime:{
+                        gte:now()
+                    }
+                },{
+                    NOT:{
+                        stateKey:{
+                            equals:"rejected"
+                        }
+                    }
+                }
+            ]
+        }
+    }
     return await prisma.appointment.findMany({
         take,skip,
         where:{
           studentId:id,
-          state:{
-            Appoitment_state_key:stateKey
-          }
+          ...filter
         },
         orderBy:{
             createdAt:"desc"
