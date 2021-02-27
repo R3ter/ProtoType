@@ -11,20 +11,14 @@ const refreshTokens=[]
 
 const loginToken=async(userid,role,Activate,email,phone_number)=>{
 
-    const firebaseToken=await admin.auth().createCustomToken(userid,{
-        id: userid,Role:role,Activate,email,phone_number
-    })
+    const firebaseToken=await admin.auth().createCustomToken(userid)
     
     if(!userid||!role||!email||!phone_number){
         throw new Error("some of the token data are missing")
     }
     
     const token = await jwt.sign({
-        aud: "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
-        iss: "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
-        sub: "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
-        uid: userid,
-        id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '1h' });
+        id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '10days' });
         const randomId = cryptoRandomString({length: 300})
         refreshTokens[userid]=randomId
         
