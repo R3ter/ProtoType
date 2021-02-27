@@ -241,7 +241,7 @@ type Appointment{
   coursePrice:Float!
   state: Appointment_state!
   userId:ID!
-  user:User!
+  student:User!
   courseHoursType:courseHoursType!
   teacher:User!
   rejectionReason:String
