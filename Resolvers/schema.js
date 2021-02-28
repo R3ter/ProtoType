@@ -114,6 +114,15 @@ input AppointmentInput{
   courseId:ID!
   courseHoursType:courseHoursType! 
   note:String
+  student_info:student_info!
+}
+input student_info {
+  student_name:String!
+  full_number:String!
+  address:String!
+  longitude:Float
+  latitude:Float
+  
 }
 type BookingData {
   studentCount:Int!

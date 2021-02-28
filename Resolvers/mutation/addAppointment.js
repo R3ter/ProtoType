@@ -10,7 +10,8 @@ const appAppointment=async(parent,
             courseHoursType, 
             homeWorkPackageID,
             note,
-            studentCount
+            studentCount,
+            student_info
         }
     },{prisma,req},info)=>{
         const {id} = checkToken({token:req.headers.token})
@@ -129,6 +130,11 @@ const appAppointment=async(parent,
             }
             return await prisma.appointment.create({
                 data:{
+                    student_info:{
+                        create:{
+                            ...student_info
+                        }
+                    },
                     stateKey:"waiting",
                     studentCount,
                     dateTime:dateTime,

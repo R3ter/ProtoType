@@ -15,7 +15,6 @@ const getTeacher=async(parent, args, {req,prisma}, info)=>{
             }
         }
     }).then(async(e)=>{
-        console.log(e)
         return {
             full_name:e.full_name,
             email:e.email,

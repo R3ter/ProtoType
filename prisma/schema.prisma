@@ -59,14 +59,16 @@
     certificateURL String @default("")
     CV_URL String?
 
+    image_URL String?   @default("")
+
   }
   model Student_Appointment_info{
     id                  String          @id @default(uuid())
     student_name        String
     full_number         String
-
-    longitude           Float?
-    latitude            Float?
+    address             String
+    longitude           Float? @default(0)
+    latitude            Float? @default(0)
   }
   model Appointment {
     id                  String          @id @default(uuid())
