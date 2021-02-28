@@ -21,7 +21,9 @@ const login = async(parent,{username,password},{prisma})=>{
             if(bcrypt.compareSync(password, userPassword)){
                 const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
                     teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
-                        e.Role=="TEACHER"?false:undefined})
+                        e.Role=="TEACHER"?false:undefined,
+                        includeFirebaseToken:e.teacherProfile?e.teacherProfile.teacherIsActive:
+                        e.Role=="TEACHER"?false:true})
                 return {result:true,
                     authentication:{
                         teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
@@ -56,7 +58,9 @@ const login = async(parent,{username,password},{prisma})=>{
             if(bcrypt.compareSync(password, userPassword)){
                 const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
                     teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
-                        e.Role=="TEACHER"?false:undefined})
+                        e.Role=="TEACHER"?false:undefined,
+                        includeFirebaseToken:e.teacherProfile?e.teacherProfile.teacherIsActive:
+                        e.Role=="TEACHER"?false:true})
                 return {result:true,
                     authentication:{
                         teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
