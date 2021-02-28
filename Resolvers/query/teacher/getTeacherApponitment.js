@@ -17,9 +17,19 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
         }
     }else{
         filter={
-            dateTime:{
-                gte:now()        
-            }
+            AND:[
+                {
+                    dateTime:{
+                        gte:now()
+                    }
+                },{
+                    NOT:{
+                        stateKey:{
+                            equals:"rejected"
+                        }
+                    }
+                }
+            ]
         }
     }
     return await prisma.appointment.findMany({

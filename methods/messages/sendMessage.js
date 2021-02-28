@@ -6,6 +6,17 @@ admin.initializeApp({
     databaseURL: 'https://school-92b2c-default-rtdb.europe-west1.firebasedatabase.app/',
     credential:admin.credential.cert(frirebaseData)
 })
+var condition = "'stock-GOOG' in topics || 'industry-tech' in topics";
+var message = {
+    notification: {
+      title: '$FooCorp up 1.43% on the day',
+      body: '$FooCorp gained 11.80 points to close at 835.67, up 1.43% on the day.'
+    },
+    condition: condition
+  };
+admin.messaging().send(message).then((e)=>{
+    console.log(e)
+})
 const sendMessage=async(fromId,toId,message)=>{
     const db = admin.firestore()
     await db.collection("chat").doc(fromId).collection(toId).add({
@@ -17,15 +28,6 @@ const sendMessage=async(fromId,toId,message)=>{
     })
       
     
-    // admin.messaging().send({
-    //     data: {
-    //         score: '850',
-    //         time: '2:45'  
-    //     },
-    //     token: registrationToken
-    // }).then((e)=>{
-    //     console.log(e)
-    // })
 }
 const readMessage=(userId)=>{
 
