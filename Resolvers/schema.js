@@ -115,7 +115,7 @@ type BookingData {
   materialsId:ID!
   courseHoursType:String!
   homeWorkPackage:String
-  studentsCount:int!
+  studentsCount:Int!
 
   price:Int!
   teacherId:ID!
@@ -259,6 +259,8 @@ type Appointment{
   courseHoursType:courseHoursType!
   teacher:User!
   rejectionReason:String
+  studentCount:Int
+  packageName:String
 }
 
 type TeacherReview{

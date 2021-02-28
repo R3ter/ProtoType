@@ -42,6 +42,7 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             createdAt:"desc"
         },
         include:{
+            HomeWorkPackage:true,
             student:{
                 select:{
                     id:true,
@@ -71,8 +72,9 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             }
         }
     }).then((e)=>{
-        return e.map((e)=>{
+        return e.map(async(e)=>{
             return {
+                packageName:e.HomeWorkPackage?e.HomeWorkPackage.name:null,
                 ...e,
                 time:{
                     from:e.from,
