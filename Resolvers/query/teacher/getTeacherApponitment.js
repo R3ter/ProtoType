@@ -47,6 +47,7 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
                 select:{
                     id:true,
                     full_name:true,
+                    userInfo:true,
                     teacherProfile:true
                 }
             },
