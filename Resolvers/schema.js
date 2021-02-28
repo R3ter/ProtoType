@@ -212,6 +212,7 @@ type Appointment_state{
   id:ID!
   name:String!
   color:String!
+  Appoitment_state_key:String!
 }
 type TeacherProfile{
   id:ID!
