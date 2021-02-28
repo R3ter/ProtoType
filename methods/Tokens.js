@@ -9,20 +9,25 @@ import admin from 'firebase-admin'
 
 const refreshTokens=[]
 
-const loginToken=async(userid,role,Activate,email,phone_number)=>{
-
-    const firebaseToken=await admin.auth().createCustomToken(userid)
+const loginToken=async({userid,role,Activate,email,phone_number,teacherIsActive,teacherDpcumentUploaded,
+includeFirebaseToken=true})=>{
+    let firebaseToken
+    
+    if(includeFirebaseToken)
+        firebaseToken=await admin.auth().createCustomToken(userid)
     
     if(!userid||!role||!email||!phone_number){
         throw new Error("some of the token data are missing")
     }
     
     const token = await jwt.sign({
-        id: userid,Role:role,Activate,email,phone_number}, secret,{ expiresIn: '10days' });
+        id: userid,Role:role,Activate,email,phone_number,teacherIsActive}, secret,{ expiresIn: '10days' });
         const randomId = cryptoRandomString({length: 300})
         refreshTokens[userid]=randomId
         
-    return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role,firebaseToken}
+    return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role,firebaseToken,
+        teacherDpcumentUploaded
+        ,teacherIsActive}
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
     if(refreshTokens[userId]&&refreshTokens[userId]==RefreshToken){
@@ -46,19 +51,24 @@ const logout= async(userId,RefreshToken)=>{
     }
     return false
 }
-const checkToken=({token,activeRequired=true,Roles=["STUDENT","TEACHER"]})=>{
+const checkToken=({token,activeRequired=true,Roles=["STUDENT","TEACHER"],
+teacherActivationRequired=false})=>{
     if (token) {
         try{
             token=jwt.verify(token, secret)
         }catch(e){
             throw new Error('Authentication required')
         }
+        if(token.Activate||!activeRequired){
+            //throw new Error("account is not active")
+        }
         if(!Roles.includes(token.Role)){
             throw new Error('you are not authorized to take this action')
         }
-        if(token.Activate||!activeRequired){
+        if(teacherActivationRequired&&!token.teacherIsActive&&
+            token.Role=="TEACHER"){
+                throw new Error("your teacher account is not active yet")
         }
-        //throw new Error("account is not active")
         return token
     }
     throw new AuthenticationError("Unauthenticate")

@@ -16,7 +16,11 @@ import teacherConnectToMaterial from './mutation/Teacher/connectToMaterial.js'
 import sendMessage from './mutation/chat/sendMessage.js'
 import teacherAcceptAppointment from './mutation/Teacher/teacherAcceptAppointment.js'
 import rejectAppointment from "./mutation/Teacher/rejectAppointment.js"
+import addTeacherDocument from './mutation/Teacher/addTeacherDocuments.js'
+import addTeacherInfo from './mutation/Teacher/addTeacherInfo.js'
 const Mutation={
+    addTeacherInfo,
+    addTeacherDocument,
     rejectAppointment,
     teacherAcceptAppointment,
     sendMessage,
@@ -41,7 +45,7 @@ const Mutation={
         }=await prisma.user.update({where:{id},
             data:{Active:true}
         })
-        const info=await loginToken(id,Role,true,email,phone_number)
+        const info=await loginToken({userid:id,role:Role,Activate:true,email,phone_number})
         return {result:true,
             authentication:{
               ...info,

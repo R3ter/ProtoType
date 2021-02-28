@@ -47,11 +47,18 @@
     teacherId    String        @unique
     user         User          @relation(fields: [teacherId], references: [id])
     appointments Appointment[]
+    teacherIsActive Boolean @default(false)
     educationLevel Education_Level[]
     materialTags   CourseTag[]
     workingDays  workingDay[]
     materials    Materials[]
     createdAt    DateTime      @default(now())
+
+    IDFrontImageURL String @default("")
+    IDBackImageURL String @default("")
+    certificateURL String @default("")
+    CV_URL String?
+
   }
   
   model Appointment {

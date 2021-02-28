@@ -10,7 +10,8 @@ const login = async(parent,{username,password},{prisma})=>{
                 email:username.toLowerCase()
             },
             include:{
-                userInfo:true
+                userInfo:true,
+                teacherProfile:true
             }
         }).then(async(e)=>{
             if(!e){
@@ -18,9 +19,16 @@ const login = async(parent,{username,password},{prisma})=>{
             }
             const {userInfo,id,full_name,Role,email,phone_number,Active,password:userPassword}=e
             if(bcrypt.compareSync(password, userPassword)){
-                const info=await loginToken(id,Role,Active,email,phone_number)
+                const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
+                    teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
+                        e.Role=="TEACHER"?false:undefined})
                 return {result:true,
                     authentication:{
+                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
+                        ?true:
+                        e.Role=="TEACHER"?false:undefined,
+                        teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
+                        e.Role=="TEACHER"?false:undefined,
                         ...info,
                         isActive:Active,
                         isInfoComplet:!!userInfo,
@@ -37,7 +45,8 @@ const login = async(parent,{username,password},{prisma})=>{
                 phone_number:username
             },        
             include:{
-                userInfo:true
+                userInfo:true,
+                teacherProfile:true
             }
         }).then(async(e)=>{
             if(!e){
@@ -45,9 +54,16 @@ const login = async(parent,{username,password},{prisma})=>{
             }
             const {userInfo,id,full_name,Role,email,phone_number,Active,password:userPassword}=e
             if(bcrypt.compareSync(password, userPassword)){
-                const info=await loginToken(id,Role,Active,email,phone_number)
+                const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
+                    teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
+                        e.Role=="TEACHER"?false:undefined})
                 return {result:true,
                     authentication:{
+                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
+                        ?true:
+                        e.Role=="TEACHER"?false:undefined,
+                        teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
+                        e.Role=="TEACHER"?false:undefined,
                         ...info,
                         isActive:Active,
                         isInfoComplet:!!userInfo,

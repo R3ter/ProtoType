@@ -4,6 +4,7 @@ import { sendActivateCode } from '../../methods/activate.js';
 import { loginToken } from '../../methods/Tokens.js';
 
 const addUser=async (parent, {data:{
+  accountType,
   // username,
   password,
   email,
@@ -36,14 +37,21 @@ const addUser=async (parent, {data:{
       full_name,
       email:email.toLowerCase(),
       phone_number,
+      Role:accountType,
       password:hash
     }
   }).then(async(result,e)=>{
+    
     if(result){
         sendActivateCode(email)
-        const token=await loginToken(result.id,result.Role,false,email,result.phone_number)
+        const token=await loginToken({userid:result.id,role:result.Role,Activate:false,
+          includeFirebaseToken:false,
+          email,phone_number:result.phone_number,
+          teacherIsActive:accountType=="TEACHER"?false:undefined})
         return {result:true,
           authentication:{
+            teacherDocumentUploaded:result.Role=="TEACHER"?false:undefined,
+            teacherIsActive:result.Role=="TEACHER"?false:undefined,
             ...token,
             isActive:false,
             isInfoComplet:false,

@@ -38,6 +38,8 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  addTeacherInfo(data:teacherInfoInput!):Boolean!
+  addTeacherDocument(data:TeacherDocumentInput!):Boolean!
   rejectAppointment(rejectionReason:String!,AppointmentID:ID!):Boolean!
   teacherAcceptAppointment(AppointmentID:ID!):Boolean!
   sendMessage(toId:ID!,message:String!):Boolean!
@@ -150,7 +152,12 @@ type TeacherMapInfo{
   longitude:String
   latitude:String
 }
-
+input TeacherDocumentInput{
+  IDFrontImageUR:String!
+  IDBackImageURL:String!
+  certificateURL:String!
+  CV_URL:String
+}
 type User {
   id:ID!
   full_name:String!
@@ -161,7 +168,6 @@ type User {
   userInfo: UserInfo
   teacherProfile:TeacherProfile
 }
-
 type UserInfo{
   birth_date:String
   user:User!
@@ -173,8 +179,6 @@ type UserInfo{
   image_URL:String
   cover_URL:String
   about:String
-  City:City
-  Area:Area
 }
 input userInfoInput{
   image_URL:String
@@ -185,9 +189,16 @@ input userInfoInput{
   longitude:String
   about:String
   latitude:String
-  City:ID
   full_name:String
-  Area:ID
+}
+input teacherInfoInput{
+  image_URL:String
+  birth_date:DateTime
+  education_levels_ID:[ID!]
+  address:String
+  about:String
+  longitude:String
+  latitude:String
 }
 type teacherSchedule{
   time:fromTo!
@@ -278,9 +289,11 @@ type Authentication{
   phone_number:String!
   isActive:Boolean!
   isInfoComplet:Boolean!
+  teacherDocumentUploaded:Boolean
+  teacherIsActive:Boolean
   materialSet:Boolean!
   Role:Role!
-  firebaseToken:String!
+  firebaseToken:String
 }
 type Result{
   error:String
@@ -291,6 +304,7 @@ input UserInput{
   email:String!
   phone_number:String!
   password:String!
+  accountType:Role!
 }
 type Materials {
   id: ID!
