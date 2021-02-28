@@ -55,7 +55,9 @@ const appAppointment=async(parent,
                         coursePrice:e.price,
                         finalPrice:e.price,
                         discountPercentage:0,
-                        homeWorkPackageId:e.id
+                        homeWorkPackageId:e.id,
+                        homeWorkPackage:e.name,
+                        studentsCount:studentCount
                     }
                 }),
             }

@@ -114,6 +114,9 @@ type BookingData {
   to:String!
   materialsId:ID!
   courseHoursType:String!
+  homeWorkPackage:String
+  studentsCount:int!
+
   price:Int!
   teacherId:ID!
 }
