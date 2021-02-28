@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getMyTeacherInfo:TeacherInfo
   getMyTeacherBooking(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getMyWorkingHours:[workingDay]
   getMaterialsForRegister(educationLevelId:ID!):[Materials]
@@ -68,6 +69,15 @@ enum StateTime{
 input fromToInput{
   from:DateTime!
   to:DateTime!
+}
+type TeacherInfo{
+  full_name:String
+  email:String
+  image_URL:String
+  birth_date:String
+  Education_Level:[Education_Level]
+  about:String
+  phone_number:String
 }
 input ConfirmBookingInput{
   dateTime:DateTime!

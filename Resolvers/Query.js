@@ -26,7 +26,9 @@ import getMyEducationLevels from './query/teacher/getMyEducationLevels.js'
 import getMaterialsForRegister from './query/teacher/getMaterialsForRegister.js'
 import getMyWorkingHours from './query/teacher/getMyWorkingHours.js'
 import getMyTeacherBooking from './query/teacher/getTeacherApponitment.js'
+import getMyTeacherInfo from './query/teacher/getMyTeacherProfileInfo.js'
 const Query={
+    getMyTeacherInfo,
     getMyTeacherBooking,
     getMyWorkingHours,
     getMaterialsForRegister,

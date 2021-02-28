@@ -60,9 +60,17 @@
     CV_URL String?
 
   }
-  
+  model Student_Appointment_info{
+    id                  String          @id @default(uuid())
+    student_name        String
+    full_number         String
+
+    longitude           Float?
+    latitude            Float?
+  }
   model Appointment {
     id                  String          @id @default(uuid())
+    student_info        Student_Appointment_info
     dateTime            DateTime
     from                DateTime
     to                  DateTime
