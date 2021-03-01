@@ -4,6 +4,9 @@ const search=async (parent ,{word},{prisma})=>{
             Role:"TEACHER",
             full_name:{
                 contains:word
+            },
+            NOT:{
+                userInfo:null
             }
         },
         include:{
@@ -27,7 +30,7 @@ const search=async (parent ,{word},{prisma})=>{
         }
     }).then(async(e)=>{
         return e.map((e)=>{
-            console.log(e)
+            console.log(e.userInfo)
             return {
                 full_name:e.full_name,
                 email:e.email,
