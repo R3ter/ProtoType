@@ -72,7 +72,7 @@
   }
   model Appointment {
     id                  String          @id @default(uuid())
-    student_info        Student_Appointment_info
+    student_info        Student_Appointment_info 
     dateTime            DateTime
     from                DateTime
     to                  DateTime

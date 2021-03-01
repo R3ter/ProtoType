@@ -15,11 +15,7 @@ const appAppointment=async(parent,
             student_info
         }
     },{prisma,req},info)=>{
-        console.log({
-            address:student_info.address,
-            full_number:student_info.full_number,
-            student_name:student_info.student_name
-          })
+
         const {id} = checkToken({token:req.headers.token})
         if(studentCount>4||studentCount<1){
             throw new Error("Max 4 students")
@@ -32,6 +28,7 @@ const appAppointment=async(parent,
 
         let price={}
         if(courseHoursType!="train"){
+            console.log(courseHoursType)
             price={
                 ...await prisma.education_Level.findUnique({
                 where:{
@@ -82,10 +79,8 @@ const appAppointment=async(parent,
             courseHoursType=="train"||
             courseHoursType=="OneAndHalf")?1:
             (courseHoursType=="TwoHours"||
-            courseHoursType=="package10HomeWorks"||
             courseHoursType=="TwoAndHalf")?2:
             (courseHoursType=="ThreeHours"||
-            courseHoursType=="package15HomeWorks"||
             courseHoursType=="ThreeAndHalf")?3:
             4,"hours"
             ).add(
@@ -100,42 +95,44 @@ const appAppointment=async(parent,
                 date:moment.utc(dateTime).format("DD/MM/YYYY")
             }
         })
+        let StopLoop=false
         freeTimes.forEach(e => {
-            const times=e.split("/-/")
-            const date=moment.utc(dateTime).format("HH:mm a")
-            const from=moment.utc(times[0]).format("HH:mm a")
-            const to=moment.utc(times[1]).format("HH:mm a")
-
-            console.log(moment.utc(date,"HH:mm a").isBetween(
-                moment.utc(from,"HH:mm a"),moment.utc(to,"HH:mm a"),null,"[]"))
-
-            console.log(from,date,to)
-            if(moment.utc(date,"HH:mm a").isBetween(
-                moment.utc(from,"HH:mm a"),moment.utc(to,"HH:mm a"),null,"[]")
-                &&moment.utc(toHour.format("HH:mm a"),"HH:mm a").isBetween(
-                            moment.utc(from,"HH:mm a"),
-                            moment.utc(to,"HH:mm a"),null,"[]"
-                    )){
-                        timeIsFree=true
-                    }
-                });
+            if(!StopLoop){
+                const times=e.split("/-/")
+                const date=moment.utc(dateTime).format("HH:mm a")
+                const from=moment.utc(times[0]).format("HH:mm a")
+                const to=moment.utc(times[1]).format("HH:mm a")
+                console.log("dwasd")
+                if(moment.utc(date,"HH:mm a").isBetween(
+                    moment.utc(from,"HH:mm a"),moment.utc(to,"HH:mm a"),null,"[]")
+                    &&moment.utc(toHour.format("HH:mm a"),"HH:mm a").isBetween(
+                                moment.utc(from,"HH:mm a"),
+                                moment.utc(to,"HH:mm a"),null,"[]"
+                        )){
+                            timeIsFree=true
+                            StopLoop=true
+                        }
+                }
+            });
                 if(!timeIsFree){
                     return false
-                 }
+                }
                 appointments.forEach((e)=>{
-                    if(e.stateKey!="waiting"&&e.studentId==id){
-                        timeIsFree=false
-                    }else if(e.stateKey!="waiting")
-                    if(moment.utc(moment.utc(dateTime).format("HH:mm a"),
-                    "HH:mm a").isBetween(
-                        moment.utc(moment.utc(e.from).format("HH:mm a"),"HH:mm a")
-                        ,moment.utc(moment.utc(e.to).format("HH:mm a"),"HH:mm a")
-                        ,null,"[)")||
-                        toHour.isBetween(
+                    if(timeIsFree){
+                        if(e.stateKey=="waiting"&&e.studentId==id){
+                            timeIsFree=false
+                        }else if(e.stateKey!="waiting")
+                        if(moment.utc(moment.utc(dateTime).format("HH:mm a"),
+                        "HH:mm a").isBetween(
                             moment.utc(moment.utc(e.from).format("HH:mm a"),"HH:mm a")
                             ,moment.utc(moment.utc(e.to).format("HH:mm a"),"HH:mm a")
-                            ,null,"(]")){
-                            timeIsFree=false
+                            ,null,"[)")||
+                            toHour.isBetween(
+                                moment.utc(moment.utc(e.from).format("HH:mm a"),"HH:mm a")
+                                ,moment.utc(moment.utc(e.to).format("HH:mm a"),"HH:mm a")
+                                ,null,"(]")){
+                                timeIsFree=false
+                        }
                     }
             })
             if(!timeIsFree){
@@ -143,26 +140,26 @@ const appAppointment=async(parent,
             }
             return await prisma.appointment.create({
                 data:{
-                    student_info:{
-                        create:{
-                          address:student_info.address,
-                          full_number:student_info.full_number,
-                          student_name:student_info.student_name
-                        }
-                      },
                     stateKey:"waiting",
                     studentCount,
                     dateTime:dateTime,
                     date:moment.utc(dateTime).format("DD/MM/YYYY"),note,
-                    from:moment.utc(dateTime,"YYYY-MM-DDTHH:mm:ss").format("YYYY-MM-DDTHH:mm:ss[Z]"),
+                    from:moment.utc(dateTime,"YYYY-MM-DDTHH:mm:ss").format("YYYY-MM-DD[T]HH:mm:ss[Z]"),
                     to:moment.utc(toHour,"YYYY-MM-DDTHH:mm:ss").format("YYYY-MM-DD[T]HH:mm:ss[Z]"),
                     materialsId:courseId,
                     courseHoursType,
                     ...price,
                     teacherId,
-                    studentId:id
+                    studentId:id,
+                    student_Appointment_infoId:await prisma.student_Appointment_info.create({
+                        data:{
+                            address:student_info.address,
+                            full_number:student_info.full_number,
+                            student_name:student_info.student_name
+                        }
+                    }).then((e)=>e.id)
+
                 }
             }).then(()=>true)
-            .catch((e)=>{console.log(e)})
         }
         export default appAppointment
