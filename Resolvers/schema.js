@@ -6,7 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
-  # mainSearch(word:String!)
+  teacherSearch(word:String!):[TeacherInfo]
   getMyTeacherInfo:TeacherInfo
   getMyTeacherBooking(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getMyWorkingHours:[workingDay]

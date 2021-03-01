@@ -28,7 +28,6 @@ const appAppointment=async(parent,
 
         let price={}
         if(courseHoursType!="train"){
-            console.log(courseHoursType)
             price={
                 ...await prisma.education_Level.findUnique({
                 where:{
@@ -113,7 +112,7 @@ const appAppointment=async(parent,
                             StopLoop=true
                         }
                 }
-            });
+            })
                 if(!timeIsFree){
                     return false
                 }

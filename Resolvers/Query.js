@@ -27,7 +27,9 @@ import getMaterialsForRegister from './query/teacher/getMaterialsForRegister.js'
 import getMyWorkingHours from './query/teacher/getMyWorkingHours.js'
 import getMyTeacherBooking from './query/teacher/getTeacherApponitment.js'
 import getMyTeacherInfo from './query/teacher/getMyTeacherProfileInfo.js'
+import teacherSearch from './query/searchTeacher.js'
 const Query={
+    teacherSearch,
     getMyTeacherInfo,
     getMyTeacherBooking,
     getMyWorkingHours,
