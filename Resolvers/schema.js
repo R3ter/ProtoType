@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  # mainSearch(word:String!)
   getMyTeacherInfo:TeacherInfo
   getMyTeacherBooking(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getMyWorkingHours:[workingDay]
@@ -25,7 +26,7 @@ type Query{
   BestMaterials:[Materials]
   getTeacherReviews(teacherID:ID!):[TeacherReview]
   getTeacherCourses(teacherID:ID!,take:Int,skip:Int):[Materials]
-  getTeacherInfo(teacherID:ID!):TeacherInfo
+  getTeacherInfo(teacherID:ID!):TeacherProfile
   getTeacherAppointments(teacherID:ID!,
     timeType:courseHoursType!,
     date:DateTime!):[teacherSchedule]
@@ -70,6 +71,7 @@ input fromToInput{
   from:DateTime!
   to:DateTime!
 }
+
 type TeacherInfo{
   full_name:String
   email:String
