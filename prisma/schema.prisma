@@ -67,8 +67,8 @@
     student_name        String
     full_number         String
     address             String
-    longitude           Float? @default(0)
-    latitude            Float? @default(0)
+    longitude           Float @default(0)
+    latitude            Float @default(0)
   }
   model Appointment {
     id                  String          @id @default(uuid())

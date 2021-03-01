@@ -1,5 +1,6 @@
 import {checkToken} from './../../methods/Tokens.js'
 import moment from 'moment'
+
 import { now } from '../../methods/time.js'
 const appAppointment=async(parent,
     {
@@ -14,12 +15,17 @@ const appAppointment=async(parent,
             student_info
         }
     },{prisma,req},info)=>{
+        console.log({
+            address:student_info.address,
+            full_number:student_info.full_number,
+            student_name:student_info.student_name
+          })
         const {id} = checkToken({token:req.headers.token})
         if(studentCount>4||studentCount<1){
             throw new Error("Max 4 students")
         }
-        if((moment(dateTime).format('mm')!="00" && moment(dateTime).format('mm')!="30")||
-        moment(dateTime).isBefore(moment(now()).add(5,"minutes"))
+        if((moment.utc(dateTime).format('mm')!="00" && moment.utc(dateTime).format('mm')!="30")||
+        moment.utc(dateTime).isBefore(moment.utc(now()).add(5,"minutes"))
         ){
             throw new Error("date is not correct!")
         }
@@ -66,12 +72,12 @@ const appAppointment=async(parent,
         }
         const freeTimes=await prisma.workingDay.findUnique({
             where:{
-                teacherIdAndDay:teacherId+moment(dateTime).format('dddd').toLowerCase()
+                teacherIdAndDay:teacherId+moment.utc(dateTime).format('dddd').toLowerCase()
             }
         }).then((e)=>e.hours)
         .catch(()=>[])
 
-        const toHour=moment(dateTime,"YYYY-MM-DDTHH:mm:ss[Z]").add(
+        const toHour=moment.utc(dateTime,"YYYY-MM-DDTHH:mm:ss[Z]").add(
             (courseHoursType=="oneHour"||
             courseHoursType=="train"||
             courseHoursType=="OneAndHalf")?1:
@@ -91,36 +97,43 @@ const appAppointment=async(parent,
         let timeIsFree=false
         const appointments = await prisma.appointment.findMany({
             where:{
-                date:moment(dateTime).format("DD/MM/YYYY")
+                date:moment.utc(dateTime).format("DD/MM/YYYY")
             }
         })
         freeTimes.forEach(e => {
             const times=e.split("/-/")
-            const date=moment(dateTime).format("HH:mm a")
-            const from=moment(times[0]).format("HH:mm a")
-            const to=moment(times[1]).format("HH:mm a")
-            
-            if(moment(date,"HH:mm a").isBetween(
-                moment(from,"HH:mm a"),moment(to,"HH:mm a"),null,"[]")
-                &&moment(toHour.format("HH:mm a"),"HH:mm a").isBetween(
-                            moment(from,"HH:mm a"),
-                            moment(to,"HH:mm a"),null,"[]"
+            const date=moment.utc(dateTime).format("HH:mm a")
+            const from=moment.utc(times[0]).format("HH:mm a")
+            const to=moment.utc(times[1]).format("HH:mm a")
+
+            console.log(moment.utc(date,"HH:mm a").isBetween(
+                moment.utc(from,"HH:mm a"),moment.utc(to,"HH:mm a"),null,"[]"))
+
+            console.log(from,date,to)
+            if(moment.utc(date,"HH:mm a").isBetween(
+                moment.utc(from,"HH:mm a"),moment.utc(to,"HH:mm a"),null,"[]")
+                &&moment.utc(toHour.format("HH:mm a"),"HH:mm a").isBetween(
+                            moment.utc(from,"HH:mm a"),
+                            moment.utc(to,"HH:mm a"),null,"[]"
                     )){
                         timeIsFree=true
                     }
                 });
+                if(!timeIsFree){
+                    return false
+                 }
                 appointments.forEach((e)=>{
                     if(e.stateKey!="waiting"&&e.studentId==id){
                         timeIsFree=false
                     }else if(e.stateKey!="waiting")
-                    if(moment(moment(dateTime).format("HH:mm a"),
+                    if(moment.utc(moment.utc(dateTime).format("HH:mm a"),
                     "HH:mm a").isBetween(
-                        moment(moment(e.from).format("HH:mm a"),"HH:mm a")
-                        ,moment(moment(e.to).format("HH:mm a"),"HH:mm a")
+                        moment.utc(moment.utc(e.from).format("HH:mm a"),"HH:mm a")
+                        ,moment.utc(moment.utc(e.to).format("HH:mm a"),"HH:mm a")
                         ,null,"[)")||
                         toHour.isBetween(
-                            moment(moment(e.from).format("HH:mm a"),"HH:mm a")
-                            ,moment(moment(e.to).format("HH:mm a"),"HH:mm a")
+                            moment.utc(moment.utc(e.from).format("HH:mm a"),"HH:mm a")
+                            ,moment.utc(moment.utc(e.to).format("HH:mm a"),"HH:mm a")
                             ,null,"(]")){
                             timeIsFree=false
                     }
@@ -132,15 +145,17 @@ const appAppointment=async(parent,
                 data:{
                     student_info:{
                         create:{
-                            ...student_info
+                          address:student_info.address,
+                          full_number:student_info.full_number,
+                          student_name:student_info.student_name
                         }
-                    },
+                      },
                     stateKey:"waiting",
                     studentCount,
                     dateTime:dateTime,
-                    date:moment(dateTime).format("DD/MM/YYYY"),note,
-                    from:moment(dateTime,"YYYY-MM-DDTHH:mm:ss").format("YYYY-MM-DDTHH:mm:ss[Z]"),
-                    to:moment(toHour,"YYYY-MM-DDTHH:mm:ss").format("YYYY-MM-DD[T]HH:mm:ss[Z]"),
+                    date:moment.utc(dateTime).format("DD/MM/YYYY"),note,
+                    from:moment.utc(dateTime,"YYYY-MM-DDTHH:mm:ss").format("YYYY-MM-DDTHH:mm:ss[Z]"),
+                    to:moment.utc(toHour,"YYYY-MM-DDTHH:mm:ss").format("YYYY-MM-DD[T]HH:mm:ss[Z]"),
                     materialsId:courseId,
                     courseHoursType,
                     ...price,
@@ -148,5 +163,6 @@ const appAppointment=async(parent,
                     studentId:id
                 }
             }).then(()=>true)
+            .catch((e)=>{console.log(e)})
         }
         export default appAppointment

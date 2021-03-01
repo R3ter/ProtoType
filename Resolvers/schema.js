@@ -78,6 +78,11 @@ type TeacherInfo{
   Education_Level:[Education_Level]
   about:String
   phone_number:String
+  address:String
+  userId:String
+
+  longitude:String
+  latitude:String
 }
 input ConfirmBookingInput{
   dateTime:DateTime!

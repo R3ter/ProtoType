@@ -27,6 +27,7 @@
     "graphql": "^15.4.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.33",
     "nodemailer": "^6.4.17",
     "pg": "^8.5.1",
     "validator": "^13.5.2"

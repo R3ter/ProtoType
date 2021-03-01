@@ -14,6 +14,10 @@ import teacherSchedule from './Resolvers/types/WorkingHour.js'
 import TeacherMapInfo from './Resolvers/types/TeacherMapInfo.js'
 import SchoolType from './Resolvers/types/SchoolType.js'
 import Appointment from './Resolvers/types/Appointment.js'
+
+import momentZone from "moment-timezone"
+momentZone.tz.setDefault()
+
 const { ApolloServer} = apolloServer
 
 const { PrismaClient } = pkg;

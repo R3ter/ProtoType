@@ -22,7 +22,10 @@ const getTeacher=async(parent, args, {req,prisma}, info)=>{
             phone_number:e.phone_number,
             birth_date:e.userInfo.birth_date,
             about:e.userInfo.about,
-            Education_Level:e.teacherProfile.educationLevel
+            Education_Level:e.teacherProfile.educationLevel,
+            address:e.userInfo.address,
+            longitude:e.userInfo.longitude,
+            latitude:e.userInfo.latitude
         }
     })
     

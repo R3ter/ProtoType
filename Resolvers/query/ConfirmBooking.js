@@ -14,7 +14,7 @@ const appAppointment=async(parent,
         if(studentCount>4||studentCount<1){
             throw new Error("Max 4 students")
         }
-        if(moment(dateTime).format('mm')!="00" && moment(dateTime).format('mm')!="30"){
+        if(moment.utc(dateTime).format('mm')!="00" && moment.utc(dateTime).format('mm')!="30"){
             throw new Error("date is not correct!")
         }
         let price={}
@@ -63,7 +63,7 @@ const appAppointment=async(parent,
             }
         }
         
-        const toHour=moment(dateTime).add(
+        const toHour=moment.utc(dateTime).add(
             (courseHoursType=="oneHour"||
             courseHoursType=="OneAndHalf")?1:
             (courseHoursType=="TwoHours"||
@@ -79,8 +79,8 @@ const appAppointment=async(parent,
                 )
                 
             return {
-                date:moment(dateTime).format("DD/MM/YYYY"),
-                from:moment(dateTime).format("HH:mm a"),
+                date:moment.utc(dateTime).format("DD/MM/YYYY"),
+                from:moment.utc(dateTime).format("HH:mm a"),
                 to:toHour.format("HH:mm a"),
                 ...price,
                 TaxPercentage:0

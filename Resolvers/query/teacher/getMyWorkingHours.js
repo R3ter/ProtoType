@@ -11,8 +11,8 @@ const getMyWorkingHours=async(parent ,args,{prisma,req})=>{
             return {
                 day:e.day,
                 hours:e.hours.map((e)=>({
-                    from:moment(e.split("/-/")[0]).format("HH:mm a"),
-                    to:moment(e.split("/-/")[1]).format("HH:mm a")
+                    from:moment.utc(e.split("/-/")[0]).format("HH:mm a"),
+                    to:moment.utc(e.split("/-/")[1]).format("HH:mm a")
                 }))
             }
         })

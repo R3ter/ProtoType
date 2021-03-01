@@ -7,24 +7,24 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
     const from = e.split("/-/")[0]
     const to = e.split("/-/")[1]
 
-    const From = moment(moment(from).format("HH:mm a"),"HH:mm a")
-    const To = moment(moment(to).format("HH:mm a"),"HH:mm a")
-    var i = moment(moment(From).format("HH:mm a"),"HH:mm a")
+    const From = moment.utc(moment.utc(from).format("HH:mm a"),"HH:mm a")
+    const To = moment.utc(moment.utc(to).format("HH:mm a"),"HH:mm a")
+    var i = moment.utc(moment.utc(From).format("HH:mm a"),"HH:mm a")
 
-    while (moment(i).isBefore(To)&&
-      moment(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a")
+    while (moment.utc(i).isBefore(To)&&
+      moment.utc(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a")
       <= To.format("HH:mm a")) {
         let state = 0
         let skip = false
         appointmentsArray.map((appointments,index)=>{
           if(appointments){
-            appointments.from=moment(moment(appointments.from).format("HH:mm a"),"HH:mm a")
-            appointments.to=moment(moment(appointments.to).format("HH:mm a"),"HH:mm a")
+            appointments.from=moment.utc(moment.utc(appointments.from).format("HH:mm a"),"HH:mm a")
+            appointments.to=moment.utc(moment.utc(appointments.to).format("HH:mm a"),"HH:mm a")
           }
           if (appointments &&(
-            moment(i).isBetween(appointments.from,
+            moment.utc(i).isBetween(appointments.from,
             appointments.to) ||
-            moment(i).add(hours, "hours").add(minutes, "minutes").subtract(1,"minutes")
+            moment.utc(i).add(hours, "hours").add(minutes, "minutes").subtract(1,"minutes")
             .isBetween(
               appointments.from,
               appointments.to
@@ -32,8 +32,8 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
               {
                 if(appointments.courseHoursType==timeType){
                     data.push({
-                      from: moment(appointments.from).format("HH:mm a"),
-                      to: moment(appointments.to).format("HH:mm a"),
+                      from: moment.utc(appointments.from).format("HH:mm a"),
+                      to: moment.utc(appointments.to).format("HH:mm a"),
                       state:appointments.studentId==id?(
                         appointments.state.Appoitment_state_key=="waiting"?
                         2:3
@@ -41,18 +41,18 @@ const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
                         1:0
                     })
                   }
-                  i = moment(appointments.to)
+                  i = moment.utc(appointments.to)
                   appointmentsArray[index]=null;
                   skip = true
                 }
               })
             if (!skip) {
           data.push({
-            from: moment(i).format("HH:mm a"),
-            to: moment(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a"),
+            from: moment.utc(i).format("HH:mm a"),
+            to: moment.utc(i).add(hours, "hours").add(minutes, "minutes").format("HH:mm a"),
             state
           })
-          i = moment(i).add(hours, "hours").add(minutes, "minutes")
+          i = moment.utc(i).add(hours, "hours").add(minutes, "minutes")
         }
       }
     }
@@ -69,7 +69,7 @@ const getTeacherAppointment = async (parent, {
       dateTime: 'asc',
     },
     where: {
-      date: moment(date).format("DD/MM/YYYY"),
+      date: moment.utc(date).format("DD/MM/YYYY"),
       teacherId: teacherID
     },
     include:{
@@ -84,7 +84,7 @@ const getTeacherAppointment = async (parent, {
   })
   return await prisma.workingDay.findUnique({
     where: {
-      teacherIdAndDay: teacherID + moment(date).format('dddd').toLowerCase()
+      teacherIdAndDay: teacherID + moment.utc(date).format('dddd').toLowerCase()
     }
   }).then((e) => {
     if (!e)

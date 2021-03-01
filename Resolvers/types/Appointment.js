@@ -2,8 +2,8 @@ import moment from 'moment'
 const Appointment={
     time(parent, args, {req}){
         return {
-            from:moment(parent.from).format("HH:mm a"),
-            to:moment(parent.to).format("HH:mm a")
+            from:moment.utc(parent.from).format("HH:mm a"),
+            to:moment.utc(parent.to).format("HH:mm a")
         }
     }
 }
