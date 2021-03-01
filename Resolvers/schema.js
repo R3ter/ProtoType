@@ -389,6 +389,7 @@ input DLookUp{
 type Education_Level{
   id:ID!
   name:String!
+  type:SchoolType
 }
 type CourseTag{
   id:ID!
