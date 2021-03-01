@@ -26,7 +26,7 @@ type Query{
   BestMaterials:[Materials]
   getTeacherReviews(teacherID:ID!):[TeacherReview]
   getTeacherCourses(teacherID:ID!,take:Int,skip:Int):[Materials]
-  getTeacherInfo(teacherID:ID!):TeacherProfile
+  getTeacherInfo(teacherID:ID!):TeacherInfo
   getTeacherAppointments(teacherID:ID!,
     timeType:courseHoursType!,
     date:DateTime!):[teacherSchedule]
@@ -75,12 +75,16 @@ input fromToInput{
 type TeacherInfo{
   full_name:String
   email:String
+  user:User
   image_URL:String
   birth_date:String
   Education_Level:[Education_Level]
   about:String
   phone_number:String
   address:String
+  courseCount:Int
+  averageRating:Int
+  ratingCounts:Int
   userId:String
   schoolType:[SchoolType]
   longitude:String
