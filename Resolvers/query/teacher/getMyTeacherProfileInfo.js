@@ -10,11 +10,23 @@ const getTeacher=async(parent, args, {req,prisma}, info)=>{
             userInfo:true,
             teacherProfile:{
                 select:{
-                    educationLevel:true
+                    educationLevel:{
+                        select:{
+                            id:true,
+                            lookUp:true,
+                            type:{
+                                select:{
+                                    name:true,
+                                    id:true
+                                }
+                            },
+                        }
+                    }
                 }
             }
         }
     }).then(async(e)=>{
+        console.log(e.teacherProfile.educationLevel.type)
         return {
             full_name:e.full_name,
             email:e.email,
@@ -25,7 +37,8 @@ const getTeacher=async(parent, args, {req,prisma}, info)=>{
             Education_Level:e.teacherProfile.educationLevel,
             address:e.userInfo.address,
             longitude:e.userInfo.longitude,
-            latitude:e.userInfo.latitude
+            latitude:e.userInfo.latitude,
+            schoolType:e.teacherProfile.educationLevel.map((e)=>e.type)
         }
     })
     

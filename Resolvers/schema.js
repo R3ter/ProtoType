@@ -80,7 +80,7 @@ type TeacherInfo{
   phone_number:String
   address:String
   userId:String
-
+  schoolType:[SchoolType]
   longitude:String
   latitude:String
 }
@@ -111,6 +111,7 @@ type HomeWorkPackage{
   MaterialId:String
   name:String
 }
+
 input AppointmentInput{
   teacherId:ID!
   studentCount:Int!

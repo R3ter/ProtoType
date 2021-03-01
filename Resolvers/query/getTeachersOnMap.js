@@ -22,7 +22,6 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
             centerLatitude:latitude,
             teachers:
             await userInfo.map(async(e)=>{
-                console.log(e)
                 return {
                     ...e.teacherProfile,
                     ...e.userInfo,
