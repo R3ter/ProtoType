@@ -30,8 +30,9 @@ const search=async (parent ,{word},{prisma})=>{
         }
     }).then(async(e)=>{
         return e.map((e)=>{
-            console.log(e.userInfo)
+            console.log(e)
             return {
+                userId:e.id,
                 full_name:e.full_name,
                 email:e.email,
                 image_URL:e.userInfo.image_URL,
