@@ -25,12 +25,25 @@ const addUserInfo =async(parent, {
         where: { userId:id },
         update: {
             ...data,
+            user:{
+                update:{
+                    full_name:data.full_name
+                }            },
+            full_name:undefined,
+
             preferred_materials:data.preferred_materials?{
                 set:data.preferred_materials.map((e)=>{return{id:e}})
             }:undefined
         },
         create: {
             ...data,
+            user:{
+                update:{
+                    full_name:data.full_name
+                }
+                
+            },
+            full_name:undefined,
             user:{
                 connect:{
                     id

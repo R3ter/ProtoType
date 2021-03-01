@@ -48,7 +48,7 @@ type Mutation{
   teacherConnectToMaterial(materialID:ID!):Boolean!
   addMaterialRevew(data:MaterialReviewInput!):Boolean!
   changeMyPassword(currentPassword:String!,newPassword:String!):Result!
-  editProfileInfo(data:userInfoInput!):Boolean!
+  editProfileInfo(data:userInfoInput):Boolean!
   addTeacherWorkTimes(fromTo:[fromToInput!]!):Boolean!
   addAppointment(data:AppointmentInput!):Boolean!
   becomeaTeacher(message:String!):Boolean!
