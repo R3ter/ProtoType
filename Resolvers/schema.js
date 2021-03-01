@@ -25,7 +25,7 @@ type Query{
   BestMaterials:[Materials]
   getTeacherReviews(teacherID:ID!):[TeacherReview]
   getTeacherCourses(teacherID:ID!,take:Int,skip:Int):[Materials]
-  getTeacherInfo(teacherID:ID!):TeacherProfile
+  getTeacherInfo(teacherID:ID!):TeacherInfo
   getTeacherAppointments(teacherID:ID!,
     timeType:courseHoursType!,
     date:DateTime!):[teacherSchedule]
@@ -286,6 +286,7 @@ type Appointment{
   teacher:User!
   rejectionReason:String
   studentCount:Int
+  isReview:Boolean!
   packageName:String
 }
 
