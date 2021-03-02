@@ -44,7 +44,7 @@ type Mutation{
   addTeacherDocument(data:TeacherDocumentInput!):Boolean!
   rejectAppointment(rejectionReason:String!,AppointmentID:ID!):Boolean!
   teacherAcceptAppointment(AppointmentID:ID!):Boolean!
-  sendMessage(toId:ID!,message:String!):Boolean!
+  sendMessage(toId:ID!,message:String!,isImage:Boolean,attachments:[String]):Boolean!
   teacherConnectToMaterial(materialID:ID!):Boolean!
   addMaterialRevew(data:MaterialReviewInput!):Boolean!
   changeMyPassword(currentPassword:String!,newPassword:String!):Result!
@@ -331,7 +331,6 @@ type Authentication{
   teacherIsActive:Boolean
   materialSet:Boolean!
   Role:Role!
-  firebaseToken:String
 }
 type Result{
   error:String
