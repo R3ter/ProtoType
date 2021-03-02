@@ -26,7 +26,14 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
             }
         }
     }).then(async(e)=>{
-        console.log(e)
+        const schoolTypeIDs=[]
+        const schoolType=[]
+        e.teacherProfile.educationLevel.map((e)=>{
+            if(!schoolTypeIDs.includes(e.type.id)){
+                schoolTypeIDs.push(e.type.id)
+                schoolType.push(e.type)
+            }
+        })
         return {
             user:{...e},
             full_name:e.full_name,
@@ -39,7 +46,7 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
             address:e.userInfo.address,
             longitude:e.userInfo.longitude,
             latitude:e.userInfo.latitude,
-            schoolType:e.teacherProfile.educationLevel.map((e)=>e.type)
+            schoolType
         ,
             ...await prisma.teacherReview.aggregate({
                 where:{

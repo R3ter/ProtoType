@@ -26,7 +26,14 @@ const getTeacher=async(parent, args, {req,prisma}, info)=>{
             }
         }
     }).then(async(e)=>{
-        console.log(e.teacherProfile.educationLevel.map((e)=>e.type))
+        const schoolTypeIDs=[]
+        const schoolType=[]
+        e.teacherProfile.educationLevel.map((e)=>{
+            if(!schoolTypeIDs.includes(e.type.id)){
+                schoolTypeIDs.push(e.type.id)
+                schoolType.push(e.type)
+            }
+        })
         return {
             full_name:e.full_name,
             email:e.email,
@@ -38,7 +45,7 @@ const getTeacher=async(parent, args, {req,prisma}, info)=>{
             address:e.userInfo.address,
             longitude:e.userInfo.longitude,
             latitude:e.userInfo.latitude,
-            schoolType:e.teacherProfile.educationLevel.map((e)=>e.type)
+            schoolType:schoolType
         }
     })
     

@@ -24,7 +24,7 @@ const addUserInfo =async(parent, {
         }
         delete data.education_levels_ID
         
-    const userInfo = await prisma.userInfo.upsert({
+    return await prisma.userInfo.upsert({
         where: { userId:id },
         update: {
             ...educationLevel,
@@ -40,6 +40,5 @@ const addUserInfo =async(parent, {
             }
         }
     })
-    return !!userInfo
 }
 export default addUserInfo
