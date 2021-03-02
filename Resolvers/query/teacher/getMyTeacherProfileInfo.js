@@ -26,7 +26,7 @@ const getTeacher=async(parent, args, {req,prisma}, info)=>{
             }
         }
     }).then(async(e)=>{
-        console.log(e.teacherProfile.educationLevel.type)
+        console.log(e.teacherProfile.educationLevel.map((e)=>e.type))
         return {
             full_name:e.full_name,
             email:e.email,

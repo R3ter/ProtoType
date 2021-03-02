@@ -1,7 +1,6 @@
 import {checkToken} from './../../methods/Tokens.js'
 import moment from 'moment'
-
-import { now } from '../../methods/time.js'
+const { now }=moment
 const appAppointment=async(parent,
     {
         data:{
@@ -20,10 +19,13 @@ const appAppointment=async(parent,
         if(studentCount>4||studentCount<1){
             throw new Error("Max 4 students")
         }
-        if((moment.utc(dateTime).format('mm')!="00" && moment.utc(dateTime).format('mm')!="30")||
-        moment.utc(dateTime).isBefore(moment.utc(now()).add(5,"minutes"))
+        if((moment.utc(dateTime).format('mm')!="00" && moment.utc(dateTime).format('mm')!="30")
         ){
             throw new Error("date is not correct!")
+        }
+        
+        if(moment.utc(dateTime).isBefore(moment.utc(now()).add(5,"minutes"))){
+            return false
         }
 
         let price={}

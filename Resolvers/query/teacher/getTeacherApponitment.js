@@ -1,14 +1,16 @@
-import { now } from "../../../methods/time.js"
+import moment from "moment"
+const {now} = moment
 import { checkToken } from "../../../methods/Tokens.js"
 const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)=>{
     const {id} = checkToken({token:req.headers.token})
+    
     let filter
     if(state=="PREVIOUS"){
         filter={
             OR:[
                 {
                     dateTime:{
-                        lte:now()
+                        lte:moment(now()).format("YYYY-MM-DD[T]HH:mm:ss[Z]")
                     }
                 },{
                     stateKey:"rejected"
@@ -20,7 +22,7 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             AND:[
                 {
                     dateTime:{
-                        gte:now()
+                        gte:moment(now()).format("YYYY-MM-DD[T]HH:mm:ss[Z]")
                     }
                 },{
                     NOT:{
@@ -74,8 +76,20 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             }
         }
     }).then((e)=>{
-
+      
         return e.map(async(e)=>{
+            if(e.state.Appoitment_state_key=="waiting"&&
+            state=="PREVIOUS"){
+                e.state={
+                    id:"this does not come from database",
+                    Appoitment_state_key:"Competed",
+                    name:{
+                        ar:"اكتمل",
+                        eng:"Completed"
+                    },
+                    color:"#006400"
+                }
+            }
             const studentReview=await prisma.teacherReview.count({
                 where: {
                     userId:e.studentId,

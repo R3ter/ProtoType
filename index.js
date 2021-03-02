@@ -15,9 +15,10 @@ import TeacherMapInfo from './Resolvers/types/TeacherMapInfo.js'
 import SchoolType from './Resolvers/types/SchoolType.js'
 import Appointment from './Resolvers/types/Appointment.js'
 
-// import momentZone from "moment-timezone"
-// momentZone.tz.setDefault()
+import momentZone from "moment-timezone"
+momentZone.tz.setDefault("Asia/Jerusalem")
 
+// console.log(momentZone.tz.names().map((e)=>console.log(e)))
 const { ApolloServer} = apolloServer
 
 const { PrismaClient } = pkg;
@@ -163,4 +164,3 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //       createdAt:"desc"
 //   },
 // })
-

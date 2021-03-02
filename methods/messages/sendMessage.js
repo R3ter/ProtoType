@@ -1,5 +1,6 @@
 import admin from 'firebase-admin'
-import { now } from '../time.js'
+import moment from 'moment'
+const {now}=moment
 import frirebaseData from './../firebaseData.js'
 
 admin.initializeApp({
