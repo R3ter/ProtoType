@@ -9,7 +9,7 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             OR:[
                 {
                     dateTime:{
-                        lte:now()
+                        lte:moment(now()).format("YYYY-MM-DD[T]HH:mm:ss[Z]")
                     }
                 },{
                     stateKey:"rejected"
@@ -21,7 +21,7 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             AND:[
                 {
                     dateTime:{
-                        gte:now()
+                        gte:moment(now()).format("YYYY-MM-DD[T]HH:mm:ss[Z]")
                     }
                 },{
                     NOT:{
