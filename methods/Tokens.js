@@ -9,12 +9,13 @@ import frirebaseData from './firebaseData.js'
 
 import admin from 'firebase-admin'
 import moment from 'moment';
+import { Pay } from './payment.js';
 const {now}=moment
 
 const refreshTokens=[]
 
 const loginToken=async({userid,role,Activate,email,phone_number,teacherIsActive,teacherDpcumentUploaded,
-includeFirebaseToken=true})=>{
+includeFirebaseToken=true,full_name})=>{
     let firebaseToken
 
     // if(includeFirebaseToken){
@@ -22,10 +23,10 @@ includeFirebaseToken=true})=>{
     //     // firebase.auth().signInWithCustomToken(token)
     // }
     
-    if(!userid||!role||!email||!phone_number){
+    if(!userid||!role||!email||!phone_number||!full_name){
         throw new Error("some of the token data are missing")
     }
-    
+    // Pay()
     const token = await jwt.sign({
         "aud": "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
         "iat": moment(now()).unix(),
@@ -35,16 +36,29 @@ includeFirebaseToken=true})=>{
         "uid": userid,
         id: userid,Role:role,Activate,email,
         phone_number,teacherIsActive,
+        full_name
     }, secret,
         { algorithm:"RS256" });
 
-     
-    const randomId = cryptoRandomString({length: 300})
-    refreshTokens[userid]=randomId
+
+        saveTokenInFirebase({userId:userid,token})
+        
+        const randomId = cryptoRandomString({length: 300})
+        refreshTokens[userid]=randomId
         
     return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role,firebaseToken,
         teacherDpcumentUploaded
         ,teacherIsActive}
+}
+const saveTokenInFirebase=({userId,token})=>{
+    if(userId&&token){
+        const db = admin.firestore()
+        db.collection("usersTokens").doc(userId).set({
+            id:userId,
+            token,
+            createdAt:moment(now()).format("yyyy-MM-DD[T]HH:mm:ss[Z]")
+        })   
+    }
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
     if(refreshTokens[userId]&&refreshTokens[userId]==RefreshToken){

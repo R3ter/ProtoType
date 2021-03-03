@@ -23,7 +23,7 @@ const login = async(parent,{username,password},{prisma})=>{
                     teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:undefined,
                         includeFirebaseToken:e.teacherProfile?e.teacherProfile.teacherIsActive:
-                        e.Role=="TEACHER"?false:true})
+                        e.Role=="TEACHER"?false:true,full_name})
                 return {result:true,
                     authentication:{
                         teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
@@ -60,7 +60,7 @@ const login = async(parent,{username,password},{prisma})=>{
                     teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:undefined,
                         includeFirebaseToken:e.teacherProfile?e.teacherProfile.teacherIsActive:
-                        e.Role=="TEACHER"?false:true})
+                        e.Role=="TEACHER"?false:true,full_name})
                 return {result:true,
                     authentication:{
                         teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null

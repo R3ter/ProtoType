@@ -3,6 +3,8 @@ import moment from 'moment'
 const {now}=moment
 import frirebaseData from './../firebaseData.js'
 import firebase from 'firebase'
+import data from './../firebaseData.js'
+import { Pay } from '../payment.js'
 
 // firebase.initializeApp({
 //     apiKey: "AIzaSyDdojQ8np88pGmLd1rC7B7lxEC8RdnWpZc",
@@ -19,7 +21,7 @@ admin.initializeApp({
     credential:admin.credential.cert(frirebaseData)
 })
 
-const sendMessage=async(fromId,toId,message,isImage=false,attachments)=>{
+const sendMessage=async(fromId,toId,message,isImage=false,attachments=[],full_name)=>{
     const db = admin.firestore()
     await db.collection("Conversation").doc(fromId).collection(toId).add({
         from:fromId,
@@ -30,7 +32,20 @@ const sendMessage=async(fromId,toId,message,isImage=false,attachments)=>{
         isView:false,
         createdAt:now()
     })
-    
+    db.collection("usersTokens").doc(toId).get().then((e)=>{
+        // admin.messaging().send("dawsdwadwasda")
+        admin.messaging().sendToDevice(e.data().token,{
+            data:{
+                MyKey:"waleed is awesome!",
+                message,
+                name:full_name
+            }
+        })
+    }).catch((e)=>{
+        console.log(e)
+    })
+    // admin.messaging().sendToDevice()
+    Pay()
 }
 const readMessage=(userId)=>{
 

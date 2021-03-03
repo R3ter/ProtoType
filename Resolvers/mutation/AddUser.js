@@ -47,7 +47,7 @@ const addUser=async (parent, {data:{
         const token=await loginToken({userid:result.id,role:result.Role,Activate:false,
           includeFirebaseToken:false,
           email,phone_number:result.phone_number,
-          teacherIsActive:accountType=="TEACHER"?false:undefined})
+          teacherIsActive:accountType=="TEACHER"?false:undefined,full_name})
         return {result:true,
           authentication:{
             teacherDocumentUploaded:result.Role=="TEACHER"?false:undefined,
