@@ -14,7 +14,7 @@ const TeacherProfile={
     },
     async courseCount(parent, {teacherID}, {prisma}){
         console.log(teacherID)
-        if(teacherID)
+        if(parent.courseCount==undefined||parent.courseCount==null)
         return await prisma.materials.aggregate({
             where:{
                 teachers:{
