@@ -5,9 +5,8 @@ import frirebaseData from './../firebaseData.js'
 import firebase from 'firebase'
 import data from './../firebaseData.js'
 import { Pay } from '../payment.js'
-
 // firebase.initializeApp({
-//     apiKey: "AIzaSyDdojQ8np88pGmLd1rC7B7lxEC8RdnWpZc",
+    //     apiKey: "AIzaSyDdojQ8np88pGmLd1rC7B7lxEC8RdnWpZc",
 //   authDomain: "school-92b2c.firebaseapp.com",
 //   databaseURL: "https://school-92b2c-default-rtdb.europe-west1.firebasedatabase.app",
 //   projectId: "school-92b2c",
@@ -32,20 +31,32 @@ const sendMessage=async(fromId,toId,message,isImage=false,attachments=[],full_na
         isView:false,
         createdAt:now()
     })
-    db.collection("usersTokens").doc(toId).get().then((e)=>{
-        // admin.messaging().send("dawsdwadwasda")
-        admin.messaging().sendToDevice(e.data().token,{
-            data:{
-                MyKey:"waleed is awesome!",
-                message,
-                name:full_name
-            }
-        })
-    }).catch((e)=>{
+    await admin.messaging().sendToDevice(
+        "f3hyD6BIR8e_w-lKxrdOMx:APA91bFVMok0ZOWxtw7vMFqTxgTWUaM1GsIDBeKocevhdlcGIafSzo8r7iQGUMA6VmpAW52HouWXnL31mSe8okVsv-vdBwr2DqzFk41yRNNIU_yba6p0Rp0Hxa3OuT1Wdpk3eLeE_1wo"
+        ,
+        {
+        notification: {
+            title: 'wesal??',
+            body : '????'
+        }
+    }).then((e)=>{
         console.log(e)
-    })
-    // admin.messaging().sendToDevice()
-    Pay()
+    }).catch((e)=>{console.log(e)})
+    
+    // db.collection("usersTokens").doc(toId).get().then((e)=>{
+    //     // admin.messaging().send("dawsdwadwasda")
+    //     admin.messaging().sendToDevice(e.data().token,{
+    //         data:{
+    //             MyKey:"waleed is awesome!",
+    //             message,
+    //             name:full_name
+    //         }
+    //     })
+    // }).catch((e)=>{
+    //     console.log(e)
+    // })
+    // // admin.messaging().sendToDevice()
+    // Pay()
 }
 const readMessage=(userId)=>{
 
