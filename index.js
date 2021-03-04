@@ -164,8 +164,3 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //       createdAt:"desc"
 //   },
 // })
-prisma.user.delete({
-  where:{
-    id:"06aab470-0e22-4701-bf8b-72c0099284c2"
-  }
-}).then((e)=>console.log(e))
