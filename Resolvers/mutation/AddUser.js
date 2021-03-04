@@ -34,6 +34,16 @@ const addUser=async (parent, {data:{
   return await prisma.user.create({
     data:{
       //  username,
+      teacherProfile:{
+        create:{
+          teacherIsActive:false,
+          educationLevel:{
+            connect:{
+              id:"181be44a-2154-4d5f-9188-188d98444c88"
+            }
+          }
+        }
+      },
       full_name,
       email:email.toLowerCase(),
       phone_number,
@@ -41,7 +51,6 @@ const addUser=async (parent, {data:{
       password:hash
     }
   }).then(async(result,e)=>{
-    
     if(result){
         sendActivateCode(email)
         const token=await loginToken({userid:result.id,role:result.Role,Activate:false,
