@@ -13,6 +13,7 @@ const TeacherProfile={
             }).then((e)=>(e.avg.ratingStars))
     },
     async courseCount(parent, {teacherID}, {prisma}){
+        if(teacherID)
         return await prisma.materials.aggregate({
             where:{
                 teachers:{

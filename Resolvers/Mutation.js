@@ -18,7 +18,9 @@ import teacherAcceptAppointment from './mutation/Teacher/teacherAcceptAppointmen
 import rejectAppointment from "./mutation/Teacher/rejectAppointment.js"
 import addTeacherDocument from './mutation/Teacher/addTeacherDocuments.js'
 import addTeacherInfo from './mutation/Teacher/addTeacherInfo.js'
+import setNotifificationToken from "./mutation/chat/setNotifificationToken.js"
 const Mutation={
+    setNotifificationToken,
     addTeacherInfo,
     addTeacherDocument,
     rejectAppointment,

@@ -9,18 +9,49 @@ const addUserInfo =async(parent, {
     let educationLevel={}
     if(data.education_levels_ID){
         educationLevel={
-                user:{
-                    update:{
-                        teacherProfile:{
-                            update:{
-                                educationLevel:{
-                                    set:data.education_levels_ID.map((e)=>({id:e}))
-                                }
-                            }
+            user:{
+                update:{
+                  teacherProfile:{
+                    upsert:{
+                      create:{
+                        educationLevel:{
+                            connect:data.education_levels_ID.map((e)=>({id:e}))
                         }
+                      },update:{
+                        educationLevel:{
+                            set:data.education_levels_ID.map((e)=>({id:e}))
+                        }
+                      }
                     }
+                  }
                 }
+              }
             }
+            //     user:{
+            //         update:{
+            //             teacherProfile:{
+            //                 upsert:{
+                                
+            //                     create:{
+            //                         educationLevel:{
+            //                             set:data.education_levels_ID.map((e)=>({id:e}))
+            //                         },
+            //                         user:{
+            //                             connect:{
+            //                                 id
+            //                             }
+            //                         }
+            //                     },
+            //                     update:{
+            //                         educationLevel:{
+            //                             set:data.education_levels_ID.map((e)=>({id:e}))
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
         }
         delete data.education_levels_ID
         
@@ -39,6 +70,6 @@ const addUserInfo =async(parent, {
                 }
             }
         }
-    })
+    }).then(()=>true)
 }
 export default addUserInfo

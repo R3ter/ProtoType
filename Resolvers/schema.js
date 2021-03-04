@@ -62,6 +62,7 @@ type Mutation{
   resendActivationCode:Boolean!
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
+  setNotifificationToken(data:notificationData!):Boolean
 }
 enum StateTime{
   PREVIOUS,
@@ -71,7 +72,10 @@ input fromToInput{
   from:DateTime!
   to:DateTime!
 }
-
+input notificationData{
+  userToken:String!
+  deviceToken:String!
+}
 type TeacherInfo{
   full_name:String
   email:String

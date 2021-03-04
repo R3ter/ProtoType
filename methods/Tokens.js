@@ -40,8 +40,6 @@ includeFirebaseToken=true,full_name})=>{
     }, secret,
         { algorithm:"RS256" });
 
-
-        saveTokenInFirebase({userId:userid,token})
         
         const randomId = cryptoRandomString({length: 300})
         refreshTokens[userid]=randomId
@@ -50,14 +48,21 @@ includeFirebaseToken=true,full_name})=>{
         teacherDpcumentUploaded
         ,teacherIsActive}
 }
-const saveTokenInFirebase=({userId,token})=>{
-    if(userId&&token){
-        const db = admin.firestore()
-        db.collection("usersTokens").doc(userId).set({
-            id:userId,
-            token,
-            createdAt:moment(now()).format("yyyy-MM-DD[T]HH:mm:ss[Z]")
-        })   
+const saveTokenInFirebase=({token,deviceToken})=>{
+    if(deviceToken&&token){
+        try{
+            const {full_name,id}=checkToken(token)
+            const db = admin.firestore()
+            db.collection("usersTokens").doc(id).set({
+                id:id,
+                full_name,
+                token,
+                deviceToken,
+                createdAt:moment(now()).format("yyyy-MM-DD[T]HH:mm:ss[Z]")
+            })   
+        }catch(e){
+            return
+        }
     }
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
@@ -105,4 +110,4 @@ teacherActivationRequired=false})=>{
     throw new AuthenticationError("Unauthenticate")
 }
 
-export {loginToken,checkToken,RefreshToken,logout}
+export {loginToken,checkToken,RefreshToken,logout,saveTokenInFirebase}
