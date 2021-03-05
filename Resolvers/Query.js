@@ -30,7 +30,9 @@ import getMyTeacherInfo from './query/teacher/getMyTeacherProfileInfo.js'
 import teacherSearch from './query/searchTeacher.js'
 import getUserChatProfile from './query/getUserChatProfile.js'
 import getAppointmentsForAdmin from "./query/ADMIN/getAppointmentsForAdmin.js"
+import getTeachersForAdmin from './query/ADMIN/getTeacherApplications.js'
 const Query={
+    getTeachersForAdmin,
     getAppointmentsForAdmin,
     getUserChatProfile,
     teacherSearch,

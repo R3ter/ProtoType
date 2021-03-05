@@ -7,7 +7,7 @@ const teacherAcceptAppointment=async(parent,{AppointmentID},{prisma,req})=>{
             id:AppointmentID
         }
     })
-    if(appointment.adminAccepted){
+    if(!appointment||appointment.adminAccepted){
         return false
     }
     return !!await prisma.appointment.update({

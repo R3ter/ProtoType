@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getTeachersForAdmin(skip:Int,take:Int,active:Boolean):[TeacherApplication]!
   getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getUserChatProfile(userId:ID!):ChatInfo!
   teacherSearch(word:String!):[TeacherInfo]
@@ -42,6 +43,7 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  adminAcceptTeacherApplecation(teacherId:ID!):Boolean!
   adminRejectAppointment(AppointmentID:ID!):Boolean!
   adminAcceptAppointment(AppointmentID:ID!):Boolean!
   addTeacherInfo(data:teacherInfoInput!):Boolean!
@@ -67,6 +69,17 @@ type Mutation{
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
   setNotifificationToken(data:notificationData!):Boolean
+}
+type TeacherApplication{
+  id:ID!
+  IDFrontImageURL:String
+  IDBackImageURL:String
+  certificateURL:String
+  CV_URL:String
+  image_URL:String
+  name:String!
+  createdAt:DateTime!
+  updatedAt:DateTime!
 }
 type ChatInfo{
   profileImage:String
@@ -355,6 +368,7 @@ input UserInput{
   password:String!
   accountType:Role!
   deviceToken:String
+  
 }
 type Materials {
   id: ID!
