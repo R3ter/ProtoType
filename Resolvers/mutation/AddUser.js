@@ -30,7 +30,7 @@ const addUser=async (parent, {data:{
   //   return {result:false,error:"password should contains numbers and letters"}
   // }
   let TeacherInfo={}
-  if(Role=="TEACHER"){
+  if(accountType=="TEACHER"){
     TeacherInfo={
       teacherProfile:{
         create:{
