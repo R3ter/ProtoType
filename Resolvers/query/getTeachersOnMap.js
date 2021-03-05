@@ -10,7 +10,9 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
     return await prisma.user.findMany({
         where:{
             Role:"TEACHER",
-            teacherIsActive:true
+            // teacherProfile:{
+            //     teacherIsActive:true
+            // }
         },
         include:{
             userInfo:true,
