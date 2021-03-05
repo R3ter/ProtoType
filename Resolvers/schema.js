@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getUserChatProfile(userId:ID!):ChatInfo!
   teacherSearch(word:String!):[TeacherInfo]
   getMyTeacherInfo:TeacherInfo
   getMyTeacherBooking(skip:Int,take:Int,state:StateTime!):[Appointment]!
@@ -63,6 +64,10 @@ type Mutation{
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
   setNotifificationToken(data:notificationData!):Boolean
+}
+type ChatInfo{
+  profileImage:String
+  userName:String!
 }
 enum StateTime{
   PREVIOUS,
