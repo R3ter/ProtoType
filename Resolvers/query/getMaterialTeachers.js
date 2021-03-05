@@ -5,7 +5,9 @@ const getMaterialTeachers=async(parent,{materialID,skip=0,take=5},{prisma,req})=
         },include:{
             teachers:{
                 where:{
-                    teacherIsActive:true
+                    teacherProfile:{
+                        teacherIsActive:true
+                    }
                 },
                 skip,take,
                 select:{
