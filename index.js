@@ -15,7 +15,7 @@ import teacherSchedule from './Resolvers/types/WorkingHour.js'
 import TeacherMapInfo from './Resolvers/types/TeacherMapInfo.js'
 import SchoolType from './Resolvers/types/SchoolType.js'
 import Appointment from './Resolvers/types/Appointment.js'
-
+import Authentication from "./Resolvers/types/Authentication.js"
 import momentZone from "moment-timezone"
 momentZone.tz.setDefault("Asia/Jerusalem")
 
@@ -36,7 +36,7 @@ const server = new ApolloServer({
     ...Appointment,
     teacherSchedule,
     CourseTag,
-    
+    Authentication,
     TeacherMapInfo,
     Area,
     Education_Level,

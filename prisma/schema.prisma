@@ -25,6 +25,7 @@ model User {
   TeacherReview      TeacherReview[]
   userInfo           UserInfo?
   Materials          Materials[]
+  banned             Boolean             @default(false)
 }
 
 model UserInfo {
