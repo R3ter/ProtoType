@@ -10,12 +10,13 @@ import frirebaseData from './firebaseData.js'
 import admin from 'firebase-admin'
 import moment from 'moment';
 import { Pay } from './payment.js';
+import { saveTokenInFirebase } from './addNotification.js';
 const {now}=moment
 
 const refreshTokens=[]
 
 const loginToken=async({userid,role,Activate,email,phone_number,teacherIsActive,teacherDpcumentUploaded,
-includeFirebaseToken=true,full_name})=>{
+includeFirebaseToken=true,full_name,deviceToken})=>{
     let firebaseToken
 
     // if(includeFirebaseToken){
@@ -44,26 +45,15 @@ includeFirebaseToken=true,full_name})=>{
         const randomId = cryptoRandomString({length: 300})
         refreshTokens[userid]=randomId
         
+        if(deviceToken)
+            saveTokenInFirebase({
+                deviceToken,
+                token
+            })
+
     return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role,firebaseToken,
         teacherDpcumentUploaded
         ,teacherIsActive}
-}
-const saveTokenInFirebase=({token,deviceToken})=>{
-    if(deviceToken&&token){
-        try{
-            const {full_name,id}=checkToken(token)
-            const db = admin.firestore()
-            db.collection("usersTokens").doc(id).set({
-                id:id,
-                full_name,
-                token,
-                deviceToken,
-                createdAt:moment(now()).format("yyyy-MM-DD[T]HH:mm:ss[Z]")
-            })   
-        }catch(e){
-            return
-        }
-    }
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
     if(refreshTokens[userId]&&refreshTokens[userId]==RefreshToken){
@@ -110,4 +100,4 @@ teacherActivationRequired=false})=>{
     throw new AuthenticationError("Unauthenticate")
 }
 
-export {loginToken,checkToken,RefreshToken,logout,saveTokenInFirebase}
+export {loginToken,checkToken,RefreshToken,logout}
