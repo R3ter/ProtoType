@@ -1,6 +1,9 @@
 const search=async (parent ,{word},{prisma})=>{
     return await prisma.user.findMany({
         where:{
+            teacherProfile:{
+                teacherIsActive:true
+            },
             Role:"TEACHER",
             full_name:{
                 contains:word

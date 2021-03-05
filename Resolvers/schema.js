@@ -366,7 +366,7 @@ input UserInput{
   email:String!
   phone_number:String!
   password:String!
-  accountType:Role!
+  accountType:RoleForSignup!
   deviceToken:String
   
 }
@@ -430,9 +430,14 @@ enum Day {
   friday
   saturday
 }
+enum RoleForSignup{
+  STUDENT
+  TEACHER
+}
 enum Role {
   STUDENT
   TEACHER
+  ADMIN
 }
 `;
 
