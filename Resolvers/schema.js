@@ -42,7 +42,8 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
-  
+  adminRejectAppointment(AppointmentID:ID!):Boolean!
+  adminAcceptAppointment(AppointmentID:ID!):Boolean!
   addTeacherInfo(data:teacherInfoInput!):Boolean!
   addTeacherDocument(data:TeacherDocumentInput!):Boolean!
   rejectAppointment(rejectionReason:String!,AppointmentID:ID!):Boolean!

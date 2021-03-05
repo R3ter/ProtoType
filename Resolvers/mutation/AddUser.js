@@ -29,12 +29,22 @@ const addUser=async (parent, {data:{
   // if(!password.match(/[a-z]/)||!password.match(/[0-9]/)){
   //   return {result:false,error:"password should contains numbers and letters"}
   // }
+  let TeacherInfo={}
+  if(Role=="TEACHER"){
+    TeacherInfo={
+      teacherProfile:{
+        create:{
+
+        }
+      }
+    }
+  }
 
   const hash = bcrypt.hashSync(password, 6);
   return await prisma.user.create({
     data:{
       //  username,
-      
+      ...TeacherInfo,
       full_name,
       email:email.toLowerCase(),
       phone_number,

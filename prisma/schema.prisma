@@ -76,6 +76,7 @@ model Student_Appointment_info {
 
 model Appointment {
   id                         String                   @id @default(uuid())
+  adminAccepted              Boolean                  @default(false)
   date                       String
   courseHoursType            courseHoursType
   coursePrice                Float

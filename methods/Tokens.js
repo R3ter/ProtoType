@@ -77,7 +77,7 @@ const logout= async(userId,RefreshToken)=>{
     }
     return false
 }
-const checkToken=({token,activeRequired=true,Roles=["STUDENT","TEACHER"],
+const checkToken=({token,activeRequired=true,Roles=["STUDENT","TEACHER","ADMIN"],
 teacherActivationRequired=false})=>{
     if (token) {
         try{

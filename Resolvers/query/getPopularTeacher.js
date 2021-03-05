@@ -8,6 +8,9 @@ const getBestTeachers= async(parent, {skip=0,take=5}, {req,prisma}, info)=>{
         // where:{
         //     OR:tags.map((e)=>({subjects:{some:{id:e}}}))
         //   },
+        where:{
+            teacherIsActive:true
+        },
         include:{
             user:{
                 select:{

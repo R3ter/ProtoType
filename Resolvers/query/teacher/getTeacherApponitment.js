@@ -7,6 +7,9 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
     let filter
     if(state=="PREVIOUS"){
         filter={
+            
+            adminAccepted:true
+                ,
             OR:[
                 {
                     dateTime:{
@@ -20,6 +23,9 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
     }else{
         filter={
             AND:[
+                {
+                    adminAccepted:true
+                },
                 {
                     dateTime:{
                         gte:moment(now()).format("YYYY-MM-DD[T]HH:mm:ss[Z]")
