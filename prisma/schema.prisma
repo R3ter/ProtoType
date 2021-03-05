@@ -1,232 +1,279 @@
-  generator client {
-    provider = "prisma-client-js"
-  }
+generator client {
+  provider = "prisma-client-js"
+}
 
-  datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
-  }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
-  model User {
-    id                  String              @id @default(uuid())
-    email               String              @unique
-    phone_number        String              @unique
-    full_name           String
-    Role                Role                @default(STUDENT)
-    password            String
-    Active              Boolean             @default(false)
-    MaterialReview      MaterialReview[]    @relation("user")
-    Materials           Materials[]
-    teacherProfile      TeacherProfile?
-    userInfo            UserInfo?
-    studentAppoitments  Appointment[] @relation("studentAppoitments")
-    teacherAppoitments  Appointment[] @relation("teacherAppoitments")
-    createdAt           DateTime            @default(now())
-    updatedAt           DateTime            @updatedAt
-  }
+model User {
+  id                 String              @id @default(uuid())
+  email              String              @unique
+  phone_number       String              @unique
+  full_name          String
+  Role               Role                @default(STUDENT)
+  password           String
+  Active             Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  studentAppoitments Appointment[]       @relation("studentAppoitments")
+  teacherAppoitments Appointment[]       @relation("teacherAppoitments")
+  MaterialReview     MaterialReview[]    @relation("user")
+  TeacherApplication TeacherApplication?
+  teacherProfile     TeacherProfile?
+  TeacherReview      TeacherReview[]
+  userInfo           UserInfo?
+  Materials          Materials[]
+}
 
-  model UserInfo {
-    id                      String           @id @default(uuid())
-    userId                  String           @unique
-    user                    User             @relation(fields: [userId], references: [id])
-    birth_date              DateTime?
-    address                 String?
-    about                   String?
-    image_URL               String?
-    longitude               String?
-    latitude                String?
-    cover_URL               String?
-    Current_education_level Education_Level?
-    preferred_materials     CourseTag[]
-    favoriteCourses         Materials[]
-    studentAppointments     Appointment[]
-    createdAt               DateTime         @default(now())
-  }
-  model TeacherProfile {
-    id           String        @id @default(uuid())
-    teacherId    String        @unique
-    user         User          @relation(fields: [teacherId], references: [id])
-    appointments Appointment[]
-    teacherIsActive Boolean @default(false)
-    educationLevel Education_Level[]
-    materialTags   CourseTag[]
-    workingDays  workingDay[]
-    materials    Materials[]
-    createdAt    DateTime      @default(now())
+model UserInfo {
+  id                      String           @id @default(uuid())
+  userId                  String           @unique
+  birth_date              DateTime?
+  address                 String?
+  about                   String?
+  image_URL               String?
+  longitude               String?
+  latitude                String?
+  cover_URL               String?
+  createdAt               DateTime         @default(now())
+  education_LevelId       String?
+  Current_education_level Education_Level? @relation(fields: [education_LevelId], references: [id])
+  user                    User             @relation(fields: [userId], references: [id])
+  studentAppointments     Appointment[]
+  preferred_materials     CourseTag[]
+  favoriteCourses         Materials[]
+}
 
-    IDFrontImageURL String @default("")
-    IDBackImageURL String @default("")
-    certificateURL String @default("")
-    CV_URL String?
+model TeacherProfile {
+  id              String            @id @default(uuid())
+  teacherId       String            @unique
+  createdAt       DateTime          @default(now())
+  teacherIsActive Boolean           @default(false)
+  IDFrontImageURL String            @default("")
+  IDBackImageURL  String            @default("")
+  certificateURL  String            @default("")
+  CV_URL          String?
+  image_URL       String?           @default("")
+  user            User              @relation(fields: [teacherId], references: [id])
+  appointments    Appointment[]
+  materialTags    CourseTag[]
+  materials       Materials[]
+  workingDays     workingDay[]
+  educationLevel  Education_Level[]
+}
 
-    image_URL String?   @default("")
+model Student_Appointment_info {
+  id           String        @id @default(uuid())
+  student_name String
+  full_number  String
+  longitude    Float         @default(0)
+  latitude     Float         @default(0)
+  address      String
+  Appointment  Appointment[]
+}
 
-  }
-  model Student_Appointment_info{
-    id                  String          @id @default(uuid())
-    student_name        String
-    full_number         String
-    address             String
-    longitude           Float @default(0)
-    latitude            Float @default(0)
-  }
-  model Appointment {
-    id                  String          @id @default(uuid())
-    student_info        Student_Appointment_info 
-    dateTime            DateTime
-    from                DateTime
-    to                  DateTime
-    date                String
-    course              Materials
-    courseHoursType     courseHoursType
-    coursePrice         Float
-    state               Appointment_state @relation(fields: [stateKey],references: [Appoitment_state_key])
-    stateKey            String
-    note                String
-    rejectionReason     String?
-    teacherId String
-    studentId String
-    discountPercentage  Float @default(0)
-    studentCount        Int 
-    teacher             User @relation("teacherAppoitments",fields: [teacherId],references: [id])
-    student             User @relation("studentAppoitments",fields: [studentId],references: [id])
+model Appointment {
+  id                         String                   @id @default(uuid())
+  date                       String
+  courseHoursType            courseHoursType
+  coursePrice                Float
+  note                       String
+  rejectionReason            String?
+  teacherId                  String
+  studentId                  String
+  discountPercentage         Float                    @default(0)
+  studentCount               Int
+  createdAt                  DateTime                 @default(now())
+  userInfoId                 String?
+  teacherProfileId           String?
+  materialsId                String
+  homeWorkPackageId          String?
+  stateKey                   String
+  from                       DateTime
+  to                         DateTime
+  student_Appointment_infoId String
+  dateTime                   DateTime
+  HomeWorkPackage            HomeWorkPackage?         @relation(fields: [homeWorkPackageId], references: [id])
+  course                     Materials                @relation(fields: [materialsId], references: [id])
+  state                      Appointment_state        @relation(fields: [stateKey], references: [Appoitment_state_key])
+  student                    User                     @relation("studentAppoitments", fields: [studentId], references: [id])
+  student_info               Student_Appointment_info @relation(fields: [student_Appointment_infoId], references: [id])
+  teacher                    User                     @relation("teacherAppoitments", fields: [teacherId], references: [id])
+  TeacherProfile             TeacherProfile?          @relation(fields: [teacherProfileId], references: [id])
+  UserInfo                   UserInfo?                @relation(fields: [userInfoId], references: [id])
+}
 
-    HomeWorkPackage   HomeWorkPackage?
+model HomeWorkPackage {
+  id          String        @id @default(uuid())
+  price       Float
+  MaterialId  String
+  name        String
+  Material    Materials     @relation(fields: [MaterialId], references: [id])
+  Appointment Appointment[]
+}
 
+model Appointment_state {
+  id                   String        @id @default(uuid())
+  Appoitment_state_key String        @unique
+  color                String
+  lookUpId             String
+  name                 LookUp        @relation(fields: [lookUpId], references: [id])
+  Appointment          Appointment[]
+}
 
-    createdAt           DateTime          @default(now())
-  }
-  model HomeWorkPackage{
-    id              String     @id @default(uuid())
-    price Float
-    Material Materials @relation(fields: [MaterialId],references: [id])
-    MaterialId String
-    name String
-  }
-  model Appointment_state {
-    id              String     @id @default(uuid())
-    name            LookUp
-    Appoitment_state_key String  @unique
-    color           String
-  }
+model TeacherApplication {
+  id      String @id @default(uuid())
+  userId  String @unique
+  message String
+  user    User   @relation(fields: [userId], references: [id])
+}
 
-  model TeacherApplication {
-    id              String     @id @default(uuid())
-    userId          String     @unique
-    message         String    
-    user            User       @relation(fields: [userId], references: [id])
-  }
-  model workingDay{
-    id           String        @id @default(uuid())
-    day Day
-    teacherIdAndDay String @unique
-    hours String[]
-    teacherProfile TeacherProfile @relation(fields: [teacherId], references: [teacherId])
-    teacherId    String        
-  }
+model workingDay {
+  id              String         @id @default(uuid())
+  day             Day
+  teacherIdAndDay String         @unique
+  hours           String[]
+  teacherId       String
+  teacherProfile  TeacherProfile @relation(fields: [teacherId], references: [teacherId])
+}
 
-  enum Day {
-    sunday
-    monday
-    tuesday
-    wednesday
-    thursday
-    friday
-    saturday
-  }
-  model CourseTag {
-    id               String          @id @default(uuid())
-    name             String?
-    lookUp           LookUp
-  }
-  model TeacherReview {
-    id               String   @id @default(uuid())
-    teacherId        String
-    ratingStars      Int
-    review           String
-    updatedAt        DateTime @updatedAt
-    createdAt        DateTime @default(now())
-    User             User
-  }
-  model MaterialReview {
-    id          String    @id @default(uuid())
-    materialID  String
-    userAndMaterialId     String @unique
-    ratingStars Int
-    review      String
-    updatedAt   DateTime  @updatedAt
-    createdAt   DateTime  @default(now())
-    userId      String
-    material    Materials @relation(fields: [materialID], references: [id])
-    User        User      @relation("user", fields: [userId], references: [id])
-  }
+model CourseTag {
+  id               String          @id @default(uuid())
+  name             String?
+  userInfoId       String?
+  teacherProfileId String?
+  materialsId      String?
+  lookUpId         String
+  lookUp           LookUp          @relation(fields: [lookUpId], references: [id])
+  Materials        Materials?      @relation(fields: [materialsId], references: [id])
+  TeacherProfile   TeacherProfile? @relation(fields: [teacherProfileId], references: [id])
+  UserInfo         UserInfo?       @relation(fields: [userInfoId], references: [id])
+}
 
-  model Materials {
-    id                String           @id @default(uuid())
-    name              String?
-    createdAt         DateTime         @default(now())
-    education_LevelId String
-    image_URL         String?
-    cover_URL         String?
+model TeacherReview {
+  id          String   @id @default(uuid())
+  teacherId   String
+  ratingStars Int
+  review      String
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  userId      String
+  User        User     @relation(fields: [userId], references: [id])
+}
 
-    description       DLookUp
-    lookUp            LookUp
-    education_level   Education_Level  @relation(fields: [education_LevelId], references: [id])
-    teachers          User[]
-    tags              CourseTag[]
-    reviews           MaterialReview[]
-  }
-  model LookUp {
-    id              String            @id @default(uuid())
-    eng             String
-    ar              String
-    fr              String?
-    createdAt       DateTime          @default(now())
-  }
+model MaterialReview {
+  id                String    @id @default(uuid())
+  materialID        String
+  userAndMaterialId String    @unique
+  ratingStars       Int
+  review            String
+  updatedAt         DateTime  @updatedAt
+  createdAt         DateTime  @default(now())
+  userId            String
+  material          Materials @relation(fields: [materialID], references: [id])
+  User              User      @relation("user", fields: [userId], references: [id])
+}
 
-  model DLookUp {
-    id             String           @id @default(uuid())
-    ar             String?
-    eng            String
-    fr             String?
-  }
+model Materials {
+  id                String            @id @default(uuid())
+  name              String?
+  createdAt         DateTime          @default(now())
+  education_LevelId String
+  image_URL         String?
+  cover_URL         String?
+  userInfoId        String?
+  dLookUpId         String
+  lookUpId          String
+  teacherProfileId  String?
+  description       DLookUp           @relation(fields: [dLookUpId], references: [id])
+  education_level   Education_Level   @relation(fields: [education_LevelId], references: [id])
+  lookUp            LookUp            @relation(fields: [lookUpId], references: [id])
+  TeacherProfile    TeacherProfile?   @relation(fields: [teacherProfileId], references: [id])
+  UserInfo          UserInfo?         @relation(fields: [userInfoId], references: [id])
+  Appointment       Appointment[]
+  tags              CourseTag[]
+  HomeWorkPackage   HomeWorkPackage[]
+  HomeWorksPackge   HomeWorksPackge[]
+  reviews           MaterialReview[]
+  teachers          User[]
+}
 
-  model Education_Level {
-    id              String               @id @default(uuid())
-    name            String?
-    lookUp          LookUp
-    type            SchoolType
+model LookUp {
+  id                String              @id @default(uuid())
+  eng               String
+  ar                String
+  fr                String?
+  createdAt         DateTime            @default(now())
+  Appointment_state Appointment_state[]
+  CourseTag         CourseTag[]
+  Education_Level   Education_Level[]
+  HomeWorksPackge   HomeWorksPackge[]
+  Materials         Materials[]
+  SchoolType        SchoolType[]
+}
 
-    oneHour Float 
-    OneAndHalf Float
-    TwoHours Float 
-    ThreeHours Float
+model DLookUp {
+  id        String      @id @default(uuid())
+  ar        String?
+  eng       String
+  fr        String?
+  Materials Materials[]
+}
 
-    teacherProfile TeacherProfile[]
+model Education_Level {
+  id             String           @id @default(uuid())
+  name           String?
+  oneHour        Float
+  OneAndHalf     Float
+  TwoHours       Float
+  ThreeHours     Float
+  lookUpId       String
+  schoolTypeId   String
+  lookUp         LookUp           @relation(fields: [lookUpId], references: [id])
+  type           SchoolType       @relation(fields: [schoolTypeId], references: [id])
+  Materials      Materials[]
+  UserInfo       UserInfo[]
+  teacherProfile TeacherProfile[]
+}
 
-  }
-  model HomeWorksPackge{
-    id              String               @id @default(uuid())
-    name            LookUp
-    materialId      String
-    material        Materials @relation(fields: [materialId],references: [id])
-    price           Float
-  }
-  model SchoolType{
-    id              String               @id @default(uuid())
-    name LookUp
-  }
-  enum courseHoursType {
-    oneHour
-    OneAndHalf
-    TwoHours
-    TwoAndHalf
-    ThreeHours
-    
-    train
-  }
+model HomeWorksPackge {
+  id         String    @id @default(uuid())
+  materialId String
+  price      Float
+  lookUpId   String
+  name       LookUp    @relation(fields: [lookUpId], references: [id])
+  material   Materials @relation(fields: [materialId], references: [id])
+}
 
-  enum Role {
-    STUDENT
-    TEACHER
-  }
+model SchoolType {
+  id              String            @id @default(uuid())
+  lookUpId        String
+  name            LookUp            @relation(fields: [lookUpId], references: [id])
+  Education_Level Education_Level[]
+}
+
+enum Day {
+  sunday
+  monday
+  tuesday
+  wednesday
+  thursday
+  friday
+  saturday
+}
+
+enum courseHoursType {
+  oneHour
+  OneAndHalf
+  TwoHours
+  TwoAndHalf
+  ThreeHours
+  train
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+}

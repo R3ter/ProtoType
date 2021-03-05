@@ -26,7 +26,7 @@ includeFirebaseToken=true,full_name})=>{
     if(!userid||!role||!email||!phone_number||!full_name){
         throw new Error("some of the token data are missing")
     }
-    // Pay()
+    
     const token = await jwt.sign({
         "aud": "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
         "iat": moment(now()).unix(),

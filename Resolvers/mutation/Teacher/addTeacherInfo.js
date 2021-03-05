@@ -9,33 +9,35 @@ const addUserInfo =async(parent, {
     let educationLevel={}
     if(data.education_levels_ID){
         educationLevel={
-                user:{
-                    update:{
-                        teacherProfile:{
-                            update:{
-                                educationLevel:{
-                                    set:data.education_levels_ID.map((e)=>({id:e}))
-                                }
-                            }
-                        }
+            upsert:{
+                update:{
+                    educationLevel:{
+                        set:data.education_levels_ID.map((e)=>({id:e}))
+                    }
+                },create:{
+                    educationLevel:{
+                        connect:data.education_levels_ID.map((e)=>({id:e}))
                     }
                 }
             }
         }
-        delete data.education_levels_ID
+    }
+    delete data.education_levels_ID
         
-    return await prisma.userInfo.upsert({
-        where: { userId:id },
-        update: {
-            ...educationLevel,
-            ...data,
-        },
-        create: {
-            ...data,
-            ...educationLevel,
-            user:{
-                connect:{
-                    id
+    return await prisma.user.update({
+        where: { id },
+        data: {
+            teacherProfile:{
+                ...educationLevel
+            },
+            userInfo:{
+                upsert:{
+                    create:{
+                        ...data
+                    },
+                    update:{
+                        ...data
+                    }
                 }
             }
         }
