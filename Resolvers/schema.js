@@ -58,7 +58,7 @@ type Mutation{
   CreateMaterial(lookUp:lookUp,education_levelID:ID!):Boolean!
   addUser(data:UserInput!):LoginResult!
   addUserInfo(data:userInfoInput):Boolean!
-  login(username:String!,password:String!):LoginResult!
+  login(username:String!,password:String!,deviceToken:String):LoginResult!
   resendActivationCode:Boolean!
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
@@ -346,6 +346,7 @@ input UserInput{
   phone_number:String!
   password:String!
   accountType:Role!
+  deviceToken:String
 }
 type Materials {
   id: ID!

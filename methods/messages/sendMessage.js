@@ -1,7 +1,7 @@
 import admin from 'firebase-admin'
 import moment from 'moment'
 const {now}=moment
-import frirebaseData from './../firebaseData.js'
+
 import firebase from 'firebase'
 import data from './../firebaseData.js'
 import { Pay } from '../payment.js'
@@ -15,10 +15,7 @@ import { Pay } from '../payment.js'
 //   appId: "1:1046635118653:web:8e709079978ded68b4aa54",
 //   measurementId: "G-4EX63WVC0M"
 // })
-admin.initializeApp({
-    databaseURL: 'https://school-92b2c-default-rtdb.europe-west1.firebasedatabase.app/',
-    credential:admin.credential.cert(frirebaseData)
-})
+
 
 const sendMessage=async(fromId,toId,message,isImage=false,attachments=[],full_name)=>{
     const db = admin.firestore()

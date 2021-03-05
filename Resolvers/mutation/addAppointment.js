@@ -1,5 +1,6 @@
 import {checkToken} from './../../methods/Tokens.js'
 import moment from 'moment'
+import { storeNotification } from '../../methods/addNotification.js'
 const { now }=moment
 const appAppointment=async(parent,
     {
@@ -15,7 +16,7 @@ const appAppointment=async(parent,
         }
     },{prisma,req},info)=>{
 
-        const {id} = checkToken({token:req.headers.token})
+        const {id} = checkToken({token:req.headers.token,Roles:["STUDENT"]})
         if(studentCount>4||studentCount<1){
             throw new Error("Max 4 students")
         }
@@ -103,7 +104,6 @@ const appAppointment=async(parent,
                 const date=moment.utc(dateTime).format("HH:mm a")
                 const from=moment.utc(times[0]).format("HH:mm a")
                 const to=moment.utc(times[1]).format("HH:mm a")
-                console.log("dwasd")
                 if(moment.utc(date,"HH:mm a").isBetween(
                     moment.utc(from,"HH:mm a"),moment.utc(to,"HH:mm a"),null,"[]")
                     &&moment.utc(toHour.format("HH:mm a"),"HH:mm a").isBetween(
@@ -161,6 +161,13 @@ const appAppointment=async(parent,
                     }).then((e)=>e.id)
 
                 }
-            }).then(()=>true)
+            }).then(()=>{
+                storeNotification({
+                    fromId:id,
+                    sendUserId:teacherId,
+                    type:"booking"
+                })
+                return true
+            })
         }
         export default appAppointment

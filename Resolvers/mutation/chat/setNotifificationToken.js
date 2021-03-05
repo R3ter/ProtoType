@@ -1,4 +1,4 @@
-import { saveTokenInFirebase } from "../../../methods/Tokens.js"
+import { saveTokenInFirebase } from "../../../methods/addNotification.js"
 
 const setNotifificationToken=(parent,{data:{
     userToken,

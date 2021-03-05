@@ -1,8 +1,9 @@
 import validator from 'validator'
 import bcrypt from 'bcrypt'
 import {loginToken} from './../../methods/Tokens.js'
+import { saveTokenInFirebase } from '../../methods/addNotification.js';
 
-const login = async(parent,{username,password},{prisma})=>{
+const login = async(parent,{username,password,deviceToken},{prisma})=>{
     let user;
     if(validator.isEmail(username)){
         user = await prisma.user.findUnique({
@@ -22,6 +23,7 @@ const login = async(parent,{username,password},{prisma})=>{
                 const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
                     teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:undefined,
+                        deviceToken,
                         includeFirebaseToken:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:true,full_name})
                 return {result:true,
@@ -59,6 +61,7 @@ const login = async(parent,{username,password},{prisma})=>{
                 const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
                     teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:undefined,
+                        deviceToken,
                         includeFirebaseToken:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:true,full_name})
                 return {result:true,

@@ -9,7 +9,8 @@ const addUser=async (parent, {data:{
   password,
   email,
   full_name,
-  phone_number
+  phone_number,
+  deviceToken
 }
 }, {req,prisma}, info)=>{
 
@@ -47,6 +48,7 @@ const addUser=async (parent, {data:{
         const token=await loginToken({userid:result.id,role:result.Role,Activate:false,
           includeFirebaseToken:false,
           email,phone_number:result.phone_number,
+          deviceToken,
           teacherIsActive:accountType=="TEACHER"?false:undefined,full_name})
         return {result:true,
           authentication:{

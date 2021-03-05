@@ -1,4 +1,5 @@
 // import apollo from 'apollo-server'
+import './methods/firebaseInitializeApp.js'
 import pkg from '@prisma/client';
 import Materials from "./Resolvers/types/Materials.js"
 import typeDefs from './Resolvers/schema.js'
