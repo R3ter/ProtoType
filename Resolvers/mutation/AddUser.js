@@ -2,7 +2,6 @@ import validator from 'validator';
 import bcrypt from 'bcrypt'
 import { sendActivateCode } from '../../methods/activate.js';
 import { loginToken } from '../../methods/Tokens.js';
-
 const addUser=async (parent, {data:{
   accountType,
   // username,

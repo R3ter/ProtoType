@@ -29,7 +29,9 @@ import getMyTeacherBooking from './query/teacher/getTeacherApponitment.js'
 import getMyTeacherInfo from './query/teacher/getMyTeacherProfileInfo.js'
 import teacherSearch from './query/searchTeacher.js'
 import getUserChatProfile from './query/getUserChatProfile.js'
+import getAppointmentsForAdmin from "./query/ADMIN/getAppointmentsForAdmin.js"
 const Query={
+    getAppointmentsForAdmin,
     getUserChatProfile,
     teacherSearch,
     getMyTeacherInfo,

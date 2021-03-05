@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getUserChatProfile(userId:ID!):ChatInfo!
   teacherSearch(word:String!):[TeacherInfo]
   getMyTeacherInfo:TeacherInfo
@@ -41,6 +42,7 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  
   addTeacherInfo(data:teacherInfoInput!):Boolean!
   addTeacherDocument(data:TeacherDocumentInput!):Boolean!
   rejectAppointment(rejectionReason:String!,AppointmentID:ID!):Boolean!

@@ -67,7 +67,8 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
                 select:{
                     name:true,
                     color:true,
-                    id:true
+                    id:true,
+                    Appoitment_state_key:true
                 }
             }
         }

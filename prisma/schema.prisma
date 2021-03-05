@@ -276,4 +276,5 @@ enum courseHoursType {
 enum Role {
   STUDENT
   TEACHER
+  ADMIN
 }
