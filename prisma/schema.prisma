@@ -188,8 +188,8 @@ model Materials {
   Appointment       Appointment[]
   tags              CourseTag[]
   HomeWorkPackage   HomeWorkPackage[]
-  HomeWorksPackge   HomeWorksPackge[]
   teachers          User[]
+
 }
 
 model LookUp {
@@ -201,7 +201,6 @@ model LookUp {
   Appointment_state Appointment_state[]
   CourseTag         CourseTag[]
   Education_Level   Education_Level[]
-  HomeWorksPackge   HomeWorksPackge[]
   Materials         Materials[]
   SchoolType        SchoolType[]
 }
@@ -220,6 +219,7 @@ model Education_Level {
   oneHour        Float
   OneAndHalf     Float
   TwoHours       Float
+  TwoAndHalfHours       Float
   ThreeHours     Float
   lookUpId       String
   schoolTypeId   String
@@ -228,15 +228,7 @@ model Education_Level {
   Materials      Materials[]
   UserInfo       UserInfo[]
   teacherProfile TeacherProfile[]
-}
-
-model HomeWorksPackge {
-  id         String    @id @default(uuid())
-  materialId String
-  price      Float
-  lookUpId   String
-  name       LookUp    @relation(fields: [lookUpId], references: [id])
-  material   Materials @relation(fields: [materialId], references: [id])
+  createdAt         DateTime            @default(now())
 }
 
 model SchoolType {
@@ -244,6 +236,8 @@ model SchoolType {
   lookUpId        String
   name            LookUp            @relation(fields: [lookUpId], references: [id])
   Education_Level Education_Level[]
+  createdAt         DateTime            @default(now())
+
 }
 
 enum Day {

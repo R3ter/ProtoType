@@ -165,3 +165,26 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //       createdAt:"desc"
 //   },
 // })
+
+// prisma.materials.create({
+//   data:{
+//       education_level:{
+//           connect:{
+//             id:"181be44a-2154-4d5f-9188-188d98444c88"  
+//           }
+//       },
+//       lookUp:{
+//           create:{
+//               ar:"",
+//               eng:""
+//           }
+//       },
+//       description:{
+//           create:{
+//           eng:"",
+//           ar:""  
+//           }
+//       }
+//   }
+// }).then((e)=>console.log(e))
+

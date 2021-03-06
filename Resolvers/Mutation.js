@@ -1,5 +1,5 @@
 import addUser from './mutation/AddUser.js'
-import CreateMaterial from './mutation/CreateMaterial.js'
+import createMaterial from './mutation/ADMIN/createMaterial.js'
 import login from './mutation/login.js'
 import addUserInfo from './mutation/addUserInfo.js'
 import {RefreshToken,logout, loginToken} from './../methods/Tokens.js'
@@ -22,7 +22,13 @@ import adminAcceptAppointment from "./mutation/ADMIN/acceptAppointment.js"
 import adminRejectAppointment from './mutation/ADMIN/rejectAdminAppoitment.js'
 import adminAcceptTeacherApplication from './mutation/ADMIN/acceptTeacherApplecation.js'
 import addReviewForTeacher from './mutation/addTeacherReview.js'
+import createEducationLevel from './mutation/ADMIN/createEducationLevel.js'
+import {deleteEducationLevel,deleteMaterial} from './mutation/ADMIN/delete.js'
 const Mutation={
+    deleteEducationLevel,
+    deleteMaterial,
+    createEducationLevel,
+    createMaterial,
     addReviewForTeacher,
     adminAcceptTeacherApplication,
     adminRejectAppointment,
@@ -40,7 +46,7 @@ const Mutation={
     addAppointment,
     becomeaTeacher,
     TeacherAddMaterial,
-    addUser,CreateMaterial,login,addUserInfo,uploadUserImage,
+    addUser,login,addUserInfo,uploadUserImage,
     logout:(parent,{userId,refreshToken})=>logout(userId,refreshToken)
     ,refreshToken:(parent,{userId,refreshToken},{prisma})=>RefreshToken(userId,refreshToken,prisma),
     resendActivationCode:(parent,args,{req})=>ResendActivationCode(req.headers.token),

@@ -44,6 +44,10 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  deleteMaterial(materialID:ID!):Boolean!
+  deleteEducationLevel(education_LevelId:ID!):Boolean!
+  createEducationLevel(data:educationLevelInput!):Boolean!
+  createMaterial(data:materialData!):Boolean!
   adminAcceptTeacherApplication(teacherId:ID!):Boolean!
   adminRejectAppointment(AppointmentID:ID!):Boolean!
   adminAcceptAppointment(AppointmentID:ID!):Boolean!
@@ -82,6 +86,18 @@ type TeacherApplication{
   createdAt:DateTime!
   updatedAt:DateTime!
 }
+input EducationLevelPrice{
+  oneHour:Float!
+  OneAndHalf:Float!    
+  TwoHours:Float!
+  ThreeHours:Float!
+  TwoAndHalfHours:Float!
+}
+input educationLevelInput {
+  price:EducationLevelPrice!
+  name:lookUp!
+  schoolTypeId:ID!
+}
 type ChatInfo{
   profileImage:String
   userName:String!
@@ -97,6 +113,13 @@ input fromToInput{
 input notificationData{
   userToken:String!
   deviceToken:String!
+}
+input materialData {
+  education_LevelId:ID!
+  name:lookUp!
+  tags:[ID]
+  description:DLookUp!
+  
 }
 type TeacherInfo{
   full_name:String
