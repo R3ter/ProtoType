@@ -27,6 +27,31 @@ const addTeacherReview=async(parnet,{
             review,
             ratingStars
         }
-    }).then(()=>true)
+        ,include:{
+            student:{
+                select:{
+                    id:true,
+                    full_name:true,
+                    userInfo:{
+                        select:{
+                            image_URL:true
+                        }
+                    }
+                }
+            }
+        }
+    }).then((e)=>{
+        storeNotification({
+            elementId:e.id,
+            title:`${e.teacher.full_name} has rated you for the previous lesson,`,
+            body:"Click here to view the his rate.",
+            full_name:e.teacher.full_name,
+            fromId:id,
+            toId:e.student.id,
+            fromImage:e.teacher.userInfo.image_URL,
+            type:"review"
+        })
+        return true
+    })
 }
 export default addTeacherReview

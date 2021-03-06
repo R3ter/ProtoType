@@ -177,6 +177,7 @@ const appAppointment=async(parent,
                 }
             }).then((e)=>{
                 storeNotification({
+                    elementId:e.id,
                     title:`You have a new book by ${e.student.full_name}`,
                     body:"Accept or Reject it now",
                     full_name:e.student.full_name,

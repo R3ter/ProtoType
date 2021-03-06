@@ -8,14 +8,16 @@ const db = admin.firestore()
 
 export const storeNotification= async({
     type,toId,fromId,full_name,
-    title,body,fromImage=""
+    title,body,fromImage="",
+    elementId
 })=>{
     const content={
         title,body
     }
     await db.collection("Notifications").add({
+        elementId,
         toId,
-        type,createdAt:now(),
+        type,createdAt:moment(now()).format("yyyy-MM-DD[T]HH:mm:ss[Z]"),
         fromId,
         content,
         fromImage,
