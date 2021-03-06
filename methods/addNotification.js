@@ -7,26 +7,26 @@ const db = admin.firestore()
 
 
 export const storeNotification= async({
-    type,sendUserId,fromId
+    type,toId,fromId,full_name,
+    title,body,fromImage=""
 })=>{
-    const {deviceToken,token} = getUserToken(sendUserId)
-    const {id,full_name} = await checkToken({token:token}).catch((e)=>{
-        return null
-    })
-    if(!id){
-        return
-    }
     const content={
-        title:`You have a new book by ${full_name}`,
-        body:"Accept or Reject it now"
+        title,body
     }
     await db.collection("Notifications").add({
-        userId:sendUserId,
+        toId,
         type,createdAt:now(),
         fromId,
         content,
+        fromImage,
+        from_full_name:full_name,
         isView:false
     })
+    const {deviceToken,token} = getUserToken(toId)
+    if(!token){return null}
+    const {id} = await checkToken({token:token})
+    if(!id){return}
+
     if(type=="booking"){
         sendNotification({
             ...content,
@@ -47,7 +47,7 @@ export const sendNotification=async ({
         notification: {
           title,body
         }
-    }).catch((e)=>{console.log(e)})
+    }).catch((e)=>{return false})
 }
 
 export const saveTokenInFirebase=({token,deviceToken})=>{

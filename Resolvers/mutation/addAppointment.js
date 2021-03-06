@@ -163,10 +163,26 @@ const appAppointment=async(parent,
                     }).then((e)=>e.id)
 
                 }
-            }).then(()=>{
+                ,include:{
+                    student:{
+                        select:{
+                            full_name:true,
+                            userInfo:{
+                                select:{
+                                    image_URL:true
+                                }
+                            }
+                        }
+                    }
+                }
+            }).then((e)=>{
                 storeNotification({
+                    title:`You have a new book by ${e.student.full_name}`,
+                    body:"Accept or Reject it now",
+                    full_name:e.student.full_name,
                     fromId:id,
-                    sendUserId:teacherId,
+                    toId:teacherId,
+                    fromImage:e.student.userInfo.image_URL,
                     type:"booking"
                 })
                 return true

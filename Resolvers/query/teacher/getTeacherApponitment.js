@@ -98,7 +98,7 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             }
             const studentReview=await prisma.teacherReview.count({
                 where: {
-                    userId:e.studentId,
+                    studentId:e.studentId,
                     teacherId:e.teacherId
                 },
             })
