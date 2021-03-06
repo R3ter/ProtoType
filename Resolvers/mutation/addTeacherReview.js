@@ -1,3 +1,4 @@
+import { storeNotification } from "../../methods/addNotification.js"
 import { checkToken } from "../../methods/Tokens.js"
 
 const addTeacherReview=async(parnet,{
@@ -43,12 +44,12 @@ const addTeacherReview=async(parnet,{
     }).then((e)=>{
         storeNotification({
             elementId:e.id,
-            title:`${e.teacher.full_name} has rated you for the previous lesson,`,
+            title:`${e.student.full_name} has rated you for the previous lesson,`,
             body:"Click here to view the his rate.",
-            full_name:e.teacher.full_name,
+            full_name:e.student.full_name,
             fromId:id,
-            toId:e.student.id,
-            fromImage:e.teacher.userInfo.image_URL,
+            toId:teacherId,
+            fromImage:e.student.userInfo.image_URL,
             type:"review"
         })
         return true

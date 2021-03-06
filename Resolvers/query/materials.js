@@ -22,15 +22,6 @@ const BestMaterials= async(parent, {skip=0,take=5}, {req,prisma}, info)=>{
     return materials.map(async (e)=>{
         return {
             ...e,
-            ...await prisma.materialReview.aggregate({
-                where:{
-                    id:e.id
-                  },
-                avg:{
-                    ratingStars:true
-                },
-                count:true
-              }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars}))
         }
     })
 }
