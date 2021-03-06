@@ -14,7 +14,6 @@ const getTeachers=async (parent,{take=5,skip=0,active=false},{prisma,req})=>{
             teacherProfile:true
         }
     }).then((e)=>{
-        console.log(e)
         return e.map((e)=>{
             return{
                 id:e.id,

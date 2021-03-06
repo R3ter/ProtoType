@@ -1,12 +1,12 @@
-import { checkToken } from "../../methods/Tokens.js"
+import { checkToken } from "../../../methods/Tokens.js"
 
-const getTeacherReviews=async(parent, {skip=0,take=5,teacherID}, {req,prisma}, info)=>{
-    const {id} = checkToken({token:req.headers.token})
+const getTeacherReviews=async(parent, {skip=0,take=5}, {req,prisma}, info)=>{
+    const {id} = checkToken({token:req.headers.token,Roles:["TEACHER"]})
     
     return await prisma.teacherReview.findMany({
         skip,take,
         where:{
-            teacherId:teacherID
+            teacherId:id
         },
         include:{
             student:{

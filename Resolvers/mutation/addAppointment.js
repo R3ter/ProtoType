@@ -34,17 +34,19 @@ const appAppointment=async(parent,
             price={
                 ...await prisma.education_Level.findUnique({
                 where:{
-                    id:await prisma.materials.findUnique({
+                    id:await prisma.materials.findMany({
                         where:{
                             id:courseId,
-                            // teachersID:{
-                                //     has:teacherId
-                                //   }
+                            teachers:{
+                                some:{
+                                    id:teacherId
+                                }
                             }
-                        }).then((e)=>e.education_LevelId)
-                        .catch((e)=>{
-                            throw new Error("material is not defined")})
                         }
+                    }).then((e)=>e[0].education_LevelId)
+                    .catch((e)=>{
+                        throw new Error("material is not defined")})
+                    }
         }).then((e)=>{
             return {coursePrice:e[courseHoursType]*studentCount-
                 (e[courseHoursType]*

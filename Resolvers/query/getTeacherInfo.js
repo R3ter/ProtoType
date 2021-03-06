@@ -50,7 +50,7 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
         ,
             ...await prisma.teacherReview.aggregate({
                 where:{
-                    teacherId:e.teacherId
+                    teacherId:teacherID
                   },
                 avg:{
                     ratingStars:true
@@ -61,7 +61,7 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
                     where:{
                         teachers:{
                             some:{
-                                id:e.teacherId
+                                id:teacherID
                             }
                         }
                     },

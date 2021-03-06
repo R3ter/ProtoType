@@ -19,10 +19,10 @@ model User {
   updatedAt          DateTime            @updatedAt
   studentAppoitments Appointment[]       @relation("studentAppoitments")
   teacherAppoitments Appointment[]       @relation("teacherAppoitments")
-  MaterialReview     MaterialReview[]    @relation("user")
   TeacherApplication TeacherApplication?
   teacherProfile     TeacherProfile?
-  TeacherReview      TeacherReview[]
+  TeacherReview      TeacherReview[]     @relation("reviews as teacher")
+  studentReview      TeacherReview[]     @relation("reviews that was written by him")
   userInfo           UserInfo?
   Materials          Materials[]
   banned             Boolean             @default(false)
@@ -157,26 +157,17 @@ model CourseTag {
 model TeacherReview {
   id          String   @id @default(uuid())
   teacherId   String
-  ratingStars Int
+  teacher     User    @relation("reviews as teacher",fields: [teacherId],references: [id])
+  ratingStars Float
   review      String
   updatedAt   DateTime @updatedAt
   createdAt   DateTime @default(now())
-  userId      String
-  User        User     @relation(fields: [userId], references: [id])
+  studentId   String
+  student     User     @relation("reviews that was written by him",fields: [studentId], references: [id])
+  studentAndTeacherId  Json @unique
 }
 
-model MaterialReview {
-  id                String    @id @default(uuid())
-  materialID        String
-  userAndMaterialId String    @unique
-  ratingStars       Int
-  review            String
-  updatedAt         DateTime  @updatedAt
-  createdAt         DateTime  @default(now())
-  userId            String
-  material          Materials @relation(fields: [materialID], references: [id])
-  User              User      @relation("user", fields: [userId], references: [id])
-}
+
 
 model Materials {
   id                String            @id @default(uuid())
@@ -198,7 +189,6 @@ model Materials {
   tags              CourseTag[]
   HomeWorkPackage   HomeWorkPackage[]
   HomeWorksPackge   HomeWorksPackge[]
-  reviews           MaterialReview[]
   teachers          User[]
 }
 

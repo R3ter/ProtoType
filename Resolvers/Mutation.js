@@ -22,7 +22,9 @@ import setNotifificationToken from "./mutation/chat/setNotifificationToken.js"
 import adminAcceptAppointment from "./mutation/ADMIN/acceptAppointment.js"
 import adminRejectAppointment from './mutation/ADMIN/rejectAdminAppoitment.js'
 import adminAcceptTeacherApplecation from './mutation/ADMIN/acceptTeacherApplecation.js'
+import addReviewForTeacher from './mutation/addTeacherReview.js'
 const Mutation={
+    addReviewForTeacher,
     adminAcceptTeacherApplecation,
     adminRejectAppointment,
     adminAcceptAppointment,
@@ -33,7 +35,6 @@ const Mutation={
     teacherAcceptAppointment,
     sendMessage,
     teacherConnectToMaterial,
-    addMaterialRevew,
     changeMyPassword,
     editProfileInfo,
     addTeacherWorkTimes,

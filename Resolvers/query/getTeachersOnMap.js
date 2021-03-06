@@ -24,6 +24,7 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
             centerLatitude:latitude,
             teachers:
             await userInfo.map(async(e)=>{
+                console.log(e)
                 return {
                     ...e.teacherProfile,
                     ...e.userInfo,
@@ -31,7 +32,7 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
                     
                     ...await prisma.teacherReview.aggregate({
                         where:{
-                            teacherProfileId:e.userId
+                            teacherId:e.id
                         },
                         avg:{
                             ratingStars:true

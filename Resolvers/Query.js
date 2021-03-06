@@ -18,7 +18,6 @@ import getClassStudents from './query/getClassStudents.js'
 import getMyBooking from './query/getMyBooks.js'
 import getMaterialInfo from './query/getMaterialInfi.js'
 import getSchoolTypes from './query/getSchoolTypes.js'
-import getMaterialReviews from './query/getMaterialReviews.js'
 import getMaterialTeachers from "./query/getMaterialTeachers.js"
 import getHomeWorksPackges from './query/getHomeWorkPackge.js'
 import getBookingInfo from './query/ConfirmBooking.js'
@@ -31,7 +30,9 @@ import teacherSearch from './query/searchTeacher.js'
 import getUserChatProfile from './query/getUserChatProfile.js'
 import getAppointmentsForAdmin from "./query/ADMIN/getAppointmentsForAdmin.js"
 import getTeachersForAdmin from './query/ADMIN/getTeacherApplications.js'
+import getMyReviews from './query/teacher/getMyReview.js'
 const Query={
+    getMyReviews,
     getTeachersForAdmin,
     getAppointmentsForAdmin,
     getUserChatProfile,
@@ -44,7 +45,6 @@ const Query={
     getBookingInfo,
     getHomeWorksPackges,
     getMaterialTeachers,
-    getMaterialReviews,
     getSchoolTypes,
     getMaterialInfo,
     getMyBooking,

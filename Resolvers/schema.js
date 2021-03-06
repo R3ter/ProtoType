@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getMyReviews(skip:Int,take:Int):[TeacherReview]
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean):[TeacherApplication]!
   getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getUserChatProfile(userId:ID!):ChatInfo!
@@ -33,7 +34,6 @@ type Query{
   getTeacherAppointments(teacherID:ID!,
     timeType:courseHoursType!,
     date:DateTime!):[teacherSchedule]
-  getMaterialReviews(materialId:ID!,skip:Int,take:Int):[MaterialReview]
   getMyBooking(skip:Int,take:Int,state:StateTime!):[Appointment]
   getSchoolTypes:[SchoolType]!
   getMyEducationLevels:[Education_Level]
@@ -52,7 +52,6 @@ type Mutation{
   teacherAcceptAppointment(AppointmentID:ID!):Boolean!
   sendMessage(toId:ID!,message:String!,isImage:Boolean,attachments:[String]):Boolean!
   teacherConnectToMaterial(materialID:ID!):Boolean!
-  addMaterialRevew(data:MaterialReviewInput!):Boolean!
   changeMyPassword(currentPassword:String!,newPassword:String!):Result!
   editProfileInfo(data:userInfoInput):Boolean!
   addTeacherWorkTimes(fromTo:[fromToInput!]!):Boolean!
@@ -69,6 +68,7 @@ type Mutation{
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
   setNotifificationToken(data:notificationData!):Boolean
+  addReviewForTeacher(teacherId:ID!,review:String!,ratingStars:Float!):Boolean!
 }
 type TeacherApplication{
   id:ID!
@@ -176,11 +176,6 @@ type BookingData {
   price:Int!
   teacherId:ID!
 }
-input MaterialReviewInput{
-  materialId:ID!
-  review:String!
-  ratingStars:Int!
-}
 enum courseHoursType{
   oneHour
   OneAndHalf
@@ -276,9 +271,6 @@ type TeacherProfile{
   description:String!
   address:String
   subjects:[CourseTag]
-  # Courses:[Materials]
-  # reviews:[TeacherReview]
-  # appointments:[Appointment]
   courseCount:Int!
   averageRating:Int!
   ratingCounts:Int! 
@@ -321,23 +313,18 @@ type Appointment{
   packageName:String
 }
 
+type studentReview{
+  id:ID!
+  image:String
+  name:String!
+}
 type TeacherReview{
-  id:ID
-  teacherId:ID
-  ratingStars:Int
-  review:String
-  student:User
-  teacher:User
-  createdAt:DateTime 
+  student:studentReview
+  createdAt:DateTime!
+  ratingStars:Float!
+  review:String!
 }
-type MaterialReview{
-  id:ID
-  materialID:ID
-  ratingStars:Int
-  review:String
-  user:User
-  createdAt:DateTime
-}
+
 type LoginResult {
   result:Boolean!
   error:String
@@ -377,7 +364,6 @@ type Materials {
   description:String
   education_level:Education_Level!
   tags:[CourseTag]
-  reviews:[MaterialReview]
   averageRating:Int!
   ratingCounts:Int!
   studentImages:[String]
