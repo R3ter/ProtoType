@@ -395,8 +395,6 @@ type Materials {
   education_level:Education_Level!
   tags:[CourseTag]
   teacher:User
-  averageRating:Int!
-  ratingCounts:Int!
   studentImages:[String]
 }
 input MaterialsInput {

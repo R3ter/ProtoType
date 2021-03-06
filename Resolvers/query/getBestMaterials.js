@@ -21,8 +21,7 @@ const BestMaterials= async(parent, args, {req,prisma}, info)=>{
     },info)
     return materials.map(async (e)=>{
         return {
-            ...e,
-            ...{ratingCounts:0,averageRating:0}
+            ...e
         }
     })
 }
