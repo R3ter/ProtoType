@@ -24,7 +24,8 @@ export const storeNotification= async({
         userId:sendUserId,
         type,createdAt:now(),
         fromId,
-        content
+        content,
+        isView:false
     })
     if(type=="booking"){
         sendNotification({
