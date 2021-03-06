@@ -64,7 +64,7 @@ const teacherAcceptAppointment=async(parent,{AppointmentID},{prisma,req})=>{
         }
     }).then((e)=>{
         storeNotification({
-            title:`Your book has been aproved by ${e.teacher.full_name}`,
+            title:`Your book has been approved by ${e.teacher.full_name}`,
             body:"view",
             full_name:e.teacher.full_name,
             fromId:id,
