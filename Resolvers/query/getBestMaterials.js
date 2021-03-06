@@ -11,7 +11,6 @@ const BestMaterials= async(parent, args, {req,prisma}, info)=>{
                     lookUp:true
                 }
             },
-            reviews:true,
             education_level:{
                 select:{
                     id:true,
@@ -23,15 +22,7 @@ const BestMaterials= async(parent, args, {req,prisma}, info)=>{
     return materials.map(async (e)=>{
         return {
             ...e,
-            ...await prisma.materialReview.aggregate({
-                where:{
-                    id:e.id
-                  },
-                avg:{
-                    ratingStars:true
-                },
-                count:true
-              }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars}))
+            ...{ratingCounts:0,averageRating:0}
         }
     })
 }
