@@ -6,7 +6,8 @@ scalar DateTime
 scalar Time
 
 type Query{
-  getMyReviews(skip:Int,take:Int):[TeacherReview]
+  getMyTeacherReviews(skip:Int,take:Int):[TeacherReview]!
+  getMyStudentReviews(skip:Int,take:Int):[StudentReview]!
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean):[TeacherApplication]!
   getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getUserChatProfile(userId:ID!):ChatInfo!
@@ -43,7 +44,7 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
-  adminAcceptTeacherApplecation(teacherId:ID!):Boolean!
+  adminAcceptTeacherApplication(teacherId:ID!):Boolean!
   adminRejectAppointment(AppointmentID:ID!):Boolean!
   adminAcceptAppointment(AppointmentID:ID!):Boolean!
   addTeacherInfo(data:teacherInfoInput!):Boolean!
@@ -313,13 +314,19 @@ type Appointment{
   packageName:String
 }
 
-type studentReview{
+type UserReviewer{
   id:ID!
   image:String
   name:String!
 }
 type TeacherReview{
-  student:studentReview
+  student:UserReviewer!
+  createdAt:DateTime!
+  ratingStars:Float!
+  review:String!
+}
+type StudentReview{
+  teacher:UserReviewer!
   createdAt:DateTime!
   ratingStars:Float!
   review:String!

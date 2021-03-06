@@ -11,7 +11,6 @@ import addAppointment from './mutation/addAppointment.js'
 import addTeacherWorkTimes from './mutation/Teacher/addTeacherFreeTime.js'
 import editProfileInfo from './mutation/editProfileInfo.js'
 import changeMyPassword from "./mutation/changePassword.js"
-import addMaterialRevew from './mutation/reviews/addMaterialReview.js'
 import teacherConnectToMaterial from './mutation/Teacher/connectToMaterial.js'
 import sendMessage from './mutation/chat/sendMessage.js'
 import teacherAcceptAppointment from './mutation/Teacher/teacherAcceptAppointment.js'
@@ -21,11 +20,11 @@ import addTeacherInfo from './mutation/Teacher/addTeacherInfo.js'
 import setNotifificationToken from "./mutation/chat/setNotifificationToken.js"
 import adminAcceptAppointment from "./mutation/ADMIN/acceptAppointment.js"
 import adminRejectAppointment from './mutation/ADMIN/rejectAdminAppoitment.js'
-import adminAcceptTeacherApplecation from './mutation/ADMIN/acceptTeacherApplecation.js'
+import adminAcceptTeacherApplication from './mutation/ADMIN/acceptTeacherApplecation.js'
 import addReviewForTeacher from './mutation/addTeacherReview.js'
 const Mutation={
     addReviewForTeacher,
-    adminAcceptTeacherApplecation,
+    adminAcceptTeacherApplication,
     adminRejectAppointment,
     adminAcceptAppointment,
     setNotifificationToken,
