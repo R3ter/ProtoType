@@ -74,6 +74,7 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
         }
     }).then((e)=>{
         return e.map(async(e)=>{
+           console.log(e.teacher.teacherProfile.teacherId)
             const studentReview=await prisma.teacherReview.count({
                 where: {
                     studentId:e.studentId,
@@ -86,6 +87,32 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
                 time:{
                     from:e.from,
                     to:e.to
+                },
+                teacher:{
+                ...e.teacher,
+                    teacherProfile:{
+                        ...await prisma.teacherReview.aggregate({
+                            where:{
+                                teacherId:e.teacher.teacherProfile.teacherId
+                              },
+                            avg:{
+                                ratingStars:true
+                            },
+                            count:true
+                            }).then((e)=>{
+                                 return{ratingCounts:e.count,averageRating:e.avg.ratingStars}
+                                }),
+                            ...await prisma.materials.aggregate({
+                                where:{
+                                    teachers:{
+                                        some:{
+                                            id:e.teacher.teacherProfile.teacherId
+                                        }
+                                    }
+                                },
+                                count:true
+                            }).then((e)=>({courseCount:e.count}))
+                }
                 }
             }
         })
