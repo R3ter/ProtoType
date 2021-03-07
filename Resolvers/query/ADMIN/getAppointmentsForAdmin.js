@@ -6,6 +6,7 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,state="UPCOMING"},{pr
     let filter
     if(state=="PREVIOUS"){
         filter={
+            adminAccepted:false,
             OR:[
                 {
                     dateTime:{
@@ -19,6 +20,9 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,state="UPCOMING"},{pr
     }else{
         filter={
             AND:[
+                {
+                    adminAccepted:false,
+                },
                 {
                     dateTime:{
                         gte:moment(now()).format("YYYY-MM-DD[T]HH:mm:ss[Z]")
