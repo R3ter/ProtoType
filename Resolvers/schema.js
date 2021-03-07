@@ -125,6 +125,7 @@ input materialData {
   
 }
 type TeacherInfo{
+  canContact:Boolean!
   full_name:String
   email:String
   user:User

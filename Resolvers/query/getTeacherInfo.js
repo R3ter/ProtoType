@@ -35,6 +35,7 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
             }
         })
         return {
+            
             user:{...e},
             full_name:e.full_name,
             email:e.email,
