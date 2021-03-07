@@ -7,11 +7,13 @@ const getTeachers=async (parent,{take=5,skip=0,active=false},{prisma,req})=>{
         where:{
             Role:"TEACHER",
             teacherProfile:{
-                teacherIsActive:active
+                teacherIsActive:active,
+                Rejected:false
             }
         },
         include:{
-            teacherProfile:true
+            teacherProfile:true,
+            userInfo:true
         }
     }).then((e)=>{
         return e.map((e)=>{
@@ -24,7 +26,10 @@ const getTeachers=async (parent,{take=5,skip=0,active=false},{prisma,req})=>{
                 image_URL:e.image_URL,
                 name:e.full_name,
                 createdAt:e.createdAt,
-                updatedAt:e.updatedAt
+                updatedAt:e.updatedAt,
+                userInfo:{
+                    ...e.userInfo
+                }
             }
         })
     })

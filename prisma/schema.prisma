@@ -55,6 +55,8 @@ model TeacherProfile {
   IDFrontImageURL String            @default("")
   IDBackImageURL  String            @default("")
   certificateURL  String            @default("")
+  Rejected        Boolean           @default(false)
+
   CV_URL          String?
   image_URL       String?           @default("")
   user            User              @relation(fields: [teacherId], references: [id])

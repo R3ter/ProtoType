@@ -21,6 +21,7 @@ const addTeacherInfo = async (parent,{
             certificateURL
         },
         update:{
+            Rejected:false,
             CV_uRL,
             IDFrontImageURL,
             IDBackImageURL,

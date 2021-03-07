@@ -4,6 +4,18 @@ const Materials={
     },
     async description(parent, args, {req}){
         return parent.description[req.headers.lang||"eng"]
+    },
+    async teachersCount(parent, args, {req,prisma}){
+        return await prisma.user.aggregate({
+            where:{
+                Materials:{
+                    some:{
+                        id:parent.id
+                    }
+                }
+            },
+            count:true
+        }).then((e)=>(e.count))
     }
 }
 export default Materials

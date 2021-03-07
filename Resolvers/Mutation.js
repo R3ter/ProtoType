@@ -24,7 +24,9 @@ import adminAcceptTeacherApplication from './mutation/ADMIN/acceptTeacherAppleca
 import addReviewForTeacher from './mutation/addTeacherReview.js'
 import createEducationLevel from './mutation/ADMIN/createEducationLevel.js'
 import {deleteEducationLevel,deleteMaterial} from './mutation/ADMIN/delete.js'
+import adminRejectTeacherApplication from "./mutation/ADMIN/rejectTeacherApplication.js"
 const Mutation={
+    adminRejectTeacherApplication,
     deleteEducationLevel,
     deleteMaterial,
     createEducationLevel,

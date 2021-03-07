@@ -1,6 +1,6 @@
 import { checkToken } from "../../../methods/Tokens.js"
 
-const teacherAcceptApplecation=async(parent,{teacherId},{prisma,req})=>{
+const teacherRejectApplecation=async(parent,{teacherId},{prisma,req})=>{
     const {id}=checkToken({token:req.headers.token,Roles:["ADMIN"]})
     if(teacherId=="")
         return false
@@ -11,10 +11,10 @@ const teacherAcceptApplecation=async(parent,{teacherId},{prisma,req})=>{
         data:{
             teacherProfile:{
                 update:{
-                    teacherIsActive:true
+                    Rejected:true
                 }
             }
         }
     })
 }
-export default teacherAcceptApplecation
+export default teacherRejectApplecation

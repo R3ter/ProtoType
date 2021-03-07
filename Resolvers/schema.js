@@ -49,6 +49,7 @@ type Mutation{
   createEducationLevel(data:educationLevelInput!):Boolean!
   createMaterial(data:materialData!):Boolean!
   adminAcceptTeacherApplication(teacherId:ID!):Boolean!
+  adminRejectTeacherApplication(teacherId:ID!):Boolean!
   adminRejectAppointment(AppointmentID:ID!):Boolean!
   adminAcceptAppointment(AppointmentID:ID!):Boolean!
   addTeacherInfo(data:teacherInfoInput!):Boolean!
@@ -83,6 +84,7 @@ type TeacherApplication{
   CV_URL:String
   image_URL:String
   name:String!
+  userInfo:UserInfo
   createdAt:DateTime!
   updatedAt:DateTime!
 }
@@ -396,6 +398,7 @@ type Materials {
   tags:[CourseTag]
   teacher:User
   studentImages:[String]
+  teachersCount:Int
 }
 input MaterialsInput {
   name:lookUp!
