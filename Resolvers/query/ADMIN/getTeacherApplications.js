@@ -12,13 +12,33 @@ const getTeachers=async (parent,{take=5,skip=0,active=false},{prisma,req})=>{
             }
         },
         include:{
-            teacherProfile:true,
+            teacherProfile:{
+                select:{
+                    IDFrontImageURL:true,
+                    IDBackImageURL:true,
+                    certificateURL:true,
+                    CV_URL:true,
+                    educationLevel:{
+                        select:{
+                            lookUp:true,
+                            id:true,
+                            type:{
+                                select:{
+                                    id:true,  
+                                    name:true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             userInfo:true
         }
     }).then((e)=>{
         return e.map((e)=>{
             return{
                 id:e.id,
+                educationLevel:e.teacherProfile.educationLevel,
                 IDFrontImageURL:e.teacherProfile.IDFrontImageURL,
                 IDBackImageURL:e.teacherProfile.IDBackImageURL,
                 certificateURL:e.teacherProfile.certificateURL,

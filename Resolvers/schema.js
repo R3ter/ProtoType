@@ -82,6 +82,7 @@ type TeacherApplication{
   IDBackImageURL:String
   certificateURL:String
   CV_URL:String
+  educationLevel:[Education_Level]
   image_URL:String
   name:String!
   userInfo:UserInfo
