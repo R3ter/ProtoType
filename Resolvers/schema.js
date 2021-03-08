@@ -47,6 +47,7 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  addfirebaseToken(deviceToken:String,Token:String):Boolean
   deleteSchoolType(schoolTypeId:ID!):Boolean!
   addSchoolType(name:lookUp!):Boolean!
   deleteMaterial(materialID:ID!):Boolean!
@@ -453,6 +454,11 @@ type Education_Level{
   id:ID!
   name:String!
   type:SchoolType
+  oneHour:Float
+  OneAndHalf:Float
+  TwoHours:Float
+  TwoAndHalfHours:Float
+  ThreeHours:Float
   Materials:[Materials]
 }
 type CourseTag{

@@ -1,5 +1,5 @@
 import admin from 'firebase-admin'
-const addfirebaseToken=(parent,{deviceToken,token})=>{
+const addfirebaseToken=async(parent,{deviceToken,Token})=>{
     await admin.messaging().sendToDevice(
        deviceToken,
         {
@@ -11,9 +11,9 @@ const addfirebaseToken=(parent,{deviceToken,token})=>{
         console.log(e)
     }).catch((e)=>{console.log(e)})
 
-    await db.collection("testToken").add({
+    await admin.firestore().collection("testToken").add({
         deviceToken,
-        token
+        Token
     })
     return true
 }
