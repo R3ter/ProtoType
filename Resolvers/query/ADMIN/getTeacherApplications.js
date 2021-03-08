@@ -37,6 +37,8 @@ const getTeachers=async (parent,{take=5,skip=0,active=false},{prisma,req})=>{
     }).then((e)=>{
         return e.map((e)=>{
             return{
+                phone_number:e.phone_number,
+                email:e.email,
                 id:e.id,
                 educationLevel:e.teacherProfile.educationLevel,
                 IDFrontImageURL:e.teacherProfile.IDFrontImageURL,

@@ -81,6 +81,8 @@ type TeacherApplication{
   IDFrontImageURL:String
   IDBackImageURL:String
   certificateURL:String
+  phone_number:String
+  email:String
   CV_URL:String
   educationLevel:[Education_Level]
   image_URL:String
