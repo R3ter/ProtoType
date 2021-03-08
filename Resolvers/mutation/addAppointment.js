@@ -34,7 +34,7 @@ const appAppointment=async(parent,
             price={
                 ...await prisma.education_Level.findUnique({
                 where:{
-                    id:await prisma.materials.findMany({
+                    id:await prisma.materials.findFirst({
                         where:{
                             id:courseId,
                             teachers:{
@@ -43,7 +43,8 @@ const appAppointment=async(parent,
                                 }
                             }
                         }
-                    }).then((e)=>e[0].education_LevelId)
+                    }).then((e)=>{
+                        return e.education_LevelId})
                     .catch((e)=>{
                         throw new Error("material is not defined")})
                     }
@@ -73,7 +74,10 @@ const appAppointment=async(parent,
         }
         const freeTimes=await prisma.workingDay.findUnique({
             where:{
-                teacherIdAndDay:teacherId+moment.utc(dateTime).format('dddd').toLowerCase()
+                teacherIdAndDay:{
+                    teacherId,
+                    day:moment.utc(dateTime).format('dddd').toLowerCase()
+                }
             }
         }).then((e)=>e.hours)
         .catch(()=>[])
@@ -102,10 +106,10 @@ const appAppointment=async(parent,
         let StopLoop=false
         freeTimes.forEach(e => {
             if(!StopLoop){
-                const times=e.split("/-/")
+                const times=e
                 const date=moment.utc(dateTime).format("HH:mm a")
-                const from=moment.utc(times[0]).format("HH:mm a")
-                const to=moment.utc(times[1]).format("HH:mm a")
+                const from=moment.utc(times.from).format("HH:mm a")
+                const to=moment.utc(times.to).format("HH:mm a")
                 if(moment.utc(date,"HH:mm a").isBetween(
                     moment.utc(from,"HH:mm a"),moment.utc(to,"HH:mm a"),null,"[]")
                     &&moment.utc(toHour.format("HH:mm a"),"HH:mm a").isBetween(
@@ -122,9 +126,10 @@ const appAppointment=async(parent,
                 }
                 appointments.forEach((e)=>{
                     if(timeIsFree){
-                        if(e.stateKey=="waiting"&&e.studentId==id){
-                            timeIsFree=false
-                        }else if(e.stateKey!="waiting")
+                        
+                        if(e.stateKey!="waiting"||(
+                            e.stateKey=="waiting"&&e.studentId==id
+                        ))
                         if(moment.utc(moment.utc(dateTime).format("HH:mm a"),
                         "HH:mm a").isBetween(
                             moment.utc(moment.utc(e.from).format("HH:mm a"),"HH:mm a")

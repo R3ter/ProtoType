@@ -26,7 +26,7 @@ type Query{
   getUserInfo(userId:ID!):UserInfo
   getMyInfo:UserInfo
   getEducationLevels(schoolTypeId:ID!):[Education_Level]
-  getBestTeachers:[TeacherProfile]
+  getBestTeachers(take:Int,skip:Int):[TeacherProfile]
   getCourseTags(search:String):[CourseTag]
   BestMaterials:[Materials]
   getTeacherReviews(teacherID:ID!):[TeacherReview]

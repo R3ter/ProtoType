@@ -137,8 +137,8 @@ model TeacherApplication {
 model workingDay {
   id              String         @id @default(uuid())
   day             Day
-  teacherIdAndDay String         @unique
-  hours           String[]
+  teacherIdAndDay Json           @unique
+  hours           Json[]
   teacherId       String
   teacherProfile  TeacherProfile @relation(fields: [teacherId], references: [teacherId])
 }

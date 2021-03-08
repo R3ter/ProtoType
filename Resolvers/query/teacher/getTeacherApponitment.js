@@ -96,15 +96,8 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
                     color:"#006400"
                 }
             }
-            const studentReview=await prisma.teacherReview.count({
-                where: {
-                    studentId:e.studentId,
-                    teacherId:e.teacherId
-                },
-            })
             return {
                 packageName:e.HomeWorkPackage?e.HomeWorkPackage.name:null,
-                isReview:studentReview>0,
                 ...e,
                 time:{
                     from:e.from,

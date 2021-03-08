@@ -48,26 +48,7 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
             longitude:e.userInfo.longitude,
             latitude:e.userInfo.latitude,
             schoolType
-        ,
-            ...await prisma.teacherReview.aggregate({
-                where:{
-                    teacherId:teacherID
-                  },
-                avg:{
-                    ratingStars:true
-                },
-                count:true
-                }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars})),
-                ...await prisma.materials.aggregate({
-                    where:{
-                        teachers:{
-                            some:{
-                                id:teacherID
-                            }
-                        }
-                    },
-                    count:true
-                }).then((e)=>({courseCount:e.count}))
+        
         }
     })
     

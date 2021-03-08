@@ -39,15 +39,21 @@ const addMyFreeTime=async(parent, {fromTo}, {req,prisma}, info)=>{
           workingDays:{
           upsert:{
             where:{
-              teacherIdAndDay:id+moment.utc(fromTo[0].from).format('dddd').toLowerCase()
+              teacherIdAndDay:{
+                teacherId:id,
+                day:moment.utc(fromTo[0].from).format('dddd').toLowerCase()
+              }
             },
             create:{
-              teacherIdAndDay:id+moment.utc(fromTo[0].from).format('dddd').toLowerCase(),
+              teacherIdAndDay:{
+                teacherId:id,
+                day:moment.utc(fromTo[0].from).format('dddd').toLowerCase()
+              },
               day:moment.utc(fromTo[0].from).format('dddd').toLowerCase(),
-              hours:fromTo.map((e)=>e.from+"/-/"+e.to)                
+              hours:fromTo.map((e)=>({from:e.from,to:e.to}))
             },
             update:{
-              hours:fromTo.map((e)=>e.from+"/-/"+e.to)
+              hours:fromTo.map((e)=>({from:e.from,to:e.to}))
             }
           }
         }

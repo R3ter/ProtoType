@@ -4,8 +4,8 @@ import moment from 'moment'
 const checkTime = (times, hours, minutes, appointmentsArray, id,timeType) => {
   const data = []
   times.forEach((e) => {
-    const from = e.split("/-/")[0]
-    const to = e.split("/-/")[1]
+    const from = e.from
+    const to = e.to
 
     const From = moment.utc(moment.utc(from).format("HH:mm a"),"HH:mm a")
     const To = moment.utc(moment.utc(to).format("HH:mm a"),"HH:mm a")
@@ -84,7 +84,10 @@ const getTeacherAppointment = async (parent, {
   })
   return await prisma.workingDay.findUnique({
     where: {
-      teacherIdAndDay: teacherID + moment.utc(date).format('dddd').toLowerCase()
+      teacherIdAndDay:{
+        teacherId:teacherID,
+        day:moment.utc(date).format('dddd').toLowerCase()
+      } 
     }
   }).then((e) => {
     if (!e)

@@ -13,6 +13,7 @@ const getMaterialTeachers=async(parent,{materialID,skip=0,take=5},{prisma,req})=
                 select:{
                     full_name:true,
                     id:true,
+                    teacherProfile:true,
                     userInfo:{
                         select:{
                             about:true,
@@ -26,32 +27,10 @@ const getMaterialTeachers=async(parent,{materialID,skip=0,take=5},{prisma,req})=
                 }
             }
         }
-    }).then(e=>e.teachers.map(async (e)=>{
-        return {
-        ...e,
-        teacherProfile:{
-            ...e.teacherProfile,
-            ...await prisma.teacherReview.aggregate({
-                where:{
-                    teacherId:e.id
-                },
-                avg:{
-                    ratingStars:true
-                },
-                count:true,
-            }).then((e)=>({ratingCounts:e.count,averageRating:e.avg.ratingStars})),
-            ...await prisma.materials.aggregate({
-                where:{
-                    teachers:{
-                        some:{
-                            id:e.teacherId
-                        }
-                    }
-                },
-                count:true
-            }).then((e)=>({courseCount:e.count}))
-        }}
-    }
-))
+    }).then(e=>{
+        return e.teachers
+    })
+
+
 }
 export default getMaterialTeachers

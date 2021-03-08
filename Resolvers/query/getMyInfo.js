@@ -1,6 +1,6 @@
 import { checkToken } from "../../methods/Tokens.js"
 
-const getMyInfo=(parent, {userId}, {req,prisma}, info)=>{
+const getMyInfo=(parent, args, {req,prisma}, info)=>{
     const {id}=checkToken({token:req.headers.token})
     return prisma.userInfo.findUnique({
         where:{

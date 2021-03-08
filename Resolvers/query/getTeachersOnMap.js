@@ -28,7 +28,6 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
                     ...e.teacherProfile,
                     ...e.userInfo,
                     ...e,
-                    
                     ...await prisma.teacherReview.aggregate({
                         where:{
                             teacherId:e.id
