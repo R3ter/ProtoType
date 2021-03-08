@@ -1,5 +1,5 @@
-import { storeNotification } from "../../methods/addNotification.js"
-import { checkToken } from "../../methods/Tokens.js"
+import { storeNotification } from "../../../methods/addNotification.js"
+import { checkToken } from "../../../methods/Tokens.js"
 
 const addTeacherReview=async(parnet,{
     teacherId,

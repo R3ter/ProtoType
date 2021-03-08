@@ -21,7 +21,7 @@ import setNotifificationToken from "./mutation/chat/setNotifificationToken.js"
 import adminAcceptAppointment from "./mutation/ADMIN/acceptAppointment.js"
 import adminRejectAppointment from './mutation/ADMIN/rejectAdminAppoitment.js'
 import adminAcceptTeacherApplication from './mutation/ADMIN/acceptTeacherApplecation.js'
-import addReviewForTeacher from './mutation/addTeacherReview.js'
+import addReviewForTeacher from './mutation/reviews/addTeacherReview.js'
 import createEducationLevel from './mutation/ADMIN/createEducationLevel.js'
 import {deleteEducationLevel,deleteMaterial} from './mutation/ADMIN/delete.js'
 import adminRejectTeacherApplication from "./mutation/ADMIN/rejectTeacherApplication.js"
