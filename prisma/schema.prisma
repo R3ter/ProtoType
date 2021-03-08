@@ -12,7 +12,7 @@ model User {
   email              String              @unique
   phone_number       String              @unique
   full_name          String
-  Role               Role                @default(STUDENT)
+  Role               Role                @default(STUDENT) 
   password           String
   Active             Boolean             @default(false)
   createdAt          DateTime            @default(now())
@@ -226,7 +226,7 @@ model Education_Level {
   lookUpId       String
   schoolTypeId   String
   lookUp         LookUp           @relation(fields: [lookUpId], references: [id])
-  type           SchoolType       @relation(fields: [schoolTypeId], references: [id])
+  type           SchoolType       @relation("schoolTypeWithEducationLevel",fields: [schoolTypeId], references: [id])
   Materials      Materials[]
   UserInfo       UserInfo[]
   teacherProfile TeacherProfile[]
@@ -235,9 +235,9 @@ model Education_Level {
 
 model SchoolType {
   id              String            @id @default(uuid())
-  lookUpId        String
+  lookUpId        String 
   name            LookUp            @relation(fields: [lookUpId], references: [id])
-  Education_Level Education_Level[]
+  Education_Level Education_Level[] @relation("schoolTypeWithEducationLevel") 
   createdAt         DateTime            @default(now())
 
 }

@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getSchoolTypesForAdmin:[SchoolType]!
   getMyTeacherReviews(skip:Int,take:Int):[TeacherReview]!
   getMyStudentReviews(skip:Int,take:Int):[StudentReview]!
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean):[TeacherApplication]!
@@ -225,6 +226,7 @@ type MapInfo{
 type SchoolType{
   id:ID!
   name:String!
+  Education_Level:[Education_Level]
 }
 type TeacherMapInfo{
   id:ID!

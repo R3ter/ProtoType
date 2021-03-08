@@ -32,7 +32,9 @@ import getAppointmentsForAdmin from "./query/ADMIN/getAppointmentsForAdmin.js"
 import getTeachersForAdmin from './query/ADMIN/getTeacherApplications.js'
 import getMyTeacherReviews from './query/teacher/getMyReview.js'
 import getMyStudentReviews from './query/getMyStudentReviews.js'
+import getSchoolTypesForAdmin from './query/ADMIN/getSchoolTypes.js'
 const Query={
+    getSchoolTypesForAdmin,
     getMyTeacherReviews,
     getMyStudentReviews,
     getTeachersForAdmin,
