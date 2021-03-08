@@ -345,6 +345,15 @@ type Appointment{
   studentCount:Int
   isReview:Boolean!
   packageName:String
+  student_info:Student_Appointment_info!
+}
+
+type Student_Appointment_info {
+  student_name:String
+  full_number:String
+  longitude:Float
+  latitude:Float
+  address:String
 }
 
 type UserReviewer{

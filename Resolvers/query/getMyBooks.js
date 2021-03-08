@@ -43,6 +43,7 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             createdAt:"desc"
         },
         include:{
+            student_info:true,
             teacher:{
                 select:{
                     id:true,
