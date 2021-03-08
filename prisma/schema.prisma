@@ -107,6 +107,8 @@ model Appointment {
   teacher                    User                     @relation("teacherAppoitments", fields: [teacherId], references: [id])
   TeacherProfile             TeacherProfile?          @relation(fields: [teacherProfileId], references: [id])
   UserInfo                   UserInfo?                @relation(fields: [userInfoId], references: [id])
+  
+  review TeacherReview?
 }
 
 model HomeWorkPackage {
@@ -166,7 +168,10 @@ model TeacherReview {
   createdAt   DateTime @default(now())
   studentId   String
   student     User     @relation("reviews that was written by him",fields: [studentId], references: [id])
-  studentAndTeacherId  Json @unique
+
+
+  appointment          Appointment @relation(fields: [appoitmentId],references: [id])
+  appoitmentId         String @unique
 }
 
 

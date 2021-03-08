@@ -2,17 +2,15 @@ import { storeNotification } from "../../../methods/addNotification.js"
 import { checkToken } from "../../../methods/Tokens.js"
 
 const addTeacherReview=async(parnet,{
-    teacherId,
+    appointmentId,
     review,
     ratingStars
 },{prisma,req},info)=>{
     const {id} = checkToken({token:req.headers.token,Roles:["STUDENT"]})
+    await prisma.appointment.findUnique
     return await prisma.teacherReview.upsert({
         where:{
-            studentAndTeacherId:{
-                studentId:id,
-                teacherId
-            }
+            appoitmentId:appointmentId
         },
         update:{
             review,
@@ -21,10 +19,7 @@ const addTeacherReview=async(parnet,{
         create:{
             teacherId,
             studentId:id,
-            studentAndTeacherId:{
-                studentId:id,
-                teacherId
-            },
+            appointmentId,
             review,
             ratingStars
         }
