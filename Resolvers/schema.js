@@ -77,15 +77,15 @@ type Mutation{
   uploadUserImage(imageData:String!):Boolean!
   activateAccount(code:String!):LoginResult!
   setNotifificationToken(data:notificationData!):Boolean
-  addReviewForTeacher(teacherId:ID!,review:String!,ratingStars:Float!):Boolean!
+  addReviewForTeacher(appointmentId:ID!,review:String!,ratingStars:Float!):Boolean!
 }
 type TeacherApplication{
   id:ID!
+  phone_number:String
+  email:String
   IDFrontImageURL:String
   IDBackImageURL:String
   certificateURL:String
-  phone_number:String
-  email:String
   CV_URL:String
   educationLevel:[Education_Level]
   image_URL:String
@@ -241,7 +241,7 @@ type TeacherMapInfo{
   latitude:String
 }
 input TeacherDocumentInput{
-  IDFrontImageUR:String!
+  IDFrontImageURL:String!
   IDBackImageURL:String!
   certificateURL:String!
   CV_URL:String
