@@ -44,6 +44,8 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  deleteSchoolType(schoolTypeId:ID!):Boolean!
+  addSchoolType(name:lookUp!):Boolean!
   deleteMaterial(materialID:ID!):Boolean!
   deleteEducationLevel(education_LevelId:ID!):Boolean!
   createEducationLevel(data:educationLevelInput!):Boolean!

@@ -16,5 +16,15 @@ const deleteEducationLevel=async(parent,{education_LevelId},{prisma,req})=>{
         }
     }).then(()=>true).catch(()=>false)
 }
+const deleteSchoolType= async (parent,{
+    schoolTypeId
+},{prisma,req})=>{
+    checkToken({token:req.headers.token,Roles:["ADMIN"]})
+    return await prisma.schoolType.delete({
+       where:{
+           id:schoolTypeId
+       }
+    }).then(()=>true).catch(()=>false)
+}
 
-export {deleteEducationLevel,deleteMaterial}
+export {deleteEducationLevel,deleteMaterial,deleteSchoolType}

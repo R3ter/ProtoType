@@ -23,9 +23,12 @@ import adminRejectAppointment from './mutation/ADMIN/rejectAdminAppoitment.js'
 import adminAcceptTeacherApplication from './mutation/ADMIN/acceptTeacherApplecation.js'
 import addReviewForTeacher from './mutation/reviews/addTeacherReview.js'
 import createEducationLevel from './mutation/ADMIN/createEducationLevel.js'
-import {deleteEducationLevel,deleteMaterial} from './mutation/ADMIN/delete.js'
+import {deleteEducationLevel,deleteMaterial,deleteSchoolType} from './mutation/ADMIN/delete.js'
+import addSchoolType from './mutation/ADMIN/addSchool.js'
 import adminRejectTeacherApplication from "./mutation/ADMIN/rejectTeacherApplication.js"
 const Mutation={
+    deleteSchoolType,
+    addSchoolType,
     adminRejectTeacherApplication,
     deleteEducationLevel,
     deleteMaterial,
