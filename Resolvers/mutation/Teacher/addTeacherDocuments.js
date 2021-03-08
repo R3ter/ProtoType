@@ -2,7 +2,7 @@ import { checkToken } from "../../../methods/Tokens.js"
 
 const addTeacherInfo = async (parent,{
     data:{
-        CV_uRL,
+        CV_URL,
         IDFrontImageURL,
         IDBackImageURL,
         certificateURL
@@ -15,14 +15,14 @@ const addTeacherInfo = async (parent,{
         },
         create:{
             teacherId:id,
-            CV_uRL,
+            CV_URL,
             IDFrontImageURL,
             IDBackImageURL,
             certificateURL
         },
         update:{
             Rejected:false,
-            CV_uRL,
+            CV_URL,
             IDFrontImageURL,
             IDBackImageURL,
             certificateURL

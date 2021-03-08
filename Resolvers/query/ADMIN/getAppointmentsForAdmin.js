@@ -48,6 +48,8 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,state="UPCOMING"},{pr
     include:{
         teacher:{
             select:{
+                phone_number:true,
+                email:true,
                 id:true,
                 full_name:true,
                 teacherProfile:true,

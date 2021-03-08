@@ -7,7 +7,11 @@ const addTeacherReview=async(parnet,{
     ratingStars
 },{prisma,req},info)=>{
     const {id} = checkToken({token:req.headers.token,Roles:["STUDENT"]})
-    await prisma.appointment.findUnique
+
+    const appointment=await prisma.appointment.findFirst({
+        id:appointmentId,
+        studentId:id
+    })
     return await prisma.teacherReview.upsert({
         where:{
             appoitmentId:appointmentId
@@ -17,7 +21,7 @@ const addTeacherReview=async(parnet,{
             ratingStars
         },
         create:{
-            teacherId,
+            teacherId:appointment.teacherId,
             studentId:id,
             appointmentId,
             review,
