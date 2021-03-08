@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getMyTeacherDocument:TeacherApplication!
   getSchoolTypesForAdmin:[SchoolType]!
   getMyTeacherReviews(skip:Int,take:Int):[TeacherReview]!
   getMyStudentReviews(skip:Int,take:Int):[StudentReview]!

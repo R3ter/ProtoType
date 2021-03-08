@@ -33,7 +33,9 @@ import getTeachersForAdmin from './query/ADMIN/getTeacherApplications.js'
 import getMyTeacherReviews from './query/teacher/getMyReview.js'
 import getMyStudentReviews from './query/getMyStudentReviews.js'
 import getSchoolTypesForAdmin from './query/ADMIN/getSchoolTypes.js'
+import getMyTeacherDocument from './query/teacher/getTeacherDocument.js'
 const Query={
+    getMyTeacherDocument,
     getSchoolTypesForAdmin,
     getMyTeacherReviews,
     getMyStudentReviews,

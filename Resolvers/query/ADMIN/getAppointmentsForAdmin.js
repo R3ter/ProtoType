@@ -56,6 +56,7 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,state="UPCOMING"},{pr
                 userInfo:true
             }
         },
+        student_info:true,
         student:{
             select:{
                 phone_number:true,

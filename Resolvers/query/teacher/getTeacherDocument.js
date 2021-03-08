@@ -1,9 +1,11 @@
-import { checkToken } from "../../../methods/Tokens"
+import { checkToken } from "../../../methods/Tokens.js"
 
-const getDocument=(parent,args,{prisma,req})=>{
+const getDocument=async (parent,args,{prisma,req})=>{
     const {id} = checkToken({token:req.headers.token,Roles:["TEACHER"]})
     return await prisma.teacherProfile.findUnique({
-        teacherId:id
+        where:{
+            teacherId:id
+        }
     }).then((e)=>{
         return {
             IDFrontImageURL:e.IDFrontImageURL,
