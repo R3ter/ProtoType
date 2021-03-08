@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getSubjectsForAdmin:[SchoolType]!
   getMyTeacherDocument:TeacherApplication!
   getSchoolTypesForAdmin:[SchoolType]!
   getMyTeacherReviews(skip:Int,take:Int):[TeacherReview]!
@@ -452,6 +453,7 @@ type Education_Level{
   id:ID!
   name:String!
   type:SchoolType
+  Materials:[Materials]
 }
 type CourseTag{
   id:ID!
