@@ -1,6 +1,6 @@
 import { checkToken } from "../../../methods/Tokens.js"
 
-const getTeachers=async (parent,{take=5,skip=0,active=false},{prisma,req})=>{
+const getTeachers=async (parent,{take=5,skip=0,active=false,search},{prisma,req})=>{
     checkToken({token:req.headers.token,Roles:["ADMIN"]})
     return await prisma.user.findMany({
         skip,take,
@@ -9,6 +9,9 @@ const getTeachers=async (parent,{take=5,skip=0,active=false},{prisma,req})=>{
             teacherProfile:{
                 teacherIsActive:active,
                 Rejected:false
+            },
+            full_name:{
+                contains:search
             }
         },
         include:{
