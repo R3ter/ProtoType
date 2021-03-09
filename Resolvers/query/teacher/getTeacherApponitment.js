@@ -50,6 +50,7 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             createdAt:"desc"
         },
         include:{
+            review:true,
             HomeWorkPackage:true,
             student_info:true,
             student:{

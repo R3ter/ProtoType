@@ -29,6 +29,7 @@ const getTeacherReviews=async(parent, {skip=0,take=5,teacherID}, {req,prisma}, i
                     image:e.student.userInfo.image_URL,
                     name:e.student.full_name
                 },
+                appoitmentId:e.appoitmentId,
                 createdAt:e.createdAt,
                 ratingStars:e.ratingStars,
                 review:e.review

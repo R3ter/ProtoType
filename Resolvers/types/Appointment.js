@@ -8,12 +8,7 @@ const Appointment={
         }
     },
     async isReview(parent,args,{prisma}){
-        return await prisma.teacherReview.count({
-            where: {
-                studentId:parent.studentId,
-                teacherId:parent.teacherId
-            },
-        }).then((e)=>e>0)
+        return parent.review?true:false
     },
     async canContact(parent,args,{prisma,req}){
         const {id} = checkToken({token:req.headers.token})

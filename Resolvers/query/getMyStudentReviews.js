@@ -28,6 +28,7 @@ const getMyReviews=async(parent,{skip,take},{prisma,req})=>{
                     name:e.teacher.full_name,
                     image_URL:e.teacher.userInfo.image_URL
                 },
+                appoitmentId:e.appoitmentId,
                 review:e.review,
                 createdAt:e.createdAt,
                 ratingStars:e.ratingStars
@@ -36,3 +37,4 @@ const getMyReviews=async(parent,{skip,take},{prisma,req})=>{
     })
 }
 export default getMyReviews
+

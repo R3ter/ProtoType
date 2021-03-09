@@ -46,6 +46,7 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,state="UPCOMING"},{pr
         createdAt:"desc"
     },
     include:{
+        review:true,
         teacher:{
             select:{
                 phone_number:true,

@@ -186,7 +186,7 @@ input AppointmentInput{
   homeWorkPackageID:ID
   courseId:ID!
   courseHoursType:courseHoursType! 
-  note:String
+  note:String!
   student_info:student_info!
 }
 input student_info {
@@ -370,12 +370,14 @@ type TeacherReview{
   createdAt:DateTime!
   ratingStars:Float!
   review:String!
+  appoitmentId:ID!
 }
 type StudentReview{
   teacher:UserReviewer!
   createdAt:DateTime!
   ratingStars:Float!
   review:String!
+  appoitmentId:ID!
 }
 
 type LoginResult {

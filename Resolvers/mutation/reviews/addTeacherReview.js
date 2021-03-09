@@ -9,8 +9,10 @@ const addTeacherReview=async(parnet,{
     const {id} = checkToken({token:req.headers.token,Roles:["STUDENT"]})
 
     const appointment=await prisma.appointment.findFirst({
-        id:appointmentId,
-        studentId:id
+        where:{
+            id:appointmentId,
+            studentId:id
+        }
     })
     return await prisma.teacherReview.upsert({
         where:{
@@ -23,7 +25,7 @@ const addTeacherReview=async(parnet,{
         create:{
             teacherId:appointment.teacherId,
             studentId:id,
-            appointmentId,
+            appoitmentId:appointmentId,
             review,
             ratingStars
         }
@@ -47,7 +49,7 @@ const addTeacherReview=async(parnet,{
             body:"Click here to view the his rate.",
             full_name:e.student.full_name,
             fromId:id,
-            toId:teacherId,
+            toId:appointment.teacherId,
             fromImage:e.student.userInfo.image_URL,
             type:"review"
         })
