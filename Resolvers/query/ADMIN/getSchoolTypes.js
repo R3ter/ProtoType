@@ -4,6 +4,11 @@ const getSchools=async(parent,args,{prisma,req})=>{
     return await prisma.schoolType.findMany({
         include:{
             Education_Level:{
+                oneHour:true,
+                OneAndHalf:true,
+                TwoHours:true,
+                TwoAndHalfHours:true,
+                ThreeHours:true,
                 select:{
                     lookUp:true,
                     id:true
