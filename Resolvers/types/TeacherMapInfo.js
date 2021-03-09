@@ -1,3 +1,5 @@
+import { checkToken } from "../../methods/Tokens.js"
+
 const getTeachersOnMap={
     async canContact(parent,args,{prisma,req}){
         const {id} = checkToken({token:req.headers.token})
