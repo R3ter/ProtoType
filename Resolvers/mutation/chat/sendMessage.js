@@ -1,7 +1,23 @@
 import {checkToken} from './../../../methods/Tokens.js'
-import {sendMessage} from './../../../methods/messages/sendMessage.js'
-const sendMessageResolver=async (parent,{toId,message,isImage,attachments},{prisma,req})=>{
-    const {id,full_name} = checkToken({token:req.headers.token,teacherActivationRequired:true})
-    return await sendMessage(id,toId,message,isImage,attachments,full_name).then(()=>true)
+import admin from 'firebase-admin'
+const sendMessageResolver=async (parent,{toId},{prisma,req})=>{
+    const {full_name} = checkToken({token:req.headers.token})
+    const db = admin.firestore()
+    
+        const {token,deviceToken} = await db.collection("usersTokens").doc(toId).get()
+        .then((e)=>e.data()).catch(()=>null)
+        
+         checkToken({token})
+        
+        await admin.messaging().sendToDevice(
+           deviceToken,
+            {
+            notification: {
+                title: `${full_name} send you a message`,
+                body : 'check it out'
+            }
+        }).then((e)=>{
+            console.log(e)
+        }).catch((e)=>{console.log(e)})
 }
 export default sendMessageResolver

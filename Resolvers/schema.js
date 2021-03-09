@@ -11,7 +11,7 @@ type Query{
   getSchoolTypesForAdmin:[SchoolType]!
   getMyTeacherReviews(skip:Int,take:Int):[TeacherReview]!
   getMyStudentReviews(skip:Int,take:Int):[StudentReview]!
-  getTeachersForAdmin(skip:Int,take:Int,active:Boolean):[TeacherApplication]!
+  getTeachersForAdmin(skip:Int,take:Int,active:Boolean,search:String):[TeacherApplication]!
   getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getUserChatProfile(userId:ID!):ChatInfo!
   teacherSearch(word:String!):[TeacherInfo]
@@ -62,7 +62,7 @@ type Mutation{
   addTeacherDocument(data:TeacherDocumentInput!):Boolean!
   rejectAppointment(rejectionReason:String!,AppointmentID:ID!):Boolean!
   teacherAcceptAppointment(AppointmentID:ID!):Boolean!
-  sendMessage(toId:ID!,message:String!,isImage:Boolean,attachments:[String]):Boolean!
+  sendMessage(toId:ID!):Boolean
   teacherConnectToMaterial(materialID:ID!):Boolean!
   changeMyPassword(currentPassword:String!,newPassword:String!):Result!
   editProfileInfo(data:userInfoInput):Boolean!
