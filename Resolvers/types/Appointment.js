@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { checkToken } from "../../methods/Tokens.js"
 const Appointment={
     time(parent, args, {req}){
         return {
@@ -13,6 +14,18 @@ const Appointment={
                 teacherId:parent.teacherId
             },
         }).then((e)=>e>0)
+    },
+    async canContact(parent,args,{prisma,req}){
+        const {id} = checkToken({token:req.headers.token})
+        return await prisma.appointment.count({
+            where:{
+                teacherId:parent.teacherId,
+                studentId:id,
+                stateKey:"accepted"
+
+            }
+        }).then((e)=>e>0)
+
     }
 }
 const Appointment_state={

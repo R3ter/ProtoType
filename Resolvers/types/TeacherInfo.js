@@ -6,7 +6,8 @@ const getTeacherInfo={
         return await prisma.appointment.count({
             where:{
                 teacherId:parent.user.id,
-                studentId:id
+                studentId:id,
+                stateKey:"accepted"
             }
         }).then((e)=>e>0)
 

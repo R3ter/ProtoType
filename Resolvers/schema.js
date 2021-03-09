@@ -339,6 +339,7 @@ type Appointment{
   date:String!
   course:Materials!
   coursePrice:Float!
+  canContact:Boolean!
   state: Appointment_state!
   userId:ID!
   student:User!
