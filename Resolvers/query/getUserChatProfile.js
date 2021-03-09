@@ -7,6 +7,7 @@ const getUserChatProfile=async(parent,{userId},{prisma,req},info)=>{
             user:true
         }
     }).then((e)=>{
+        if(e)
         return{
             profileImage:e.image_URL,
             userName:e.user.full_name
