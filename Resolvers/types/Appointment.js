@@ -11,16 +11,23 @@ const Appointment={
         return parent.review?true:false
     },
     async canContact(parent,args,{prisma,req}){
-        const {id} = checkToken({token:req.headers.token})
-        return await prisma.appointment.count({
-            where:{
-                teacherId:parent.teacherId,
-                studentId:id,
-                stateKey:"accepted"
-
-            }
-        }).then((e)=>e>0)
-
+        const {id,Role} = checkToken({token:req.headers.token})
+        if(Role=="STUDENT")
+            return await prisma.appointment.count({
+                where:{
+                    teacherId:parent.teacherId,
+                    studentId:id,
+                    stateKey:"accepted"
+                }
+            }).then((e)=>e>0)
+        else if(Role=="TEACHER")
+            return await prisma.appointment.count({
+                where:{
+                    teacherId:id,
+                    studentId:parent.studentId,
+                    stateKey:"accepted"
+                }
+            }).then((e)=>e>0)
     }
 }
 const Appointment_state={
