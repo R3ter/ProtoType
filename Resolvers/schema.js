@@ -237,6 +237,7 @@ type TeacherMapInfo{
   ratingStars:Int!
   count:Int!
   phone_number:String!
+  canContact:Boolean!
   email:String!
   info:String
   image_URL:String
