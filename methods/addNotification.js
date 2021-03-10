@@ -24,16 +24,35 @@ export const storeNotification= async({
         from_full_name:full_name,
         isView:false
     })
-    const {deviceToken,token} = getUserToken(toId)
-    if(!token){return null}
-    const {id} = await checkToken({token:token})
-    if(!id){return}
-
-    if(type=="booking"){
-        sendNotification({
-            ...content,
-            token:deviceToken
+    if(Array.isArray(toId)){
+        let skip=false
+        toId.map(async(toId)=>{
+            const {deviceToken,token} = getUserToken(toId)
+            if(token){
+                const {id} = await checkToken({token:token}).catch((e)=>null)
+                if(id){
+                    if(!skip)
+                        if(type=="booking"){
+                            sendNotification({
+                                ...content,
+                                token:deviceToken
+                            })
+                        }
+                    }
+                }
         })
+    }else{
+        const {deviceToken,token} = getUserToken(toId)
+        if(!token){return null}
+        const {id} = await checkToken({token:token})
+        if(!id){return}
+    
+        if(type=="booking"){
+            sendNotification({
+                ...content,
+                token:deviceToken
+            })
+        }
     }
 }
 export const getUserToken = async(userId)=>{

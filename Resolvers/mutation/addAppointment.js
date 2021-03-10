@@ -180,14 +180,19 @@ const appAppointment=async(parent,
                         }
                     }
                 }
-            }).then((e)=>{
+            }).then(async (e)=>{
+                const adminsIds = await prisma.users.findMany({
+                    where:{
+                        Role:"ADMIN"
+                    }
+                }).then((e)=>{return e.id})
                 storeNotification({
                     elementId:e.id,
                     title:`You have a new book by ${e.student.full_name}`,
                     body:"Accept or Reject it now",
                     full_name:e.student.full_name,
                     fromId:id,
-                    toId:teacherId,
+                    toId:adminsIds.concat(teacherId),
                     fromImage:e.student.userInfo.image_URL,
                     type:"booking"
                 })
