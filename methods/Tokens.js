@@ -8,7 +8,7 @@ import frirebaseData from './firebaseData.js'
 // import firebase from 'firebase'
 
 import moment from 'moment';
-import { Pay } from './payment.js';
+// import { Pay } from './payment.js';
 import { saveTokenInFirebase } from './addNotification.js';
 const {now}=moment
 
