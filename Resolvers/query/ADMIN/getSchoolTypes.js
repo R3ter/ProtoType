@@ -10,10 +10,10 @@ const getSchools=async(parent,args,{prisma,req})=>{
                     TwoHours:true,
                     TwoAndHalfHours:true,
                     ThreeHours:true,
-                    select:{
+                    
                         lookUp:true,
                         id:true
-                    }
+                    
                 }
             },
             name:true
