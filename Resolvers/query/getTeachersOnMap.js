@@ -6,7 +6,7 @@ const getTeachersOnMap=async(parent,args,{prisma,req},info)=>{
         where:{
             userId:id
         }
-    })
+    }) 
     return await prisma.user.findMany({
         where:{
             Role:"TEACHER",

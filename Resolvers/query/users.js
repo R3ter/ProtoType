@@ -1,6 +1,6 @@
 import {checkToken} from './../../methods/Tokens.js'
 const users=(parent, args, {req,prisma}, info)=>{
-    checkToken({token:req.headers.token})
+    checkToken({token:req.headers.token,Roles:["ADMIN"]})
     return prisma.user.findMany({
         include: {
             userInfo:{
@@ -12,6 +12,6 @@ const users=(parent, args, {req,prisma}, info)=>{
                 }
             }
         }
-    })
+    },info)
 }
 export default users
