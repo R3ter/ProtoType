@@ -71,7 +71,6 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 });
 
 
-
 // prisma.appointment_state.create({
 //   data:{
 //     Appoitment_state_key:"rejected",

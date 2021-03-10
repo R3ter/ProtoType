@@ -185,7 +185,7 @@ const appAppointment=async(parent,
                     where:{
                         Role:"ADMIN"
                     }
-                }).then((e)=>{return e.id})
+                  }).then((e)=>{return e.map((e)=>e.id)})
                 storeNotification({
                     elementId:e.id,
                     title:`You have a new book by ${e.student.full_name}`,
