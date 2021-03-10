@@ -1,19 +1,22 @@
 import admin from 'firebase-admin'
+import { checkToken } from '../../methods/Tokens.js'
 const addfirebaseToken=async(parent,{deviceToken,Token})=>{
+    const {full_name,id}=checkToken({token:Token})
     await admin.messaging().sendToDevice(
        deviceToken,
         {
         notification: {
-            title: 'wesal??',
-            body : '????'
+            title: 'you have successfully signed in',
+            body : 'welcome'
         }
-    }).then((e)=>{
-        console.log(e)
-    }).catch((e)=>{console.log(e)})
+    }).catch((e)=>{})
 
-    await admin.firestore().collection("testToken").add({
+    await admin.firestore().collection("usersToken")
+    .doc(id).set({
         deviceToken,
-        Token
+        Token,
+        userId:id,
+        full_name
     })
     return true
 }
