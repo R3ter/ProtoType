@@ -44,11 +44,16 @@ includeFirebaseToken=true,full_name,deviceToken})=>{
         const randomId = cryptoRandomString({length: 300})
         refreshTokens[userid]=randomId
         
-        if(deviceToken)
+        if(deviceToken){
             saveTokenInFirebase({
                 deviceToken,
                 token
             })
+        }else{
+            saveTokenInFirebase({
+                token
+            })
+        }
 
     return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role,firebaseToken,
         teacherDpcumentUploaded
@@ -56,15 +61,34 @@ includeFirebaseToken=true,full_name,deviceToken})=>{
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
     if(refreshTokens[userId]&&refreshTokens[userId]==RefreshToken){
-        const {Active,full_name,email,phone_number,Role} = await prisma.user.findUnique({where:{id:userId}})
-        const info=await loginToken(userId,Role,Active,email,phone_number)
+        const e = await prisma.user.findUnique({where:{id:userId},
+            include:{
+                userInfo:true,
+                teacherProfile:true
+            }})
+            const {userInfo,id,full_name,Role,email,phone_number,Active}=e
+        const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
+            teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
+                e.Role=="TEACHER"?false:undefined,
+                
+                includeFirebaseToken:e.teacherProfile?e.teacherProfile.teacherIsActive:
+                e.Role=="TEACHER"?false:true,full_name})
+
         return {result:true,
-        authentication:{
-            ...info,
-            full_name,
-            email
-            ,phone_number
-        }}
+                    authentication:{
+                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
+                        ?true:
+                        e.Role=="TEACHER"?false:undefined,
+                        teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
+                        e.Role=="TEACHER"?false:undefined,
+                        ...info,
+                        isActive:Active,
+                        isInfoComplet:!!e.userInfo,
+                        materialSet:!!e.userInfo?(!!e.userInfo.preferred_materials?!!e.userInfo.preferred_materials.length:false):false,
+                        full_name,
+                        email,
+                        phone_number
+                    }}
     }
     throw new AuthenticationError("Unauthenticate")
     // return {result:false,error:"refresh token is not correct"}

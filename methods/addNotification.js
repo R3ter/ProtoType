@@ -91,5 +91,10 @@ export const saveTokenInFirebase=({token,deviceToken})=>{
             return null
         }
         
+    }else if(token){
+        const {full_name,id}=checkToken({token})
+        db.collection("usersTokens").doc(id).update({
+            token
+        })
     }
 }
