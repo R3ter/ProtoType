@@ -11,10 +11,8 @@ const teacherAcceptAppointment=async(parent,{AppointmentID},{prisma,req})=>{
     if(!appointment||
         appointment.stateKey!="waiting"||
         appointment.teacherId!=id){
-            console.log(appointment.teacherId)
             return false
     }
-
     await prisma.appointment.updateMany({
         where:{
             stateKey:"waiting",
@@ -48,6 +46,7 @@ const teacherAcceptAppointment=async(parent,{AppointmentID},{prisma,req})=>{
         include:{
             teacher:{
                 select:{
+                    id:true,
                     full_name:true,
                     userInfo:{
                         select:{
@@ -58,7 +57,8 @@ const teacherAcceptAppointment=async(parent,{AppointmentID},{prisma,req})=>{
             },
             student:{
                 select:{
-                    id:true
+                    id:true,
+                    full_name:true
                 }
             }
         }
