@@ -62,7 +62,7 @@ const teacherAcceptAppointment=async(parent,{AppointmentID},{prisma,req})=>{
                 }
             }
         }
-    }).then((e)=>{
+    }).then(async(e)=>{
         const adminsIds = await prisma.user.findMany({
             where:{
                 Role:"ADMIN"

@@ -41,7 +41,7 @@ const reject =async(parent,{rejectionReason,AppointmentID},{req,prisma})=>{
                 }
             }
         }
-    }).then((e)=>{
+    }).then(async(e)=>{
         const adminsIds = await prisma.user.findMany({
             where:{
                 Role:"ADMIN"
