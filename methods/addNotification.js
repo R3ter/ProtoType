@@ -7,13 +7,16 @@ const db = admin.firestore()
 
 
 export const storeNotification= async({
-    type,toId,fromId,full_name,
+    type,toId,fromId,
     title,body,fromImage="",
+    from_full_name,to_full_name,
     elementId
 })=>{
     const content={
         title,body
     }
+
+    fromImage=fromImage?fromImage:""
     await db.collection("Notifications").add({
         elementId,
         toId,
@@ -21,7 +24,8 @@ export const storeNotification= async({
         fromId,
         content,
         fromImage,
-        from_full_name:full_name,
+        from_full_name,
+        to_full_name,
         isView:false
     })
     if(Array.isArray(toId)){

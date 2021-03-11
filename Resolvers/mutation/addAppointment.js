@@ -187,6 +187,7 @@ const appAppointment=async(parent,
                     }
                 }
             }).then(async (e)=>{
+                console.log(e)
                 const adminsIds = await prisma.user.findMany({
                     where:{
                         Role:"ADMIN"
