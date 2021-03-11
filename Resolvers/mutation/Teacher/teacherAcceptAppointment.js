@@ -2,7 +2,7 @@ import { storeNotification } from "../../../methods/addNotification.js"
 import { checkToken } from "../../../methods/Tokens.js"
 
 const teacherAcceptAppointment=async(parent,{AppointmentID},{prisma,req})=>{
-    const {id}=checkToken({token:req.headers.token,Roles:["TEACHER"],teacherActivationRequired:true})
+    const {id,full_name}=checkToken({token:req.headers.token,Roles:["TEACHER"],teacherActivationRequired:true})
     const appointment=await prisma.appointment.findUnique({
         where:{
             id:AppointmentID
@@ -63,11 +63,28 @@ const teacherAcceptAppointment=async(parent,{AppointmentID},{prisma,req})=>{
             }
         }
     }).then((e)=>{
+        const adminsIds = await prisma.user.findMany({
+            where:{
+                Role:"ADMIN"
+            }
+          }).then((e)=>{return e.map((e)=>e.id)})
+        storeNotification({
+            elementId:e.id,
+            title:`teacher ${e.teacher.full_name} has approved on the appointment for student ${e.student.full_name}`,
+            body:"Accept or Reject it now",
+            to_full_name:"admins",
+            from_full_name:e.teacher.full_name,
+            fromId:id,
+            toId:adminsIds,
+            fromImage:e.teacher.userInfo.image_URL,
+            type:"booking"
+        })
         storeNotification({
             elementId:e.id,
             title:`Your book has been approved by ${e.teacher.full_name}`,
             body:"view",
-            full_name:e.teacher.full_name,
+            to_full_name:e.student.full_name,
+            from_full_name:full_name,
             fromId:id,
             toId:e.student.id,
             fromImage:e.teacher.userInfo.image_URL,

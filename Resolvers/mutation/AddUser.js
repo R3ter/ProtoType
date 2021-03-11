@@ -60,6 +60,27 @@ const addUser=async (parent, {data:{
           email,phone_number:result.phone_number,
           deviceToken,
           teacherIsActive:accountType=="TEACHER"?false:undefined,full_name})
+
+          if(accountType=="TEACHER"){
+            const adminsIds = await prisma.user.findMany({
+              where:{
+                  Role:"ADMIN"
+              }
+            }).then((e)=>{return e.map((e)=>e.id)})
+            storeNotification({
+              elementId:e.id,              
+              title:`a new teacher has registered!`,
+              body:"check his request",
+              to_full_name:"admins",
+              from_full_name:e.full_name,
+              fromId:e.id,
+              toId:adminsIds,
+              fromImage:null,
+              type:"signup"
+            })
+          
+          }
+
         return {result:true,
           authentication:{
             teacherDocumentUploaded:result.Role=="TEACHER"?false:undefined,

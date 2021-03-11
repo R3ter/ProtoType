@@ -2,7 +2,7 @@ import moment from "moment"
 const {now} = moment
 import { checkToken } from "../../../methods/Tokens.js"
 const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)=>{
-    const {id} = checkToken({token:req.headers.token,Roles:["TEACHER"]})
+    const {id} = checkToken({token:req.headers.token,Roles:["TEACHER"],teacherActivationRequired:true})
     
     let filter
     if(state=="PREVIOUS"){
