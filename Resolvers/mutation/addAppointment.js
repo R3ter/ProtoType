@@ -16,7 +16,7 @@ const appAppointment=async(parent,
         }
     },{prisma,req},info)=>{
 
-        const {id} = checkToken({token:req.headers.token,Roles:["STUDENT"]})
+        const {id,full_name} = checkToken({token:req.headers.token,Roles:["STUDENT"]})
         if(studentCount>4||studentCount<1){
             throw new Error("Max 4 students")
         }
@@ -201,6 +201,17 @@ const appAppointment=async(parent,
                     from_full_name:e.student.full_name,
                     fromId:id,
                     toId:adminsIds,
+                    fromImage:e.student.userInfo.image_URL,
+                    type:"booking"
+                })
+                storeNotification({
+                    elementId:e.id,
+                    title:`you'r book is waiting to be approved by the teacher`,
+                    body:"please wait...",
+                    to_full_name:full_name,
+                    from_full_name:full_name,
+                    fromId:id,
+                    toId:id,
                     fromImage:e.student.userInfo.image_URL,
                     type:"booking"
                 })
