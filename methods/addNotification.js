@@ -46,22 +46,21 @@ export const storeNotification= async({
                 }
         })
     }else{
-        const {deviceToken,token} = getUserToken(toId)
+        const {deviceToken,token} = await getUserToken(toId)
         if(!token){return null}
         const {id} = await checkToken({token:token})
+        
+        sendNotification({
+            ...content,
+            token:deviceToken
+        })
         if(!id){return}
     
-        if(type=="booking"){
-            sendNotification({
-                ...content,
-                token:deviceToken
-            })
-        }
     }
 }
 export const getUserToken = async(userId)=>{
     return await db.collection("usersTokens").doc(userId).get()
-    .then((e)=>e.data().token).catch(()=>null)
+    .then((e)=>e.data()).catch(()=>null)
 }
 export const sendNotification=async ({
     title,body,token
@@ -73,12 +72,13 @@ export const sendNotification=async ({
           title,body
         }
     }).catch((e)=>{return false})
+    .then((e)=>{console.log(e)})
 }
 
 export const saveTokenInFirebase=({token,deviceToken})=>{
     if(deviceToken&&token){
         try{
-            const {full_name,id}=checkToken({token})
+            const {full_name,id}= checkToken({token})
             const db = admin.firestore()
             db.collection("usersTokens").doc(id).set({
                 id:id,
@@ -86,13 +86,13 @@ export const saveTokenInFirebase=({token,deviceToken})=>{
                 token,
                 deviceToken,
                 createdAt:moment(now()).format("yyyy-MM-DD[T]HH:mm:ss[Z]")
-            })   
+            })
         }catch(e){
             return null
         }
         
     }else if(token){
-        const {full_name,id}=checkToken({token})
+        const {full_name,id}= checkToken({token})
         db.collection("usersTokens").doc(id).update({
             token
         })
