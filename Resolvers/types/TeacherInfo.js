@@ -11,6 +11,25 @@ const getTeacherInfo={
             }
         }).then((e)=>e>0)
 
+    },
+    async ratingCounts(parent,args,{prisma}){
+        return await prisma.teacherReview.count({
+            where:{
+                teacherId:parent.teacherId
+              }
+            })
+    },
+    async averageRating(parent,args,{prisma}){
+        return await prisma.teacherReview.aggregate({
+            where:{
+                teacherId:parent.teacherId
+              },
+            avg:{
+                ratingStars:true
+            },
+            count:true,
+    
+            }).then((e)=>(e.avg.ratingStars))
     }
 }
 export default getTeacherInfo
