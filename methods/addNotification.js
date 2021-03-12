@@ -69,8 +69,13 @@ export const sendNotification=async ({
         token,
         {
         notification: {
-          title,body
-        }
+          title,body,
+          "data":{
+            "Nick" : "Mario",
+            "body" : "great match!",
+            "Room" : "PortugalVSDenmark"
+          }        
+        },
     }).catch((e)=>{return false})
     .then((e)=>{console.log(e)})
 }
