@@ -76,6 +76,7 @@ export const sendNotification=async ({
 }
 
 export const saveTokenInFirebase=({token,deviceToken})=>{
+    console.log(deviceToken)
     if(deviceToken&&token){
         try{
             const {full_name,id}= checkToken({token})
