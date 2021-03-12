@@ -2,21 +2,20 @@ import { storeNotification } from "../../../methods/addNotification.js"
 import { checkToken } from "../../../methods/Tokens.js"
 
 const reject =async(parent,{rejectionReason,AppointmentID},{req,prisma})=>{
-    const {id,full_name}=checkToken({token:req.headers.token,Roles:["TEACHER"],teacherActivationRequired:true})
-    return await prisma.appointment.updateMany({
+    const {id,full_name}=checkToken({token:req.headers.token,Roles:["TEACHER"],teacherActivationRequired:true})    
+    const appointment=await prisma.appointment.findUnique({
         where:{
-            AND:[
-                {
-                    teacherId:id
-                },
-                {
-                    stateKey:"waiting"
-                },
-                {
-                    id:AppointmentID
-                }
-
-            ]
+            id:AppointmentID
+        }
+    })
+    if(!appointment||
+        appointment.stateKey!="waiting"||
+        appointment.teacherId!=id){
+            return false
+    }
+    return await prisma.appointment.update({
+        where:{
+            id:AppointmentID
         },
         data:{
             stateKey:"rejected",
