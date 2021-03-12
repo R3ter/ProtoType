@@ -47,6 +47,7 @@ type Query{
   getMaterialTeachers(materialID:ID!,take:Int,skip:Int):[User]!
 }
 type Mutation{
+  addMaterialToFavorite(materialId:ID!):Boolean
   addfirebaseToken(deviceToken:String,Token:String):Boolean
   deleteSchoolType(schoolTypeId:ID!):Boolean!
   addSchoolType(name:lookUp!):Boolean!

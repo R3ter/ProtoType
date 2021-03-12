@@ -27,7 +27,9 @@ import {deleteEducationLevel,deleteMaterial,deleteSchoolType} from './mutation/A
 import addSchoolType from './mutation/ADMIN/addSchool.js'
 import adminRejectTeacherApplication from "./mutation/ADMIN/rejectTeacherApplication.js"
 import addfirebaseToken from './mutation/addFirebaseToken.js'
+import addMaterialToFavorite from './mutation/addMaterialToFavorite.js'
 const Mutation={
+    addMaterialToFavorite,
     addfirebaseToken,
     deleteSchoolType,
     addSchoolType,
