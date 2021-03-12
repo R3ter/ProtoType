@@ -15,22 +15,16 @@ const teacherAcceptApplecation=async(parent,{teacherId},{prisma,req})=>{
                     teacherIsActive:true
                 }
             }
-        },
-        teacher:{
-            select:{
-                full_name:true,
-                id:true
-            }
         }
     }).then((e)=>{
         storeNotification({
             elementId:e.id,
             title:`you'r account has been approved!!`,
             body:"check it out!",
-            to_full_name:e.teacher.full_name,
+            to_full_name:e.full_name,
             from_full_name:"admin",
             fromId:"admin's id",
-            toId:e.teacher.id,
+            toId:e.id,
             fromImage:"admin",
             type:"signup"
         })
