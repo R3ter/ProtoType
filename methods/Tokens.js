@@ -30,7 +30,7 @@ includeFirebaseToken=true,full_name,deviceToken})=>{
     const token = await jwt.sign({
         "aud": "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
         "iat": moment(now()).unix(),
-        "exp": moment(now()).add(2,'seconds').unix(),
+        "exp": moment(now()).add(2,'hours').unix(),
         "iss": "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
         "sub": "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
         "uid": userid,
