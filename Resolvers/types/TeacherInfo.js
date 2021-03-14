@@ -15,14 +15,14 @@ const getTeacherInfo={
     async ratingCounts(parent,args,{prisma}){
         return await prisma.teacherReview.count({
             where:{
-                teacherId:parent.teacherId
+                teacherId:parent.user.id
               }
             })
     },
     async averageRating(parent,args,{prisma}){
         return await prisma.teacherReview.aggregate({
             where:{
-                teacherId:parent.teacherId
+                teacherId:parent.user.id
               },
             avg:{
                 ratingStars:true
