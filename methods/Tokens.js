@@ -14,8 +14,7 @@ const {now}=moment
 
 const refreshTokens=[]
 
-const loginToken=async({userid,role,Activate,email,phone_number,teacherIsActive,teacherDocumentUploaded,
-includeFirebaseToken=true,full_name,deviceToken})=>{
+const loginToken=async({userid,role,Activate,email,phone_number,teacherIsActive,full_name,deviceToken})=>{
     let firebaseToken
 
     // if(includeFirebaseToken){
@@ -56,8 +55,7 @@ includeFirebaseToken=true,full_name,deviceToken})=>{
         }
 
     return {token,refreshToken:randomId,userId:userid,email,isActive:Activate,Role:role,
-        teacherDocumentUploaded
-        ,teacherIsActive}
+        teacherIsActive}
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
     if(refreshTokens[userId]&&refreshTokens[userId]==RefreshToken){
