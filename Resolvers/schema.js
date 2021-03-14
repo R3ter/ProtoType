@@ -145,7 +145,7 @@ type TeacherInfo{
   phone_number:String
   address:String
   courseCount:Int
-  averageRating:Int
+  averageRating:Float
   ratingCounts:Int
   userId:String
   schoolType:[SchoolType]
@@ -311,7 +311,7 @@ type TeacherProfile{
   address:String
   subjects:[CourseTag]
   courseCount:Int!
-  averageRating:Int!
+  averageRating:Float!
   ratingCounts:Int! 
   register:Int!
   workingDays:[workingDay]
