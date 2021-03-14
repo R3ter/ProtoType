@@ -31,9 +31,6 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                         e.Role=="TEACHER"?false:true,full_name})
                 return {result:true,
                     authentication:{
-                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
-                        ?true:
-                        e.Role=="TEACHER"?false:undefined,
                         teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:undefined,
                         ...info,
@@ -42,7 +39,10 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                         materialSet:!!userInfo?(!!userInfo.preferred_materials?!!userInfo.preferred_materials.length:false):false,
                         full_name,
                         email,
-                        phone_number
+                        phone_number,
+                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
+                        ?true:
+                        e.Role=="TEACHER"?false:undefined,
                     }}
                 }
         })
@@ -73,9 +73,6 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                         e.Role=="TEACHER"?false:true,full_name})
                 return {result:true,
                     authentication:{
-                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
-                        ?true:
-                        e.Role=="TEACHER"?false:undefined,
                         teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:undefined,
                         ...info,
@@ -84,7 +81,10 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                         materialSet:!!userInfo?(!!userInfo.preferred_materials?!!userInfo.preferred_materials.length:false):false,
                         full_name,
                         email,
-                        phone_number
+                        phone_number,
+                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
+                        ?true:
+                        e.Role=="TEACHER"?false:undefined,
                   }}
                 }
             })
