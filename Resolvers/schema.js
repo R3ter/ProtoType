@@ -235,7 +235,7 @@ type SchoolType{
 type TeacherMapInfo{
   id:ID!
   full_name:String!
-  ratingStars:Int!
+  ratingStars:Float!
   count:Int!
   phone_number:String!
   canContact:Boolean!
