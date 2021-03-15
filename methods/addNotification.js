@@ -31,7 +31,7 @@ export const storeNotification= async({
     if(Array.isArray(toId)){
         let skip=false
         toId.map(async(toId)=>{
-            const {deviceToken,token} = getUserToken(toId)
+            const {deviceToken,token} = await getUserToken(toId)
             if(token){
                 const {id} = await checkToken({token:token}).catch((e)=>null)
                 if(id){
