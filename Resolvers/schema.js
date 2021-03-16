@@ -315,6 +315,7 @@ type TeacherProfile{
   ratingCounts:Int! 
   register:Int!
   workingDays:[workingDay]
+  studentCount:Int!
 }
 # type workingDay{
 #   id:ID!

@@ -1,3 +1,5 @@
+import moment from 'moment'
+const {now}=moment
 const TeacherProfile={
     async description(parent, {teacherID}, {req}){
         return parent.description[req.headers.lang||"eng"]
@@ -6,6 +8,17 @@ const TeacherProfile={
         return await prisma.teacherReview.count({
             where:{
                 teacherId:parent.teacherId
+              }
+            })
+    },
+    async studentCount(parent,args,{prisma}){
+        return await prisma.appointment.count({
+            where:{
+                teacherId:parent.teacherId,
+                dateTime:{
+                    lte:moment(now()).format("YYYY-MM-DD[T]HH:mm:ss[Z]")
+                }
+                ,stateKey:"accepted"
               }
             })
     },
