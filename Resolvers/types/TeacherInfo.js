@@ -17,7 +17,7 @@ const getTeacherInfo={
         return await prisma.appointment.count({
             where:{
                 studentId:id,
-                teacherId:teacherId
+                teacherId:parent.teacherId
               }
             })
     },
