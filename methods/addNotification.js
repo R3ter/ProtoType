@@ -19,7 +19,7 @@ export const storeNotification= async({
     fromImage=fromImage?fromImage:""
     await db.collection("Notifications").add({
         elementId,
-        toId,
+        toId:Array.isArray(toId)?toId[0]:toId,
         type,createdAt:moment(now()).format("yyyy-MM-DD[T]HH:mm:ss[Z]"),
         fromId,
         content,
