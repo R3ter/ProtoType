@@ -3,7 +3,7 @@ import isLength from 'validator/lib/isLength.js'
 const addUserInfo =async(parent, {
     data}, {req,prisma}, info)=>{
     const {id}=checkToken({token:req.headers.token})
-    if(data&&data.address&&!isLength(data.address,{max:"100"})){
+    if(data&&data.address&&!isLength(data.address,{max:"500"})){
         throw new Error("data is too big")
     }
     if(data&&data.preferred_materials){
