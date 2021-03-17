@@ -7,6 +7,7 @@ const getTeachers=async (parent,{take=5,skip=0,active=false,search},{prisma,req}
         where:{
             Role:"TEACHER",
             teacherProfile:{
+                paperComplete:true,
                 teacherIsActive:active,
                 Rejected:false
             },

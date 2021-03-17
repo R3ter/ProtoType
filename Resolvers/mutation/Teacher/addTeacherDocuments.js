@@ -14,6 +14,7 @@ const addTeacherInfo = async (parent,{
             teacherId:id,
         },
         create:{
+            paperComplete:true,
             teacherId:id,
             CV_URL,
             IDFrontImageURL,
