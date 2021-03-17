@@ -2,6 +2,7 @@ import validator from 'validator';
 import bcrypt from 'bcrypt'
 import { sendActivateCode } from '../../methods/activate.js';
 import { loginToken } from '../../methods/Tokens.js';
+import { storeNotification } from '../../methods/addNotification.js';
 
 const addUser=async (parent, {data:{
   accountType,
@@ -56,7 +57,6 @@ const addUser=async (parent, {data:{
     if(result){
         sendActivateCode(email)
         const token=await loginToken({userid:result.id,role:result.Role,Activate:false,
-          includeFirebaseToken:false,
           email,phone_number:result.phone_number,
           deviceToken,
           teacherIsActive:accountType=="TEACHER"?false:undefined,full_name})
@@ -68,14 +68,14 @@ const addUser=async (parent, {data:{
               }
             }).then((e)=>{return e.map((e)=>e.id)})
             storeNotification({
-              elementId:e.id,              
+              elementId:result.id,
               title:`a new teacher has registered!`,
               body:"check his request",
               to_full_name:"admins",
-              from_full_name:e.full_name,
-              fromId:e.id,
+              from_full_name:result.full_name,
+              fromId:result.id,
               toId:adminsIds,
-              fromImage:null,
+              fromImage:"",
               type:"signup"
             })
           
