@@ -139,7 +139,8 @@ type TeacherInfo{
   email:String
   user:User
   image_URL:String
-  birth_date:String
+  birth_date:DateTime
+  studentCount:Int
   Education_Level:[Education_Level]
   about:String
   phone_number:String
