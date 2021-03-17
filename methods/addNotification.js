@@ -33,7 +33,7 @@ export const storeNotification= async({
         toId.map(async(toId)=>{
             const {deviceToken,token} = await getUserToken(toId)
             if(token){
-                const {id} = await checkToken({token:token}).catch((e)=>null)
+                const {id} = await checkToken({token:token})
                 if(id){
                     if(!skip)
                         if(type=="booking"){
