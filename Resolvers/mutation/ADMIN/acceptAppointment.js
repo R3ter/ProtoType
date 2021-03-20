@@ -43,10 +43,10 @@ const teacherAcceptAppointment=async(parent,{AppointmentID},{prisma,req})=>{
             elementId:e.id,
             title:`you have a new book by ${e.student.full_name}`,
             body:"Accept or Reject it now",
-            to_full_name:e.student.full_name,
-            from_full_name:e.teacher.full_name,
-            fromId:e.teacher.id,
-            toId:e.student.id,
+            to_full_name:e.teacher.full_name,
+            from_full_name:e.student.full_name,
+            fromId:e.student.id,
+            toId:e.teacher.id,
             fromImage:e.student.userInfo.image_URL,
             type:"booking"
         })
