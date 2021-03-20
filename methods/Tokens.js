@@ -29,7 +29,7 @@ const loginToken=async({userid,role,Activate,email,phone_number,teacherIsActive,
     const token = await jwt.sign({
         "aud": "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
         "iat": moment(now()).unix(),
-        "exp": moment(now()).add(3600,'seconds').unix(),
+        "exp": moment(now()).add(1,'weeks').unix(),
         "iss": "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
         "sub": "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
         "uid": userid,
