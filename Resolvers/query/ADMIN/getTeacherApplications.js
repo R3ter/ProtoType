@@ -1,5 +1,6 @@
 import { checkToken } from "../../../methods/Tokens.js"
 
+
 const getTeachers=async (parent,{take=5,skip=0,active=false,search},{prisma,req})=>{
     checkToken({token:req.headers.token,Roles:["ADMIN"]})
     return await prisma.user.findMany({
@@ -7,7 +8,9 @@ const getTeachers=async (parent,{take=5,skip=0,active=false,search},{prisma,req}
         where:{
             Role:"TEACHER",
             teacherProfile:{
-                paperComplete:true,
+                NOT:{
+                    IDBackImageURL:""
+                },
                 teacherIsActive:active,
                 Rejected:false
             },
