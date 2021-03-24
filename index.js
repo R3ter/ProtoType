@@ -73,15 +73,23 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 
 // prisma.appointment_state.create({
 //   data:{
-//     Appoitment_state_key:"rejected",
-//     color:"#8B0000",
+//     Appoitment_state_key:"waiting",
+//     color:"#FFC300",
 //     name:{
 //       create:{
-//         ar:"مرفوض",
-//         eng:"Rejected"
+//         ar:"بالانتظار",
+//         eng:"waiting"
 //       }
 //     }
 //   }
 // }).then((e)=>console.log(e))
 
 
+// prisma.user.create({
+//   data:{
+//     email:"admin@test.com",
+//     password:"waleed",
+//     full_name:"waleed",
+//     phone_number:"4234234324"
+//   }
+// }).then((e)=>console.log(e))
