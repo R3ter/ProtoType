@@ -73,7 +73,7 @@ type Mutation{
   TeacherAddMaterial(data:MaterialsInput):Result
   logout(userId:ID!,refreshToken:String!):Boolean!
   refreshToken(userId:ID!,refreshToken:String!):LoginResult!
-  CreateMaterial(lookUp:lookUp,education_levelID:ID!):Boolean!
+  # CreateMaterial(lookUp:lookUp,education_levelID:ID!):Boolean!
   addUser(data:UserInput!):LoginResult!
   addUserInfo(data:userInfoInput):Boolean!
   login(username:String!,password:String!,deviceToken:String):LoginResult!

@@ -2,7 +2,6 @@ import validator from 'validator'
 import bcrypt from 'bcrypt'
 import {loginToken} from './../../methods/Tokens.js'
 import { saveTokenInFirebase } from '../../methods/addNotification.js';
-
 const login = async(parent,{username,password,deviceToken},{prisma})=>{
     let user;
     if(validator.isEmail(username)){
@@ -15,6 +14,7 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                 teacherProfile:true
             }
         }).then(async(e)=>{
+            console.log(e)
             if(!e){
                 return{error:"password does not match",result:false}
             }

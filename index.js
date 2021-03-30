@@ -73,12 +73,12 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 
 // prisma.appointment_state.create({
 //   data:{
-//     Appoitment_state_key:"waiting",
-//     color:"#FFC300",
+//     Appoitment_state_key:"rejected",
+//     color:"#800000",
 //     name:{
 //       create:{
-//         ar:"بالانتظار",
-//         eng:"waiting"
+//         ar:"مرفوض",
+//         eng:"rejected"
 //       }
 //     }
 //   }
