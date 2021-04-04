@@ -21,6 +21,10 @@ const getTeacherCourses=async(parent, {teacherID,take=6,skip=0}, {req,prisma}, i
             },
             education_level:{
                 select:{
+                    type:{
+                        name:true,
+                        id:true
+                    },
                     id:true,
                     lookUp:true
                 }
