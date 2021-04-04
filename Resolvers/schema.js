@@ -154,7 +154,7 @@ type TeacherInfo{
   latitude:String
 
   education_level_name:[String!]
-  schoolTypeName:String!
+  schoolTypeName:String
 }
 input ConfirmBookingInput{
   dateTime:DateTime!
@@ -313,7 +313,7 @@ type TeacherProfile{
   id:ID!
   user:User!
   education_level_name:[String!]
-  schoolTypeName:String!
+  schoolTypeName:String
   description:String!
   address:String
   subjects:[CourseTag]

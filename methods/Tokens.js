@@ -34,6 +34,7 @@ educationLevelId,SchoolTypeId})=>{
         "iss": "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
         "sub": "firebase-adminsdk-bxya3@school-92b2c.iam.gserviceaccount.com",
         "uid": userid,
+        educationLevelId,SchoolTypeId,
         id: userid,Role:role,Activate,email,
         phone_number,teacherIsActive,
         full_name

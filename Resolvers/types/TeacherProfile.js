@@ -12,6 +12,7 @@ const TeacherProfile={
             })
     },
     schoolTypeName(parent,args,{req}){
+        if(parent.educationLevel)
         return parent.educationLevel[0].type.name[req.headers.lang||"eng"]
     },
     education_level_name(parent,args,{req}){

@@ -10,7 +10,17 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                 email:username.toLowerCase()
             },
             include:{
-                userInfo:true,
+                userInfo:{
+                    select:{
+                        preferred_materials:true,
+                        education_LevelId:true,
+                        Current_education_level:{
+                            select:{
+                                schoolTypeId:true
+                            }
+                        }
+                    }
+                },
                 teacherProfile:true
             }
         }).then(async(e)=>{
@@ -25,6 +35,9 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                 const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
                     teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:undefined,
+                        educationLevelId:userInfo?e.userInfo.education_LevelId:undefined
+                        ,SchoolTypeId:userInfo?e.userInfo.Current_education_level?
+                        e.userInfo.Current_education_level.schoolTypeId:undefined:undefined,
                         deviceToken,
                         includeFirebaseToken:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:true,full_name})
@@ -52,7 +65,15 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
             },        
             include:{
                 userInfo:true,
-                teacherProfile:true
+                select:{
+                    preferred_materials:true,
+                    education_LevelId:true,
+                    Current_education_level:{
+                        select:{
+                            schoolTypeId:true
+                        }
+                    }
+                }
             }
         }).then(async(e)=>{
             if(!e){
@@ -67,6 +88,9 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                 const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
                     teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:undefined,
+                        educationLevelId:userInfo?e.userInfo.education_LevelId:undefined
+                        ,SchoolTypeId:userInfo?e.userInfo.Current_education_level?
+                        e.userInfo.Current_education_level.schoolTypeId:undefined:undefined,
                         deviceToken,
                         includeFirebaseToken:e.teacherProfile?e.teacherProfile.teacherIsActive:
                         e.Role=="TEACHER"?false:true,full_name})
