@@ -12,6 +12,16 @@ const getBestTeachers= async(parent, {skip=0,take=5}, {req,prisma}, info)=>{
             teacherIsActive:true
         },
         include:{
+            educationLevel:{
+                select:{
+                    lookUp:true,
+                    type:{
+                        select:{
+                            name:true
+                        }
+                    }
+                }
+            },
             user:{
                 select:{
                     id:true,

@@ -152,6 +152,9 @@ type TeacherInfo{
   schoolType:[SchoolType]
   longitude:String
   latitude:String
+
+  education_level_name:[String!]
+  schoolTypeName:String!
 }
 input ConfirmBookingInput{
   dateTime:DateTime!
@@ -273,6 +276,7 @@ type UserInfo{
   image_URL:String
   cover_URL:String
   about:String
+  
 }
 input userInfoInput{
   image_URL:String
@@ -309,7 +313,7 @@ type TeacherProfile{
   id:ID!
   user:User!
   education_level_name:[String!]
-  schoolType:String!
+  schoolTypeName:String!
   description:String!
   address:String
   subjects:[CourseTag]
@@ -319,6 +323,8 @@ type TeacherProfile{
   register:Int!
   workingDays:[workingDay]
   studentCount:Int!
+
+
 }
 # type workingDay{
 #   id:ID!
