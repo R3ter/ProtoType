@@ -162,6 +162,8 @@ const appAppointment=async(parent,
                     student_Appointment_infoId:await prisma.student_Appointment_info.create({
                         data:{
                             address:student_info.address,
+                            latitude:student_info.latitude,
+                            longitude:student_info.longitude,
                             full_number:student_info.full_number,
                             student_name:student_info.student_name
                         }

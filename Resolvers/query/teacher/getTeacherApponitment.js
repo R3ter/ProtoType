@@ -84,7 +84,6 @@ const getTeacherReviews=async(parent, {take=5,skip=0,state}, {req,prisma}, info)
             }
         }
     }).then((e)=>{
-      
         return e.map(async(e)=>{
             if(e.state.Appoitment_state_key=="waiting"&&
             state=="PREVIOUS"){
