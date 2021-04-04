@@ -14,7 +14,8 @@ const {now}=moment
 
 const refreshTokens=[]
 
-const loginToken=async({userid,role,Activate,email,phone_number,teacherIsActive,full_name,deviceToken})=>{
+const loginToken=async({userid,role,Activate,email,phone_number,teacherIsActive,full_name,deviceToken,
+educationLevelId,SchoolTypeId})=>{
     let firebaseToken
 
     // if(includeFirebaseToken){
