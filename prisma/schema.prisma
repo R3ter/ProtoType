@@ -65,6 +65,8 @@ model TeacherProfile {
   materials       Materials[]
   workingDays     workingDay[]
   educationLevel  Education_Level[]
+  Major           Major? @relation(fields: [majorId],references:[id])
+  majorId         String?
 }
 
 model Student_Appointment_info {
@@ -210,6 +212,7 @@ model LookUp {
   Education_Level   Education_Level[]
   Materials         Materials[]
   SchoolType        SchoolType[]
+  major             Major?
 }
 
 model DLookUp {
@@ -238,6 +241,12 @@ model Education_Level {
   createdAt         DateTime            @default(now())
 }
 
+model Major{
+  id              String            @id @default(uuid())
+  name            LookUp            @relation(fields: [nameId],references: [id])
+  nameId          String           
+  TeacherProfile  TeacherProfile?
+}
 model SchoolType {
   id              String            @id @default(uuid())
   lookUpId        String 
