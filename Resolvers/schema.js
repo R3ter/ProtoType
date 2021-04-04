@@ -12,6 +12,7 @@ type Query{
   getMyTeacherReviews(skip:Int,take:Int):[TeacherReview]!
   getMyStudentReviews(skip:Int,take:Int):[StudentReview]!
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean,search:String):[TeacherApplication]!
+  getAllTeachersForAdmin(skip:Int,take:Int):[TeacherApplication]!
   getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getUserChatProfile(userId:ID!):ChatInfo!
   teacherSearch(word:String!):[TeacherInfo]
@@ -91,6 +92,7 @@ type TeacherApplication{
   IDBackImageURL:String
   certificateURL:String
   CV_URL:String
+  state:Boolean
   educationLevel:[Education_Level]
   image_URL:String
   name:String!
@@ -137,6 +139,7 @@ type TeacherInfo{
   canContact:Boolean!
   full_name:String
   email:String
+  state:Boolean
   user:User
   image_URL:String
   birth_date:DateTime
