@@ -65,8 +65,8 @@ model TeacherProfile {
   materials       Materials[]
   workingDays     workingDay[]
   educationLevel  Education_Level[]
-  Major           Major? @relation(fields: [majorId],references:[id])
-  majorId         String?
+
+  major           Major?
 }
 
 model Student_Appointment_info {
@@ -245,7 +245,8 @@ model Major{
   id              String            @id @default(uuid())
   name            LookUp            @relation(fields: [nameId],references: [id])
   nameId          String           
-  TeacherProfile  TeacherProfile?
+  TeacherProfile  TeacherProfile? @relation(fields: [teacherId],references: [teacherId])
+  teacherId       String?
 }
 model SchoolType {
   id              String            @id @default(uuid())
