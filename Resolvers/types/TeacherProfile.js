@@ -11,7 +11,7 @@ const TeacherProfile={
               }
             })
     },
-    schoolType(parent,args,{req}){
+    schoolTypeName(parent,args,{req}){
         return parent.educationLevel[0].type.name[req.headers.lang||"eng"]
     },
     education_level_name(parent,args,{req}){
