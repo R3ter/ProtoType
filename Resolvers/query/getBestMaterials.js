@@ -4,9 +4,6 @@ const BestMaterials= async(parent, {take=5,skip=0}, {req,prisma}, info)=>{
     const {educationLevelId} = checkToken({token:req.headers.token})
     const materials = await prisma.materials.findMany({
         take,skip,
-        orderBy:{
-            education_LevelId:educationLevelId
-        },
         include:{
             lookUp:true,
             description:true,
