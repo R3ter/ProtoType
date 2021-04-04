@@ -93,3 +93,48 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //     phone_number:"4234234324"
 //   }
 // }).then((e)=>console.log(e))
+
+
+// prisma.materials.updateMany({
+//   where:{},data:{
+    
+//   }
+// })
+
+// prisma.homeWorkPackage.deleteMany({where:{}}).then((e)=>console.log(e))
+
+// prisma.materials.findMany({}).then((e)=>{
+//   e.map(async (e)=>{
+//     await sleep(10000)
+//     await prisma.homeWorkPackage.create({
+//       data:{
+//         name:"10 واجبات",
+//         price:20,
+//         MaterialId:e.id
+//       }
+//     })
+//     await sleep(10000)
+//       await prisma.homeWorkPackage.create({
+//         data:{
+//           name:"15 واجبات",
+//           price:25,
+//           MaterialId:e.id
+//         }
+//       })
+//       await sleep(10000)
+//         await prisma.homeWorkPackage.create({
+//           data:{
+//             name:"25 واجبات",
+//             price:30,
+//             MaterialId:e.id
+//           }
+//         })
+//   })
+//   console.log(e)
+// })
+
+// function sleep(ms) {
+//   return new Promise((resolve) => {
+//     setTimeout(resolve, ms);
+//   })
+// }

@@ -308,6 +308,8 @@ type Appointment_state{
 type TeacherProfile{
   id:ID!
   user:User!
+  education_level_name:[String!]
+  schoolType:String!
   description:String!
   address:String
   subjects:[CourseTag]
@@ -418,6 +420,8 @@ input UserInput{
 }
 type Materials {
   id: ID!
+  education_level_name:String!
+  schoolType:String!
   name:String!
   image_URL:String
   description:String

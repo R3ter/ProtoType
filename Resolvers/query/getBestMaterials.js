@@ -15,7 +15,13 @@ const BestMaterials= async(parent, {take=5,skip=0}, {req,prisma}, info)=>{
             education_level:{
                 select:{
                     id:true,
-                    lookUp:true
+                    lookUp:true,
+                    type:{
+                        select:{
+                            id:true,
+                            name:true
+                        }
+                    }
                 }
             }
         }

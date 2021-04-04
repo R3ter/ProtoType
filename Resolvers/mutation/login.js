@@ -14,7 +14,6 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                 teacherProfile:true
             }
         }).then(async(e)=>{
-            console.log(e)
             if(!e){
                 return{error:"password does not match",result:false}
             }
