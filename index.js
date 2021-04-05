@@ -151,3 +151,32 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //     }
 //   }
 // }).then((e)=>console.log(e))
+
+
+prisma.user.update({
+  where: { id },
+  data: {
+      teacherProfile:{
+        update:{
+          major:{
+            connect:{
+              id:
+            }
+          }]
+        }
+        Major:{
+          
+        }
+      },
+      userInfo:{
+          upsert:{
+              create:{
+                  ...data
+              },
+              update:{
+                  ...data
+              }
+          }
+      }
+  }
+}).then(()=>true)
