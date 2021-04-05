@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  getMajors:[Major]
   getSubjectsForAdmin:[SchoolType]!
   getMyTeacherDocument:TeacherApplication!
   getSchoolTypesForAdmin:[SchoolType]!
@@ -14,6 +15,8 @@ type Query{
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean,search:String):[TeacherApplication]!
   getAllTeachersForAdmin(skip:Int,take:Int):[TeacherApplication]!
   getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
+  getTeacherAppointmentsForAdmin(skip:Int,take:Int,teacherId:ID!):[Appointment]!
+  getStudentAppointmentsForAdmin(skip:Int,take:Int,studnetId:ID!):[Appointment]!
   getUserChatProfile(userId:ID!):ChatInfo!
   teacherSearch(word:String!):[TeacherInfo]
   getMyTeacherInfo:TeacherInfo
@@ -99,6 +102,10 @@ type TeacherApplication{
   userInfo:UserInfo
   createdAt:DateTime!
   updatedAt:DateTime!
+}
+type Major{
+  id:ID!
+  name:String!
 }
 input EducationLevelPrice{
   oneHour:Float!

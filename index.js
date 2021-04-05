@@ -18,6 +18,7 @@ import Appointment from './Resolvers/types/Appointment.js'
 import Authentication from "./Resolvers/types/Authentication.js"
 import momentZone from "moment-timezone"
 import TeacherInfo from './Resolvers/types/TeacherInfo.js'
+import Major from './Resolvers/types/Major.js'
 momentZone.tz.setDefault("Asia/Jerusalem")
 
 // console.log(momentZone.tz.names().map((e)=>console.log(e)))
@@ -34,6 +35,7 @@ const server = new ApolloServer({
     Materials,
     SchoolType,
     City,
+    Major,
     ...Appointment,
     teacherSchedule,
     CourseTag,
@@ -138,3 +140,14 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //     setTimeout(resolve, ms);
 //   })
 // }
+
+// prisma.major.create({
+//   data:{
+//     name:{
+//       create:{
+//         ar:"دستور",
+//         eng:"Constitution"
+//       }
+//     }
+//   }
+// }).then((e)=>console.log(e))
