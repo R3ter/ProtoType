@@ -8,6 +8,12 @@ const getMaterialInfo=async(parent,{materialID},{prisma,req},info)=>{
             description:true,
             education_level:{
                 select:{
+                    type:{
+                        select:{
+                            name:true,
+                            id:true
+                        }
+                    },
                     id:true,
                     lookUp:true
                 }
