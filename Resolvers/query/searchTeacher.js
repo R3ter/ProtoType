@@ -45,6 +45,7 @@ const search=async (parent ,{word},{prisma})=>{
                 address:e.userInfo.address,
                 longitude:e.userInfo.longitude,
                 latitude:e.userInfo.latitude,
+                educationLevel:e.teacherProfile.educationLevel,
                 schoolType:e.teacherProfile.educationLevel.map((e)=>e.type)
             }
         })
