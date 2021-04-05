@@ -1,9 +1,11 @@
 import  jwt from 'jsonwebtoken';
 import cryptoRandomString from 'crypto-random-string'
 import apollo from 'apollo-server';
+import fs from 'fs';
 const {AuthenticationError}=apollo
 import admin from 'firebase-admin'
-const secret=process.env.SECRET
+
+const secret=fs.readFileSync('public.pem');
 import frirebaseData from './firebaseData.js'
 // import firebase from 'firebase'
 
