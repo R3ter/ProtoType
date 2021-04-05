@@ -20,9 +20,7 @@ const addUserInfo =async(parent, {
         major={
             major:{
                 connect:{
-                    where:{
-                        id:data.majorId
-                    }
+                    id:data.majorId
                 }
             }
         }
