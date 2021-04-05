@@ -10,7 +10,12 @@ const getTeacher=async(parent, args, {req,prisma}, info)=>{
             userInfo:true,
             teacherProfile:{
                 select:{
-                    major:true,
+                    major:{
+                        select:{
+                            name:true,
+                            id:true
+                        }
+                    },
                     educationLevel:{
                         select:{
                             id:true,
