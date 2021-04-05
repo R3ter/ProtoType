@@ -102,6 +102,8 @@ type TeacherApplication{
   userInfo:UserInfo
   createdAt:DateTime!
   updatedAt:DateTime!
+  major:Major
+
 }
 type Major{
   id:ID!
@@ -162,6 +164,7 @@ type TeacherInfo{
   schoolType:[SchoolType]
   longitude:String
   latitude:String
+  major:Major
 
   education_level_name:[String!]
   schoolTypeName:String
@@ -300,6 +303,7 @@ input userInfoInput{
   full_name:String
 }
 input teacherInfoInput{
+  majorId:ID
   image_URL:String
   birth_date:DateTime
   education_levels_ID:[ID!]
@@ -331,6 +335,7 @@ type TeacherProfile{
   averageRating:Float!
   ratingCounts:Int! 
   register:Int!
+  major:Major
   workingDays:[workingDay]
   studentCount:Int!
 

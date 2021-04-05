@@ -11,7 +11,7 @@ const getTeachers=async (parent,{take=10,skip=0},{prisma,req})=>{
         include:{
             teacherProfile:{
                 select:{
-                    
+                    major:true,
                     teacherIsActive:true,
                     IDFrontImageURL:true,
                     IDBackImageURL:true,
@@ -37,6 +37,7 @@ const getTeachers=async (parent,{take=10,skip=0},{prisma,req})=>{
         return e.map((e)=>{
             console.log(e)
             return{
+                major:e.major,
                 phone_number:e.phone_number,
                 email:e.email,
                 id:e.id,
