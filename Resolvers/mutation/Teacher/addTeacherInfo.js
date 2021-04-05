@@ -19,7 +19,7 @@ const addUserInfo =async(parent, {
     if(data.majorId){
         major={
             major:{
-                connect:majorId
+                connect:data.majorId
             }
         }
     }
