@@ -29,7 +29,6 @@ const getTeacherInfo={
             })
     },
     schoolTypeName(parent,args,{req}){
-        console.log(parent)
 
         if(parent.educationLevel)
             return parent.educationLevel[0].type.name[req.headers.lang||"eng"]

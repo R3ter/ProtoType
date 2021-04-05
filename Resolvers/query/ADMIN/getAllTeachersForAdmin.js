@@ -35,7 +35,6 @@ const getTeachers=async (parent,{take=10,skip=0},{prisma,req})=>{
         }
     }).then((e)=>{
         return e.map((e)=>{
-            console.log(e)
             return{
                 major:e.major,
                 phone_number:e.phone_number,
@@ -49,7 +48,7 @@ const getTeachers=async (parent,{take=10,skip=0},{prisma,req})=>{
                 image_URL:e.image_URL,
                 name:e.full_name,
                 createdAt:e.createdAt,
-                state:e.Active,
+                state:e.teacherProfile.teacherIsActive,
                 updatedAt:e.updatedAt,
                 userInfo:{
                     ...e.userInfo

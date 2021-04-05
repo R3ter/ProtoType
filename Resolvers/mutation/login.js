@@ -52,7 +52,7 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                         full_name,
                         email,
                         phone_number,
-                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
+                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=""
                         ?true:
                         e.Role=="TEACHER"?false:undefined,
                     }}
@@ -105,7 +105,7 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                         full_name,
                         email,
                         phone_number,
-                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=null
+                        teacherDocumentUploaded:e.teacherProfile&&e.teacherProfile.IDFrontImageURL!=""
                         ?true:
                         e.Role=="TEACHER"?false:undefined,
                   }}

@@ -103,6 +103,7 @@ type TeacherApplication{
   createdAt:DateTime!
   updatedAt:DateTime!
   major:Major
+  schoolTypeName:String
 
 }
 type Major{
