@@ -47,8 +47,8 @@ const getTeacher=async(parent, {teacherID}, {req,prisma}, info)=>{
             address:e.userInfo.address,
             longitude:e.userInfo.longitude,
             latitude:e.userInfo.latitude,
-            schoolType
-        
+            schoolType,
+            educationLevel:e.teacherProfile.educationLevel
         }
     })
     
