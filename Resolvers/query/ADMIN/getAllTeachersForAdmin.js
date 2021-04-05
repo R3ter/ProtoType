@@ -35,6 +35,7 @@ const getTeachers=async (parent,{take=10,skip=0},{prisma,req})=>{
             userInfo:true
         }
     }).then((e)=>{
+        console.log(e)
         return e.map((e)=>{
             return{
                 major:e.major,
@@ -46,7 +47,7 @@ const getTeachers=async (parent,{take=10,skip=0},{prisma,req})=>{
                 IDBackImageURL:e.teacherProfile.IDBackImageURL,
                 certificateURL:e.teacherProfile.certificateURL,
                 CV_URL:e.teacherProfile.CV_URL,
-                image_URL:e.image_URL,
+                image_URL:e.teacherProfile.image_URL,
                 name:e.full_name,
                 createdAt:e.createdAt,
                 state:e.teacherProfile.teacherIsActive,
