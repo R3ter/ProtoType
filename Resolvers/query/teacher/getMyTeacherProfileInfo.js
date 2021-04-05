@@ -41,6 +41,7 @@ const getTeacher=async(parent, args, {req,prisma}, info)=>{
             }
         })
         return {
+            major:e.teacherProfile.major,
             full_name:e.full_name,
             email:e.email,
             image_URL:e.userInfo.image_URL,
