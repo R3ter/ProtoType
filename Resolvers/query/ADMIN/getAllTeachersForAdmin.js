@@ -16,6 +16,7 @@ const getTeachers=async (parent,{take=10,skip=0},{prisma,req})=>{
                     IDFrontImageURL:true,
                     IDBackImageURL:true,
                     certificateURL:true,
+                    image_URL:true,
                     CV_URL:true,
                     educationLevel:{
                         select:{
