@@ -16,15 +16,9 @@ const {now}=moment
 
 const refreshTokens=[]
 
-const loginToken=async({userid,role,Activate,email,phone_number,teacherIsActive,full_name,deviceToken,
+const loginToken= async ({userid,role,Activate,email,phone_number,teacherIsActive,full_name,deviceToken,
 educationLevelId,SchoolTypeId})=>{
-    let firebaseToken
 
-    // if(includeFirebaseToken){
-    //     // firebaseToken=await admin.auth().createCustomToken(userid)
-    //     // firebase.auth().signInWithCustomToken(token)
-    // }
-    
     if(!userid||!role||!email||!phone_number||!full_name){
         throw new Error("some of the token data are missing")
     }
@@ -63,12 +57,16 @@ educationLevelId,SchoolTypeId})=>{
 }
 const RefreshToken= async (userId,RefreshToken,prisma)=>{
     if(refreshTokens[userId]&&refreshTokens[userId]==RefreshToken){
-        const e = await prisma.user.findUnique({where:{id:userId},
+        const e = await prisma.user.findUnique(
+            {where:{id:userId},
             include:{
                 userInfo:true,
                 teacherProfile:true
             }})
-            const {userInfo,id,full_name,Role,email,phone_number,Active}=e
+            const {userInfo,id,full_name,Role,email,phone_number,Active,banned}=e
+            if(banned){
+                throw new Error("you have been banned!")
+            }
         const info = await loginToken({userid:id,role:Role,Activate:Active,email,phone_number,
             teacherIsActive:e.teacherProfile?e.teacherProfile.teacherIsActive:
                 e.Role=="TEACHER"?false:undefined,
@@ -124,9 +122,17 @@ teacherActivationRequired=false})=>{
             token.Role=="TEACHER"){
                 throw new Error("your teacher account is not active yet")
         }
+        const bannedAccounts = fs.readFileSync('bannedAccounts.txt').toString().split("\n");
+        if(bannedAccounts.includes(token.id)){
+            throw new Error("you have been banned!")
+        }
         return token
     }
     throw new AuthenticationError("Unauthenticate")
 }
 
-export {loginToken,checkToken,RefreshToken,logout}
+const banAnAccount=({userId})=>{
+    fs.appendFileSync("bannedAccounts.txt",userId+'\n')
+}
+
+export {loginToken,checkToken,RefreshToken,logout,banAnAccount}

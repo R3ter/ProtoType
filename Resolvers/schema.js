@@ -58,6 +58,7 @@ type Mutation{
   deleteSchoolType(schoolTypeId:ID!):Boolean!
   addSchoolType(name:lookUp!):Boolean!
   deleteMaterial(materialID:ID!):Boolean!
+  banUser(userId:ID!):Boolean!
   deleteEducationLevel(education_LevelId:ID!):Boolean!
   createEducationLevel(data:educationLevelInput!):Boolean!
   createMaterial(data:materialData!):Boolean!

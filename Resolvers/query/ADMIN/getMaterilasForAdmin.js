@@ -1,4 +1,7 @@
-const getMaterialsForAdmin=(parent,{teacherId},{prisma},info)=>{
+import { checkToken } from "../../../methods/Tokens.js"
+
+const getMaterialsForAdmin=(parent,{teacherId},{prisma,req},info)=>{
+    checkToken({token:req.headers.token,Roles:["ADMIN"]})
     let filter={}
     if(teacherId){
         filter={
