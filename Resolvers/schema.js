@@ -15,7 +15,7 @@ type Query{
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean,search:String):[TeacherApplication]!
   getAllTeachersForAdmin(skip:Int,take:Int):[TeacherApplication]!
   getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
-  getAppointmentsForAdminByDate(skip:Int,take:Int,date:DateTime,stateKey:String):[Appointment]!
+  getAppointmentsForAdminByDate(skip:Int,take:Int,date:DateTime,stateKey:String,teacherId:ID):[Appointment]!
   getMaterialsForAdmin(teacherId:String):[Materials]
   getTeacherAppointmentsForAdmin(skip:Int,take:Int,teacherId:ID!):[Appointment]!
   getStudentAppointmentsForAdmin(skip:Int,take:Int,studnetId:ID!):[Appointment]!
