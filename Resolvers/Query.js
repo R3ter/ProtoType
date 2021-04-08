@@ -41,7 +41,9 @@ import getTeacherAppointmentsForAdmin from './query/ADMIN/getTeacherAppointments
 import getStudentAppointmentsForAdmin from './query/ADMIN/getStudentAppointmentsForAdmin.js'
 import getAppointmentsForAdminByDate from './query/ADMIN/getAppointmentsForAdminByDate.js'
 import getMaterialsForAdmin from './query/ADMIN/getMaterilasForAdmin.js'
+import getTeacherInfoForAdmin from './query/ADMIN/getTeacherInfoForAdmin.js'
 const Query={
+    getTeacherInfoForAdmin,
     getMaterialsForAdmin,
     getAppointmentsForAdminByDate,
     getStudentAppointmentsForAdmin,

@@ -22,6 +22,7 @@ type Query{
   getUserChatProfile(userId:ID!):ChatInfo!
   teacherSearch(word:String!):[TeacherInfo]
   getMyTeacherInfo:TeacherInfo
+  getTeacherInfoForAdmin(teacherId:ID!):TeacherProfile
   getMyTeacherBooking(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getMyWorkingHours:[workingDay]
   getMaterialsForRegister(educationLevelId:ID!):[Materials]
@@ -342,7 +343,7 @@ type TeacherProfile{
   major:Major
   workingDays:[workingDay]
   studentCount:Int!
-
+  materials:[Materials]
 
 }
 # type workingDay{

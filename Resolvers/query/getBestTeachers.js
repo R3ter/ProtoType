@@ -20,7 +20,6 @@ const getBestTeachers= async(parent, {take=5,skip=0}, {req,prisma}, info)=>{
         }
     })
     return teachers.map(async (e)=>{
-        console.log(e)
         return {
             ...e,
             id:e.teacherId
