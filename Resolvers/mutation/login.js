@@ -28,7 +28,7 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                 return{error:"password does not match",result:false}
             }
             if(e.banned){
-                return{error:"this account has been banned",result:false}
+                return{error:"this account has been banned!",result:false}
             }
             const {userInfo,id,full_name,Role,email,phone_number,Active,password:userPassword}=e
             if(bcrypt.compareSync(password, userPassword)){
@@ -80,7 +80,7 @@ const login = async(parent,{username,password,deviceToken},{prisma})=>{
                 return{error:"password does not match",result:false}
             }
             if(e.banned){
-                return{error:"this account has been banned",result:false}
+                return{error:"this account has been banned!",result:false}
             }
 
             const {userInfo,id,full_name,Role,email,phone_number,Active,password:userPassword}=e
