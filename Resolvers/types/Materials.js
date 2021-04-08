@@ -19,6 +19,9 @@ const Materials={
                 Materials:{
                     some:{
                         id:parent.id
+                    },
+                    TeacherProfile:{
+                        teacherIsActive:true
                     }
                 }
             },
