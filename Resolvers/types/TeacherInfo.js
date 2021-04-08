@@ -13,13 +13,12 @@ const getTeacherInfo={
 
     },
     async studentCount(parent,{teacherId},{prisma,req}){
-        const {id} = checkToken({token:req.headers.token})
         return await prisma.appointment.count({
             where:{
-                studentId:id,
-                teacherId:parent.teacherId
-              }
-            })
+                teacherId:parent.id
+                ,stateKey:"accepted"
+            }
+        })
     },
     async ratingCounts(parent,args,{prisma}){
         return await prisma.teacherReview.count({
