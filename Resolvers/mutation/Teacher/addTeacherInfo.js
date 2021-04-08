@@ -1,8 +1,15 @@
 import { checkToken } from "../../../methods/Tokens.js"
 import isLength from 'validator/lib/isLength.js'
 const addUserInfo =async(parent, {
-    data}, {req,prisma}, info)=>{
-    const {id}=checkToken({token:req.headers.token,Roles:["TEACHER"]})
+    data,teacherId
+}, {req,prisma}, info)=>{
+    let id;
+    if(teacherId){
+        checkToken({token:req.headers.token,Roles:["ADMIN"]})
+        id=teacherId
+    }else{
+        id = checkToken({token:req.headers.token,Roles:["TEACHER"]}).id
+    }
     if(data&&data.address&&!isLength(data.address,{max:"1000"})){
         throw new Error("data is too big")
     }
@@ -48,5 +55,6 @@ const addUserInfo =async(parent, {
             }
         }
     }).then(()=>true)
+    .catch(()=>false)
 }
 export default addUserInfo

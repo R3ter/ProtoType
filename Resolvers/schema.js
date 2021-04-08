@@ -15,6 +15,8 @@ type Query{
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean,search:String):[TeacherApplication]!
   getAllTeachersForAdmin(skip:Int,take:Int):[TeacherApplication]!
   getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
+  getAppointmentsForAdminByDate(skip:Int,take:Int,date:DateTime,stateKey:String):[Appointment]!
+  getMaterialsForAdmin(teacherId:String):[Materials]
   getTeacherAppointmentsForAdmin(skip:Int,take:Int,teacherId:ID!):[Appointment]!
   getStudentAppointmentsForAdmin(skip:Int,take:Int,studnetId:ID!):[Appointment]!
   getUserChatProfile(userId:ID!):ChatInfo!
@@ -63,7 +65,7 @@ type Mutation{
   adminRejectTeacherApplication(teacherId:ID!):Boolean!
   adminRejectAppointment(AppointmentID:ID!):Boolean!
   adminAcceptAppointment(AppointmentID:ID!):Boolean!
-  addTeacherInfo(data:teacherInfoInput!):Boolean!
+  addTeacherInfo(data:teacherInfoInput!,teacherId:ID):Boolean!
   addTeacherDocument(data:TeacherDocumentInput!):Boolean!
   rejectAppointment(rejectionReason:String!,AppointmentID:ID!):Boolean!
   teacherAcceptAppointment(AppointmentID:ID!):Boolean!
@@ -450,6 +452,7 @@ type Materials {
   education_level:Education_Level!
   tags:[CourseTag]
   teacher:User
+  teachers:[User]
   studentImages:[String]
   teachersCount:Int
 }
