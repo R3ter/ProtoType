@@ -20,9 +20,9 @@ const Materials={
                     some:{
                         id:parent.id
                     },
-                    TeacherProfile:{
-                        teacherIsActive:true
-                    }
+                },
+                teacherProfile:{
+                    teacherIsActive:true
                 }
             },
             count:true
