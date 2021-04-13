@@ -1,4 +1,7 @@
+import { checkToken } from "../../../methods/Tokens.js"
+
 export default async(parent,{studentId},{req,prisma},info)=>{
+    checkToken({token:req.headers.token,Roles:"ADMIN"})
     return await prisma.user.findUnique({
         where:{
             id:studentId

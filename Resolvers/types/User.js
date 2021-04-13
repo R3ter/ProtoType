@@ -15,7 +15,6 @@ export default {
                 teacher:true
             }
         }).then((e)=>{
-            console.log(e)
             return e.map((e)=>e.teacher)
         })
     }

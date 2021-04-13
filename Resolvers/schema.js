@@ -22,6 +22,7 @@ type Query{
   getUserChatProfile(userId:ID!):ChatInfo!
   teacherSearch(word:String!):[TeacherInfo]
   getMyTeacherInfo:TeacherInfo
+  getStudentMaterials(studentId:ID!):[Materials]
   getStudentInfoForAdmin(studentId:ID!):User!
   getTeacherInfoForAdmin(teacherId:ID!):TeacherProfile
   getMyTeacherBooking(skip:Int,take:Int,state:StateTime!):[Appointment]!
