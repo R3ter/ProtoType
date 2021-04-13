@@ -50,7 +50,6 @@ export default async(parent, {teacherId}, {req,prisma}, info)=>{
             }
         }
     }).then((e)=>{
-        console.log(e)
         return {
             ...e,
             materials:e.user.Materials

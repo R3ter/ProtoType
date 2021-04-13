@@ -43,6 +43,22 @@ const TeacherProfile={
     
             }).then((e)=>(e.avg.ratingStars))
     },
+    async paymentsCount(parent,args,{prisma}){
+        return await prisma.payment.count({
+            where:{
+                Appointment:{
+                    teacherId:parent.teacherId
+                }
+            }})
+    },
+    // async totalPayments(parent,args,{prisma}){
+    //     return await prisma.payment.count({
+    //         where:{
+    //             Appointment:{
+    //                 teacherId:parent.teacherId
+    //             }
+    //         }})
+    // },
     async courseCount(parent,args,{prisma}){
         return await prisma.materials.count({
             where:{

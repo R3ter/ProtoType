@@ -60,6 +60,7 @@ type Mutation{
   addfirebaseToken(deviceToken:String,Token:String):Boolean
   deleteSchoolType(schoolTypeId:ID!):Boolean!
   addSchoolType(name:lookUp!):Boolean!
+  addPayment(appointmentId:ID!):Boolean!
   deleteMaterial(materialID:ID!):Boolean!
   banUser(userId:ID!):Boolean!
   deleteEducationLevel(education_LevelId:ID!):Boolean!
@@ -342,12 +343,19 @@ type TeacherProfile{
   subjects:[CourseTag]
   courseCount:Int!
   averageRating:Float!
-  ratingCounts:Int! 
+  ratingCounts:Int!
+  paymentsCount:Int
   register:Int!
   major:Major
   workingDays:[workingDay]
   studentCount:Int!
   materials:[Materials]
+  teacherIsActive: Boolean
+  IDFrontImageURL:String   
+  IDBackImageURL: String   
+  certificateURL:String   
+  CV_URL:String
+  image_URL:String
 
 }
 # type workingDay{
