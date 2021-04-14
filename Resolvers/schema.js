@@ -6,6 +6,7 @@ scalar DateTime
 scalar Time
 
 type Query{
+  searchForUser(word:String!,role:RoleForSignup!):[User]!
   getMajors:[Major]
   getSubjectsForAdmin:[SchoolType]!
   getMyTeacherDocument:TeacherApplication!
