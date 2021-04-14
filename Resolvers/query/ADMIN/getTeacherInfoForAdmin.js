@@ -3,7 +3,6 @@ import { checkToken } from "../../../methods/Tokens.js"
 
 export default async(parent, {teacherId}, {req,prisma}, info)=>{
     checkToken({token:req.headers.token,Roles:["ADMIN"]})
-
     return await prisma.teacherProfile.findUnique({
         where:{
             teacherId

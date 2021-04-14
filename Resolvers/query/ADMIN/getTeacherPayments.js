@@ -1,7 +1,14 @@
+import {checkToken} from './../../../methods/Tokens.js'
 export default async(parent,{teacherId},{prisma,req})=>{
+    checkToken({token:req.headers.token,Roles:["ADMIN"]})
     return await prisma.payment.findMany({
         where:{
-            appoitment
+            Appointment:{
+                teacherId
+            }
+        },
+        include:{
+            Appointment:true
         }
     })
 }

@@ -10,6 +10,7 @@ type Query{
   getSubjectsForAdmin:[SchoolType]!
   getMyTeacherDocument:TeacherApplication!
   getSchoolTypesForAdmin:[SchoolType]!
+  getTeacherPayment(teacherId:ID!):[Payment]
   getMyTeacherReviews(skip:Int,take:Int):[TeacherReview]!
   getMyStudentReviews(skip:Int,take:Int):[StudentReview]!
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean,search:String):[TeacherApplication]!
@@ -322,6 +323,10 @@ input teacherInfoInput{
   longitude:String
   latitude:String
 }
+type Payment{
+  id:ID!
+  Appointment:Appointment!
+}
 type teacherSchedule{
   time:fromTo!
   day:String!
@@ -340,6 +345,10 @@ type TeacherProfile{
   schoolTypeName:String
   description:String!
   address:String
+  rejectedAppointmentsCount:Int!
+  totalPayment:Float!
+  totalPaidAmount:Int!
+  acceptedAppointmentsCount:Int!
   subjects:[CourseTag]
   courseCount:Int!
   averageRating:Float!

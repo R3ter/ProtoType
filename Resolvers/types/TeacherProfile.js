@@ -51,14 +51,49 @@ const TeacherProfile={
                 }
             }})
     },
-    // async totalPayments(parent,args,{prisma}){
-    //     return await prisma.payment.count({
-    //         where:{
-    //             Appointment:{
-    //                 teacherId:parent.teacherId
-    //             }
-    //         }})
-    // },
+    async acceptedAppointmentsCount(parent,args,{prisma}){
+        return await prisma.appointment.count({
+            where:{
+                teacherId:parent.teacherId,
+                stateKey:"accepted"
+            }
+        })
+    },
+    async rejectedAppointmentsCount(parent,args,{prisma}){
+        return await prisma.appointment.count({
+            where:{
+                teacherId:parent.teacherId,
+                stateKey:"rejected"
+            }
+        })
+    },
+    async totalPayment(parent,args,{prisma}){
+        return await prisma.appointment.aggregate({
+            sum:{
+                coursePrice:true
+            },
+            where:{
+                teacherId:parent.teacherId,
+                stateKey:"accepted"
+            }
+        }).then((e)=>{
+            return e.sum.coursePrice
+        })
+    },
+    async totalPaidAmount(parent,args,{prisma}){
+        return await prisma.appointment.aggregate({
+            sum:{
+              coursePrice:true
+            },
+            where:{
+              payment:{
+                isNot:null
+              }
+            }
+          }).then((e)=>{
+            return e.sum.coursePrice
+          })
+    },
     async courseCount(parent,args,{prisma}){
         return await prisma.materials.count({
             where:{
