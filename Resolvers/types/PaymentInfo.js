@@ -1,6 +1,5 @@
 export default {
     async totalAmount(parent,args,{prisma,req}){
-        if(parent.teacherId)
         return await prisma.appointment.aggregate({
             where:{
               teacherId:parent.teacherId,
@@ -12,10 +11,8 @@ export default {
           }).then((e)=>{
               return e.sum.coursePrice
           })
-          return 0
     },
     async owedAmount(parent,args,{prisma,req}){
-        if(parent.teacherId)
         return await prisma.appointment.aggregate({
             where:{
               teacherId:parent.teacherId,
@@ -29,6 +26,5 @@ export default {
           }).then((e)=>{
               return e.sum.coursePrice
           })
-          return 0
     }
 }
