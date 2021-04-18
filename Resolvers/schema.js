@@ -101,6 +101,7 @@ type TeacherApplication{
   id:ID!
   phone_number:String
   email:String
+  studentCount:Int!
   IDFrontImageURL:String
   IDBackImageURL:String
   certificateURL:String

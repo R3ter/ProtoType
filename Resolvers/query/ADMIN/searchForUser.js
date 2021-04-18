@@ -9,6 +9,9 @@ export default async (parent,{role,word},{prisma,req})=>{
               mode:"insensitive"
             },
             Role:role
+        },
+        include:{
+            userInfo:true
         }
     })
 }
