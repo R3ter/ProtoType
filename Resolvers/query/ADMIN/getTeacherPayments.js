@@ -10,5 +10,11 @@ export default async(parent,{teacherId},{prisma,req})=>{
         include:{
             Appointment:true
         }
+    }).then((e)=>{
+        return {
+            teacherId:e[0]?e[0].Appointment.teacherId:undefined,
+            payments:e
+            
+        }
     })
 }

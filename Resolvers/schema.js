@@ -11,7 +11,7 @@ type Query{
   getSubjectsForAdmin:[SchoolType]!
   getMyTeacherDocument:TeacherApplication!
   getSchoolTypesForAdmin:[SchoolType]!
-  getTeacherPayment(teacherId:ID!):[Payment]
+  getTeacherPayment(teacherId:ID!):PaymentInfo
   getMyTeacherReviews(skip:Int,take:Int):[TeacherReview]!
   getMyStudentReviews(skip:Int,take:Int):[StudentReview]!
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean,search:String):[TeacherApplication]!
@@ -333,8 +333,14 @@ input teacherInfoInput{
   longitude:String
   latitude:String
 }
+type PaymentInfo{
+  totalAmount:Float!
+  owedAmount:Float!
+  payments:[Payment]
+}
 type Payment{
   id:ID!
+  createdAt:DateTime!
   Appointment:Appointment!
 }
 type teacherSchedule{
@@ -403,6 +409,7 @@ type Appointment{
   course:Materials!
   coursePrice:Float!
   canContact:Boolean!
+  createdAt:DateTime!
   state: Appointment_state!
   userId:ID!
   student:User!
