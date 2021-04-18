@@ -342,6 +342,7 @@ type PaymentInfo{
 type Payment{
   id:ID!
   createdAt:DateTime!
+  hasBeenPaid:Boolean!
   Appointment:Appointment!
 }
 type teacherSchedule{

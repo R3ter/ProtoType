@@ -11,13 +11,11 @@ const Appointment={
         return parent.review?true:false
     },
     schoolTypeName(parent,args,{req}){
-        if(parent.educationLevel)
-            return parent.educationLevel[0].type.name[req.headers.lang||"eng"]
+        return parent.course.education_level.type.name[req.headers.lang||"eng"]
     },
     education_level_name(parent,args,{req}){
-        console.log(parent)
-        // return parent.educationLevel.
-        //     lookUp[req.headers.lang||"eng"]
+        return parent.course.education_level.
+            lookUp[req.headers.lang||"eng"]
         
     },
     async canContact(parent,args,{prisma,req}){
