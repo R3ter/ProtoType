@@ -46,7 +46,9 @@ import getStudentInfoForAdmin from './query/ADMIN/getStudentInfo.js'
 import getStudentMaterials from './query/ADMIN/getStudentMaterials.js'
 import getTeacherPayment from './query/ADMIN/getTeacherPayments.js'
 import searchForUser from './query/ADMIN/searchForUser.js'
+import getStudentsForAdmin from './query/ADMIN/getStudentsForAdmin.js'
 const Query={
+    getStudentsForAdmin,
     searchForUser,
     getTeacherPayment,
     getStudentMaterials,

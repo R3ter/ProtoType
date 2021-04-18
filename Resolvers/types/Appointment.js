@@ -10,6 +10,16 @@ const Appointment={
     async isReview(parent,args,{prisma}){
         return parent.review?true:false
     },
+    schoolTypeName(parent,args,{req}){
+        if(parent.educationLevel)
+            return parent.educationLevel[0].type.name[req.headers.lang||"eng"]
+    },
+    education_level_name(parent,args,{req}){
+        console.log(parent)
+        // return parent.educationLevel.
+        //     lookUp[req.headers.lang||"eng"]
+        
+    },
     async canContact(parent,args,{prisma,req}){
         const {id,Role} = checkToken({token:req.headers.token})
         if(Role=="STUDENT")

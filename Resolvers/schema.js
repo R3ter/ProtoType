@@ -15,6 +15,7 @@ type Query{
   getMyTeacherReviews(skip:Int,take:Int):[TeacherReview]!
   getMyStudentReviews(skip:Int,take:Int):[StudentReview]!
   getTeachersForAdmin(skip:Int,take:Int,active:Boolean,search:String):[TeacherApplication]!
+  getStudentsForAdmin(skip:Int,take:Int,search:String):[StudentProfile]!
   getAllTeachersForAdmin(skip:Int,take:Int):[TeacherApplication]!
   getAppointmentsForAdmin(skip:Int,take:Int,state:StateTime!):[Appointment]!
   getAppointmentsForAdminByDate(skip:Int,take:Int,date:DateTime,stateKey:String,teacherId:ID):[Appointment]!
@@ -114,6 +115,14 @@ type TeacherApplication{
   major:Major
   schoolTypeName:String
 
+}
+type StudentProfile{
+  id:ID!
+  email:String!
+  image_URL:String
+  full_name:String!
+  school_name:String
+  education_level_name:String
 }
 type Major{
   id:ID!
@@ -397,6 +406,8 @@ type Appointment{
   state: Appointment_state!
   userId:ID!
   student:User!
+  schoolTypeName:String
+  education_level_name:String
   courseHoursType:courseHoursType!
   teacher:User!
   rejectionReason:String

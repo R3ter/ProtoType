@@ -21,6 +21,7 @@ import TeacherInfo from './Resolvers/types/TeacherInfo.js'
 import TeacherApplication from './Resolvers/types/TeacherApplication.js'
 import Major from './Resolvers/types/Major.js'
 import User from './Resolvers/types/User.js'
+import StudentProfile from './Resolvers/types/studentProfile.js'
 momentZone.tz.setDefault("Asia/Jerusalem")
 
 // console.log(momentZone.tz.names().map((e)=>console.log(e)))
@@ -46,6 +47,7 @@ const server = new ApolloServer({
     TeacherApplication,
     TeacherMapInfo,
     Area,
+    StudentProfile,
     Education_Level,
     TeacherInfo,
     TeacherProfile
