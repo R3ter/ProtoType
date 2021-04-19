@@ -13,6 +13,7 @@ export default {
           })
     },
     async owedAmount(parent,args,{prisma,req}){
+      console.log(parent)
         return await prisma.appointment.aggregate({
             where:{
               teacherId:parent.teacherId,

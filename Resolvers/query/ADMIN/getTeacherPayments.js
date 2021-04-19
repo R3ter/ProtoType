@@ -11,7 +11,7 @@ export default async(parent,{teacherId},{prisma,req})=>{
         }
     }).then((e)=>{
         return {
-            teacherId:e.teacherId,
+            teacherId,
             payments:e.map((e)=>{
                     return{
                         id:e.payment?e.payment.id:"not paid yet",
