@@ -60,6 +60,10 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,studentId},{prisma,re
             }
         }
     }
+    }).then((e)=>{
+        return {
+            appointments:e
+        }
     })
     
 }

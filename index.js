@@ -23,6 +23,7 @@ import Major from './Resolvers/types/Major.js'
 import User from './Resolvers/types/User.js'
 import StudentProfile from './Resolvers/types/studentProfile.js'
 import PaymentInfo from './Resolvers/types/PaymentInfo.js'
+import Student_Appointment from './Resolvers/types/Student_Appointment.js'
 momentZone.tz.setDefault("Asia/Jerusalem")
 
 // console.log(momentZone.tz.names().map((e)=>console.log(e)))
@@ -44,6 +45,7 @@ const server = new ApolloServer({
     teacherSchedule,
     CourseTag,
     User,
+    Student_Appointment,
     Authentication,
     TeacherApplication,
     PaymentInfo,

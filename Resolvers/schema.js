@@ -22,7 +22,7 @@ type Query{
   getAppointmentsForAdminByDate(skip:Int,take:Int,date:DateTime,stateKey:String,teacherId:ID):[Appointment]!
   getMaterialsForAdmin(teacherId:String):[Materials]
   getTeacherAppointmentsForAdmin(skip:Int,take:Int,teacherId:ID!):[Appointment]!
-  getStudentAppointmentsForAdmin(skip:Int,take:Int,studnetId:ID!):[Appointment]!
+  getStudentAppointmentsForAdmin(skip:Int,take:Int,studnetId:ID!):Student_Appointment!
   getUserChatProfile(userId:ID!):ChatInfo!
   teacherSearch(word:String!):[TeacherInfo]
   getMyTeacherInfo:TeacherInfo
@@ -404,6 +404,12 @@ type WorkingHour{
   booked:Boolean!
   userBooked:Boolean!
   hour:Int
+}
+type Student_Appointment{
+  totalPaidAmount:Float!
+  AcceptedAppointmentCount:Int!
+  RejectedAppointmentCount:Int!
+  appointments:[Appointment]
 }
 type Appointment{
   id: ID!
