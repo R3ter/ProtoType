@@ -8,7 +8,10 @@ export default async(parent,{teacherId},{prisma,req})=>{
         },
         include:{
             payment:true
-        }
+        },
+        orderBy:{
+            createdAt:"desc"
+        },
     }).then((e)=>{
         return {
             teacherId,

@@ -1,8 +1,28 @@
-export default async(parent,{skip=0,take=10},{prisma,req})=>{
+export default async(parent,{skip=0,take=10,teacherId},{prisma,req})=>{
     return await prisma.appointment.findMany({
+        skip,take,
         where:{
             payment:{
-                isNot:null
+                is:null
+            },teacherId
+        },
+        orderBy:{
+            createdAt:"desc"
+        },
+        include:{
+            teacher:{
+                select:{
+                    id:true,
+                    userInfo:{
+                        select:{
+                            image_URL:true,
+                            address:true
+                        }
+                    },
+                    full_name:true,
+                    email:true,
+                    phone_number:true
+                }
             }
         }
     })

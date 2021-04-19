@@ -8,6 +8,7 @@ scalar Time
 type Query{
   searchForUser(word:String!,role:RoleForSignup!):[User]!
   getMajors:[Major]
+  getOnHoldPayments(take:Int,skip:Int,teacherId:String):[Appointment]
   getSubjectsForAdmin:[SchoolType]!
   getMyTeacherDocument:TeacherApplication!
   getSchoolTypesForAdmin:[SchoolType]!
