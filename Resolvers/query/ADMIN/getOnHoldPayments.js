@@ -10,6 +10,20 @@ export default async(parent,{skip=0,take=10,teacherId},{prisma,req})=>{
             createdAt:"desc"
         },
         include:{
+            course:{
+                select:{
+                    education_level:{
+                        select:{
+                            lookUp:true,
+                            type:{
+                                select:{
+                                    name:true
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             teacher:{
                 select:{
                     id:true,
