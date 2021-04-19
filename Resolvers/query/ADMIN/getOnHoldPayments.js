@@ -10,6 +10,7 @@ export default async(parent,{skip=0,take=10,teacherId},{prisma,req})=>{
             createdAt:"desc"
         },
         include:{
+            student:true,
             course:{
                 select:{
                     education_level:{

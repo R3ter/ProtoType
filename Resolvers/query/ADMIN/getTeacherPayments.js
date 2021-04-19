@@ -7,7 +7,8 @@ export default async(parent,{teacherId},{prisma,req})=>{
             stateKey:"accepted"
         },
         include:{
-            payment:true
+            payment:true,
+            student:true
         },
         orderBy:{
             createdAt:"desc"
