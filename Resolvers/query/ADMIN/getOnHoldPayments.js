@@ -4,7 +4,9 @@ export default async(parent,{skip=0,take=10,teacherId},{prisma,req})=>{
         where:{
             payment:{
                 is:null
-            },teacherId
+            },teacherId,
+            stateKey:"accepted"
+
         },
         orderBy:{
             createdAt:"desc"
