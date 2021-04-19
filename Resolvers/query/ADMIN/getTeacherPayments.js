@@ -3,7 +3,8 @@ export default async(parent,{teacherId},{prisma,req})=>{
     checkToken({token:req.headers.token,Roles:["ADMIN"]})
     return await prisma.appointment.findMany({
         where:{
-            teacherId
+            teacherId,
+            stateKey:"accepted"
         },
         include:{
             payment:true
