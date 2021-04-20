@@ -22,6 +22,7 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,studentId},{prisma,re
                 userInfo:true
             }
         },
+        payment:true,
         student_info:true,
         student:{
             select:{

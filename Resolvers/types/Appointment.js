@@ -18,6 +18,9 @@ const Appointment={
             lookUp[req.headers.lang||"eng"]
         
     },
+    hasBeenPaid(parent,args,{prisma,req}){
+        return parent.payment?true:false
+    },
     async canContact(parent,args,{prisma,req}){
         const {id,Role} = checkToken({token:req.headers.token})
         if(Role=="STUDENT")

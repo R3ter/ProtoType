@@ -431,6 +431,7 @@ type Appointment{
   isReview:Boolean!
   packageName:String
   student_info:Student_Appointment_info!
+  hasBeenPaid:Boolean!
 }
 
 type Student_Appointment_info {
