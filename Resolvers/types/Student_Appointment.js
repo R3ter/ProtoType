@@ -1,6 +1,5 @@
 export default {
     async AcceptedAppointmentCount(parent,args,{prisma,req}){
-        console.log(parent)
         return await prisma.appointment.count({
             where:{
               teacherId:parent.studentId,

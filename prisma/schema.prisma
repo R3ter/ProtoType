@@ -46,6 +46,12 @@ model UserInfo {
   preferred_materials     CourseTag[]
   favoriteCourses         Materials[]
 }
+model InfoTape{
+  id String  @id @default(uuid())
+  arText String
+  engText String
+  link String?
+}
 
 model TeacherProfile {
   id              String            @id @default(uuid())
