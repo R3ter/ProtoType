@@ -42,7 +42,13 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,teacherId},{prisma,re
                 education_level:{
                     select:{
                         lookUp:true,
-                        id:true
+                        id:true,
+                        type:{
+                            select:{
+                                id:true,  
+                                name:true
+                            }
+                        }
                     }
                 }
             }
@@ -56,6 +62,12 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,teacherId},{prisma,re
             }
         }
     }
+    }).then((e)=>{
+        return e.map((e)=>(
+        {    ...e,
+            educationLevel:e.course.educationLevel
+        }
+        ))
     })
     
 }

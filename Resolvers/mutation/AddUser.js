@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 import { sendActivateCode } from '../../methods/activate.js';
 import { loginToken } from '../../methods/Tokens.js';
 import { storeNotification } from '../../methods/addNotification.js';
-console.log(bcrypt.hashSync("waleed",6))
+console.log(bcrypt.hashSync("0592373906",6))
 const addUser=async (parent, {data:{
   accountType,
   // username,

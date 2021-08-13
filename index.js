@@ -1,36 +1,41 @@
 // import apollo from 'apollo-server'
-import './methods/firebaseInitializeApp.js'
-import pkg from '@prisma/client';
-import Materials from "./Resolvers/types/Materials.js"
-import typeDefs from './Resolvers/schema.js'
-import Mutation from './Resolvers/Mutation.js'
-import City from './Resolvers/types/City.js'
-import Area from './Resolvers/types/Area.js'
-import CourseTag from './Resolvers/types/CourseTag.js'
-import Education_Level from './Resolvers/types/Education_Level.js'
-import TeacherProfile from './Resolvers/types/TeacherProfile.js'
-import Query from './Resolvers/Query.js'
-import apolloServer from 'apollo-server';
-import teacherSchedule from './Resolvers/types/WorkingHour.js'
-import TeacherMapInfo from './Resolvers/types/TeacherMapInfo.js'
-import SchoolType from './Resolvers/types/SchoolType.js'
-import Appointment from './Resolvers/types/Appointment.js'
-import Authentication from "./Resolvers/types/Authentication.js"
-import momentZone from "moment-timezone"
-import TeacherInfo from './Resolvers/types/TeacherInfo.js'
-import TeacherApplication from './Resolvers/types/TeacherApplication.js'
-import Major from './Resolvers/types/Major.js'
-momentZone.tz.setDefault("Asia/Jerusalem")
+import "./methods/firebaseInitializeApp.js";
+import pkg from "@prisma/client";
+import Materials from "./Resolvers/types/Materials.js";
+import typeDefs from "./Resolvers/schema.js";
+import Mutation from "./Resolvers/Mutation.js";
+import City from "./Resolvers/types/City.js";
+import Area from "./Resolvers/types/Area.js";
+import CourseTag from "./Resolvers/types/CourseTag.js";
+import Education_Level from "./Resolvers/types/Education_Level.js";
+import TeacherProfile from "./Resolvers/types/TeacherProfile.js";
+import Query from "./Resolvers/Query.js";
+import apolloServer from "apollo-server";
+import teacherSchedule from "./Resolvers/types/WorkingHour.js";
+import TeacherMapInfo from "./Resolvers/types/TeacherMapInfo.js";
+import SchoolType from "./Resolvers/types/SchoolType.js";
+import Appointment from "./Resolvers/types/Appointment.js";
+import Authentication from "./Resolvers/types/Authentication.js";
+import momentZone from "moment-timezone";
+import TeacherInfo from "./Resolvers/types/TeacherInfo.js";
+import TeacherApplication from "./Resolvers/types/TeacherApplication.js";
+import Major from "./Resolvers/types/Major.js";
+import User from "./Resolvers/types/User.js";
+import StudentProfile from "./Resolvers/types/studentProfile.js";
+import PaymentInfo from "./Resolvers/types/PaymentInfo.js";
+import Student_Appointment from "./Resolvers/types/Student_Appointment.js";
+import InfoTape from "./Resolvers/types/InfoTape.js";
+momentZone.tz.setDefault("Asia/Jerusalem");
 
 // console.log(momentZone.tz.names().map((e)=>console.log(e)))
-const { ApolloServer} = apolloServer
+const { ApolloServer } = apolloServer;
 
 const { PrismaClient } = pkg;
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers:{
+  resolvers: {
     Query,
     Mutation,
     Materials,
@@ -40,13 +45,18 @@ const server = new ApolloServer({
     ...Appointment,
     teacherSchedule,
     CourseTag,
+    User,
+    Student_Appointment,
     Authentication,
     TeacherApplication,
+    PaymentInfo,
     TeacherMapInfo,
     Area,
+    StudentProfile,
     Education_Level,
     TeacherInfo,
-    TeacherProfile
+    TeacherProfile,
+    InfoTape,
   },
   introspection: true,
   playground: true,
@@ -61,19 +71,17 @@ const server = new ApolloServer({
   //   return error
   //   // return({message:error.message,code:error.originalError.code,data:error.originalError.data})
   // },
-  context({req}){
+  context({ req }) {
     return {
       req,
-      prisma
-    }
-  }}
-);
-
-
-server.listen(process.env.PORT||4000).then(({ url }) => {
-  console.log(`Server is up at ${url}`);
+      prisma,
+    };
+  },
 });
 
+server.listen(process.env.PORT || 4000).then(({ url }) => {
+  console.log(`Server is up at ${url}`);
+});
 
 // prisma.appointment_state.create({
 //   data:{
@@ -88,7 +96,6 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //   }
 // }).then((e)=>console.log(e))
 
-
 // prisma.user.create({
 //   data:{
 //     email:"admin@test.com",
@@ -98,10 +105,9 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //   }
 // }).then((e)=>console.log(e))
 
-
 // prisma.materials.updateMany({
 //   where:{},data:{
-    
+
 //   }
 // })
 
@@ -153,5 +159,3 @@ server.listen(process.env.PORT||4000).then(({ url }) => {
 //     }
 //   }
 // }).then((e)=>console.log(e))
-
-

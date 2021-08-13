@@ -1,5 +1,6 @@
 import moment from 'moment'
 const {now}=moment
+import {checkToken} from './../../methods/Tokens.js'
 const TeacherProfile={
     async description(parent, {teacherID}, {req}){
         return parent.description[req.headers.lang||"eng"]
@@ -42,6 +43,63 @@ const TeacherProfile={
             count:true,
     
             }).then((e)=>(e.avg.ratingStars))
+    },
+    async paymentsCount(parent,args,{prisma,req}){
+    checkToken({token:req.headers.token,Roles:["ADMIN"]})
+    return await prisma.payment.count({
+            where:{
+                Appointment:{
+                    teacherId:parent.teacherId
+                }
+            }})
+    },
+    async acceptedAppointmentsCount(parent,args,{prisma,req}){
+    checkToken({token:req.headers.token,Roles:["ADMIN"]})
+    return await prisma.appointment.count({
+            where:{
+                teacherId:parent.teacherId,
+                stateKey:"accepted"
+            }
+        })
+    },
+    async rejectedAppointmentsCount(parent,args,{prisma,req}){
+    checkToken({token:req.headers.token,Roles:["ADMIN"]})
+    return await prisma.appointment.count({
+            where:{
+                teacherId:parent.teacherId,
+                stateKey:"rejected"
+            }
+        })
+    },
+    async totalPayment(parent,args,{prisma,req}){
+    checkToken({token:req.headers.token,Roles:["ADMIN"]})
+    return await prisma.appointment.aggregate({
+            sum:{
+                coursePrice:true
+            },
+            where:{
+                teacherId:parent.teacherId,
+                stateKey:"accepted"
+            }
+        }).then((e)=>{
+            return e.sum.coursePrice
+        })
+    },
+    async totalPaidAmount(parent,args,{prisma,req}){
+    checkToken({token:req.headers.token,Roles:["ADMIN"]})
+    return await prisma.appointment.aggregate({
+            sum:{
+              coursePrice:true
+            },
+            where:{
+                teacherId:parent.teacherId,
+              payment:{
+                isNot:null
+              }
+            }
+          }).then((e)=>{
+            return e.sum.coursePrice
+          })
     },
     async courseCount(parent,args,{prisma}){
         return await prisma.materials.count({

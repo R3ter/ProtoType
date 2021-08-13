@@ -46,6 +46,12 @@ model UserInfo {
   preferred_materials     CourseTag[]
   favoriteCourses         Materials[]
 }
+model InfoTape{
+  id String  @id @default(uuid())
+  arText String
+  engText String
+  link String?
+}
 
 model TeacherProfile {
   id              String            @id @default(uuid())
@@ -68,7 +74,13 @@ model TeacherProfile {
 
   major           Major?
 }
+model Payment{
+  id           String        @id @default(uuid())
+  Appointment  Appointment   @relation(fields: [appointmentId],references: [id])
+  appointmentId String
+  createdAt         DateTime            @default(now())
 
+}
 model Student_Appointment_info {
   id           String        @id @default(uuid())
   student_name String
@@ -109,7 +121,7 @@ model Appointment {
   teacher                    User                     @relation("teacherAppoitments", fields: [teacherId], references: [id])
   TeacherProfile             TeacherProfile?          @relation(fields: [teacherProfileId], references: [id])
   UserInfo                   UserInfo?                @relation(fields: [userInfoId], references: [id])
-  
+  payment Payment?
   review TeacherReview?
 }
 

@@ -4,6 +4,9 @@ const getAppointmentsForAdmin=async(parent,{skip=0,take=10,date,stateKey,teacher
     if(date){
        date=moment.utc(date).format("DD/MM/YYYY")
     }
+    if(stateKey=="all"){
+        stateKey=undefined
+    }
     checkToken({token:req.headers.token,Roles:["ADMIN"]})
     return await prisma.appointment.findMany({
         skip,take,
