@@ -59,6 +59,7 @@ model Ad {
   aderID String
   description String
   title String
+  images String[]
 }
 enum adType {
   teacher
