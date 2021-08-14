@@ -39,8 +39,10 @@ import banUser from "./mutation/ADMIN/banUser.js";
 import addPayment from "./mutation/ADMIN/addPayment.js";
 import addInfoTape from "./mutation/ADMIN/addInfoTape.js";
 import removeInfoTape from "./mutation/ADMIN/removeInfoTape.js";
+import addAnAd from "./mutation/ADMIN/addAnAd.js";
 
 const Mutation = {
+  addAnAd,
   removeInfoTape,
   addInfoTape,
   addPayment,

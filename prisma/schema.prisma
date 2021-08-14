@@ -53,6 +53,17 @@ model InfoTape{
   link String?
 }
 
+model Ad {
+  id String  @id @default(uuid())
+  type adType
+  aderID String
+  description String
+  title String
+}
+enum adType {
+  teacher
+}
+
 model TeacherProfile {
   id              String            @id @default(uuid())
   teacherId       String            @unique

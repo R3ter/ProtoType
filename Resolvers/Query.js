@@ -49,7 +49,9 @@ import searchForUser from "./query/ADMIN/searchForUser.js";
 import getStudentsForAdmin from "./query/ADMIN/getStudentsForAdmin.js";
 import getOnHoldPayments from "./query/ADMIN/getOnHoldPayments.js";
 import getInfoTape from "./query/getInfoTape.js";
+import getAds from "./query/getAds.js";
 const Query = {
+  getAds,
   getInfoTape,
   getOnHoldPayments,
   getStudentsForAdmin,
