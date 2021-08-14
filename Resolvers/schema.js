@@ -6,6 +6,7 @@ const typeDefs = gql`
   scalar Time
 
   type Query {
+    getAds: [Ad]
     searchForUser(word: String!, role: RoleForSignup!): [User]!
     getMajors: [Major]
     getOnHoldPayments(take: Int, skip: Int, teacherId: ID): [Appointment]
@@ -86,6 +87,7 @@ const typeDefs = gql`
     getMaterialTeachers(materialID: ID!, take: Int, skip: Int): [User]!
   }
   type Mutation {
+    addAnAd(data: adInput!): Boolean!
     addInfoTape(arText: String!, engText: String!, link: String): Boolean!
     removeInfoTape(id: ID!): Boolean!
     addMaterialToFavorite(materialId: ID!): Boolean
@@ -133,6 +135,22 @@ const typeDefs = gql`
       review: String!
       ratingStars: Float!
     ): Boolean!
+  }
+  type Ad {
+    id: ID!
+    type: adType!
+    aderID: ID!
+    description: String!
+    title: String!
+  }
+  input adInput {
+    type: adType!
+    aderID: ID!
+    description: String!
+    title: String!
+  }
+  enum adType {
+    teacher
   }
   type TeacherApplication {
     id: ID!
