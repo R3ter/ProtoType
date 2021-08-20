@@ -145,9 +145,9 @@ const typeDefs = gql`
     images: String!
   }
   input adInput {
-    type: adType!
-    aderID: ID!
-    description: String!
+    type: adType
+    aderID: ID
+    description: String
     title: String!
     images: String!
   }
