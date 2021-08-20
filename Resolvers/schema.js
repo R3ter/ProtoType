@@ -140,8 +140,8 @@ const typeDefs = gql`
   type Ad {
     id: ID!
     type: adType!
-    aderID: ID!
-    description: String!
+    aderID: ID
+    description: String
     title: String!
     images: String!
   }
