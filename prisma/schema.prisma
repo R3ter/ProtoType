@@ -57,7 +57,7 @@ model Ad {
   id String  @id @default(uuid())
   type adType @default(teacher)
   aderID String?
-  description String?
+  description String? @default("")
   title String
   images String
 }

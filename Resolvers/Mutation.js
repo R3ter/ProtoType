@@ -40,8 +40,10 @@ import addPayment from "./mutation/ADMIN/addPayment.js";
 import addInfoTape from "./mutation/ADMIN/addInfoTape.js";
 import removeInfoTape from "./mutation/ADMIN/removeInfoTape.js";
 import addAnAd from "./mutation/ADMIN/addAnAd.js";
+import deleteAd from "./mutation/ADMIN/deleteAd.js";
 
 const Mutation = {
+  deleteAd,
   addAnAd,
   removeInfoTape,
   addInfoTape,

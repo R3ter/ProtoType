@@ -90,6 +90,7 @@ const typeDefs = gql`
     addAnAd(data: adInput!): Boolean!
     addInfoTape(arText: String!, engText: String!, link: String): Boolean!
     removeInfoTape(id: ID!): Boolean!
+    deleteAd(id: ID!): Boolean!
     addMaterialToFavorite(materialId: ID!): Boolean
     addfirebaseToken(deviceToken: String, Token: String): Boolean
     deleteSchoolType(schoolTypeId: ID!): Boolean!
