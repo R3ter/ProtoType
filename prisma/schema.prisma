@@ -55,9 +55,9 @@ model InfoTape{
 
 model Ad {
   id String  @id @default(uuid())
-  type adType
-  aderID String
-  description String
+  type adType @default(teacher)
+  aderID String?
+  description String?
   title String
   images String
 }
