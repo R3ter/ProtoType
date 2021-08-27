@@ -7,7 +7,7 @@ const BestMaterials = async (
   info,
 ) => {
   let filter = {};
-  if (schoolType == "eng") {
+  if (schoolType == "en") {
     filter = {
       education_level: { schoolTypeId: "79820b52-2b65-4ee8-bc20-4febca81d9f6" },
     };

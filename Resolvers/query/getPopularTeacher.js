@@ -9,7 +9,7 @@ const getBestTeachers = async (
   const { id } = checkToken({ token: req.headers.token });
 
   let filter = {};
-  if (schoolType == "eng") {
+  if (schoolType == "en") {
     filter = {
       educationLevel: {
         some: {
