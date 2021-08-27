@@ -2,7 +2,7 @@ import { checkToken } from "../../methods/Tokens.js";
 
 const getBestTeachers = async (
   parent,
-  { skip = 0, take = 5, schoolType },
+  { skip = 0, take = 5, schoolType, educationLevel },
   { req, prisma },
   info,
 ) => {
@@ -22,6 +22,15 @@ const getBestTeachers = async (
       educationLevel: {
         some: {
           schoolTypeId: "39d68a53-745d-4cef-81af-cec3a6fe2e5c",
+        },
+      },
+    };
+  }
+  if (educationLevel) {
+    filter = {
+      educationLevel: {
+        some: {
+          id: educationLevel,
         },
       },
     };

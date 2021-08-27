@@ -64,6 +64,7 @@ const typeDefs = gql`
       skip: Int
       take: Int
       schoolType: schoolTypeFilter
+      educationLevel: ID
     ): [Materials]
     getBookingInfo(data: ConfirmBookingInput!): ConfirmBooking!
     getCities: [City]
@@ -92,6 +93,7 @@ const typeDefs = gql`
       skip: Int
       take: Int
       schoolType: schoolTypeFilter
+      educationLevel: ID
     ): [TeacherProfile]
     getClassStudents(courseID: ID!): [User]
     getMaterialTeachers(materialID: ID!, take: Int, skip: Int): [User]!

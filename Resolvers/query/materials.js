@@ -2,7 +2,7 @@ import { checkToken } from "../../methods/Tokens.js";
 
 const BestMaterials = async (
   parent,
-  { skip = 0, take = 5, schoolType },
+  { skip = 0, take = 5, schoolType, educationLevel },
   { req, prisma },
   info,
 ) => {
@@ -15,6 +15,9 @@ const BestMaterials = async (
     filter = {
       education_level: { schoolTypeId: "39d68a53-745d-4cef-81af-cec3a6fe2e5c" },
     };
+  }
+  if (educationLevel) {
+    filter.education_LevelId = educationLevel;
   }
   checkToken({ token: req.headers.token });
   const materials = await prisma.materials.findMany(
