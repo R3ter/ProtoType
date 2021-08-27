@@ -87,7 +87,11 @@ const typeDefs = gql`
     getSchoolTypes: [SchoolType]!
     getMyEducationLevels: [Education_Level]
     getTeachersOnMap: MapInfo!
-    getPopularTeacher(skip: Int, take: Int): [TeacherProfile]
+    getPopularTeacher(
+      skip: Int
+      take: Int
+      schoolType: schoolTypeFilter
+    ): [TeacherProfile]
     getClassStudents(courseID: ID!): [User]
     getMaterialTeachers(materialID: ID!, take: Int, skip: Int): [User]!
   }

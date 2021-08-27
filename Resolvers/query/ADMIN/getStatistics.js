@@ -25,14 +25,6 @@ export default async (parent, args, { prisma, req }) => {
       },
     },
   });
-  console.log({
-    teachersCount: teachers,
-    studentsCount: students,
-    unpaidCount: unpaid,
-    paymentCount: paments,
-    totalPaments: apointment.sum,
-    allPaments: apointment.count,
-  });
   return {
     teachersCount: teachers,
     studentsCount: students,

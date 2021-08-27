@@ -1,43 +1,67 @@
-import { checkToken } from "../../methods/Tokens.js"
+import { checkToken } from "../../methods/Tokens.js";
 
-const getBestTeachers= async(parent, {skip=0,take=5}, {req,prisma}, info)=>{
-    const {id} = checkToken({token:req.headers.token})
+const getBestTeachers = async (
+  parent,
+  { skip = 0, take = 5, schoolType },
+  { req, prisma },
+  info,
+) => {
+  const { id } = checkToken({ token: req.headers.token });
 
-    const teachers = await prisma.teacherProfile.findMany({
-        skip,take,
-        // where:{
-        //     OR:tags.map((e)=>({subjects:{some:{id:e}}}))
-        //   },
-        where:{
-            teacherIsActive:true
+  let filter = {};
+  if (schoolType == "eng") {
+    filter = {
+      educationLevel: {
+        some: {
+          schoolTypeId: "79820b52-2b65-4ee8-bc20-4febca81d9f6",
         },
-        include:{
-            educationLevel:{
-                select:{
-                    lookUp:true,
-                    type:{
-                        select:{
-                            name:true
-                        }
-                    }
-                }
+      },
+    };
+  } else if (schoolType == "ar") {
+    filter = {
+      educationLevel: {
+        some: {
+          schoolTypeId: "39d68a53-745d-4cef-81af-cec3a6fe2e5c",
+        },
+      },
+    };
+  }
+  const teachers = await prisma.teacherProfile.findMany({
+    skip,
+    take,
+    // where:{
+    //     OR:tags.map((e)=>({subjects:{some:{id:e}}}))
+    //   },
+    where: {
+      teacherIsActive: true,
+      ...filter,
+    },
+    include: {
+      educationLevel: {
+        select: {
+          lookUp: true,
+          type: {
+            select: {
+              name: true,
             },
-            user:{
-                select:{
-                    id:true,
-                    full_name:true,
-                    phone_number:true,
-                    email:true,
-                    userInfo:true
-                    
-                }
-            }
-        }
-    })
-    return teachers.map(async (e)=>{
-        return {
-            ...e
-        }
-    })
-}
-export default getBestTeachers
+          },
+        },
+      },
+      user: {
+        select: {
+          id: true,
+          full_name: true,
+          phone_number: true,
+          email: true,
+          userInfo: true,
+        },
+      },
+    },
+  });
+  return teachers.map(async (e) => {
+    return {
+      ...e,
+    };
+  });
+};
+export default getBestTeachers;
