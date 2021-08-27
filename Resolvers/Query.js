@@ -51,7 +51,9 @@ import getOnHoldPayments from "./query/ADMIN/getOnHoldPayments.js";
 import getInfoTape from "./query/getInfoTape.js";
 import getAds from "./query/getAds.js";
 import getStatistics from "./query/ADMIN/getStatistics.js";
+import searchForMaterial from "./query/searchForMaterial.js";
 const Query = {
+  searchForMaterial,
   getStatistics,
   getAds,
   getInfoTape,

@@ -14,6 +14,7 @@ const typeDefs = gql`
     getMyTeacherDocument: TeacherApplication!
     getSchoolTypesForAdmin: [SchoolType]!
     getTeacherPayment(teacherId: ID!): PaymentInfo
+    searchForMaterial(word: String!): [Materials]!
     getMyTeacherReviews(skip: Int, take: Int): [TeacherReview]!
     getMyStudentReviews(skip: Int, take: Int): [StudentReview]!
     getInfoTape: [InfoTape]!

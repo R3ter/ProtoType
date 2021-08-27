@@ -5,8 +5,6 @@ const getAppointmentsForAdmin = async (
   { prisma, req },
 ) => {
   checkToken({ token: req.headers.token, Roles: ["ADMIN"] });
-
-  console.log(studentId);
   return await prisma.appointment
     .findMany({
       skip,
