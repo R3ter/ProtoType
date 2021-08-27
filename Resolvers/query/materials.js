@@ -24,6 +24,10 @@ const BestMaterials = async (
       where: {
         ...filter,
       },
+      lookUp: {
+        ar: "desc",
+        eng: "desc",
+      },
       include: {
         lookUp: true,
         description: true,

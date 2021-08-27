@@ -29,6 +29,10 @@ const getBestTeachers = async (
   const teachers = await prisma.teacherProfile.findMany({
     skip,
     take,
+    lookUp: {
+      ar: "desc",
+      eng: "desc",
+    },
     // where:{
     //     OR:tags.map((e)=>({subjects:{some:{id:e}}}))
     //   },
