@@ -6,6 +6,18 @@ const BestMaterials = async (
   { req, prisma },
   info,
 ) => {
+  let orderBy = {
+    lookUp: {
+      eng: "desc",
+    },
+  };
+  if (req.headers.lang == "ar") {
+    orderBy = {
+      lookUp: {
+        ar: "desc",
+      },
+    };
+  }
   let filter = {};
   if (schoolType == "en") {
     filter = {
@@ -27,10 +39,7 @@ const BestMaterials = async (
       where: {
         ...filter,
       },
-      lookUp: {
-        ar: "desc",
-        eng: "desc",
-      },
+      orderBy: { ...orderBy },
       include: {
         lookUp: true,
         description: true,
