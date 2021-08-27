@@ -58,7 +58,11 @@ const typeDefs = gql`
     getMyWorkingHours: [workingDay]
     getMaterialsForRegister(educationLevelId: ID!): [Materials]
     users: [User]
-    getMaterials(skip: Int, take: Int): [Materials]
+    getMaterials(
+      skip: Int
+      take: Int
+      schoolType: schoolTypeFilter
+    ): [Materials]
     getBookingInfo(data: ConfirmBookingInput!): ConfirmBooking!
     getCities: [City]
     getMaterialInfo(materialID: ID!): Materials
@@ -136,6 +140,10 @@ const typeDefs = gql`
       review: String!
       ratingStars: Float!
     ): Boolean!
+  }
+  enum schoolTypeFilter {
+    ar
+    en
   }
   type Ad {
     id: ID!
