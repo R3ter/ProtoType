@@ -46,7 +46,7 @@ const typeDefs = gql`
     getStudentAppointmentsForAdmin(
       skip: Int
       take: Int
-      studnetId: ID!
+      studentId: ID!
     ): Student_Appointment!
     getUserChatProfile(userId: ID!): ChatInfo!
     teacherSearch(word: String!): [TeacherInfo]
