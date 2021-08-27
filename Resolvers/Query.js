@@ -50,7 +50,9 @@ import getStudentsForAdmin from "./query/ADMIN/getStudentsForAdmin.js";
 import getOnHoldPayments from "./query/ADMIN/getOnHoldPayments.js";
 import getInfoTape from "./query/getInfoTape.js";
 import getAds from "./query/getAds.js";
+import getStatistics from "./query/ADMIN/getStatistics.js";
 const Query = {
+  getStatistics,
   getAds,
   getInfoTape,
   getOnHoldPayments,

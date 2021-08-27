@@ -28,7 +28,7 @@ const typeDefs = gql`
     getAppointmentsForAdmin(
       skip: Int
       take: Int
-      state: StateTime!
+      state: AdminStateTime!
     ): [Appointment]!
     getAppointmentsForAdminByDate(
       skip: Int
@@ -58,6 +58,7 @@ const typeDefs = gql`
     getMyWorkingHours: [workingDay]
     getMaterialsForRegister(educationLevelId: ID!): [Materials]
     users: [User]
+    getStatistics: statisticsInfo!
     getMaterials(
       skip: Int
       take: Int
@@ -141,6 +142,14 @@ const typeDefs = gql`
       ratingStars: Float!
     ): Boolean!
   }
+  type statisticsInfo {
+    teachersCount: Int!
+    studentsCount: Int!
+    unpaidCount: Int!
+    paymentCount: Int!
+    totalPaments: Float!
+    allPaments: Float!
+  }
   enum schoolTypeFilter {
     ar
     en
@@ -213,6 +222,11 @@ const typeDefs = gql`
   enum StateTime {
     PREVIOUS
     UPCOMING
+  }
+  enum AdminStateTime {
+    PREVIOUS
+    UPCOMING
+    ALL
   }
   input fromToInput {
     from: DateTime!

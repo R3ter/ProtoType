@@ -30,6 +30,8 @@ momentZone.tz.setDefault("Asia/Jerusalem");
 // console.log(momentZone.tz.names().map((e)=>console.log(e)))
 const { ApolloServer } = apolloServer;
 
+console.log(new Date());
+
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
